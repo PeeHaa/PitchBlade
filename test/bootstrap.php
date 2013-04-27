@@ -34,4 +34,4 @@ spl_autoload_register(function ($class) {
     }
 });
 
-require_once __DIR__ . '/../src/PitchBladeTest/bootstrap.php';
+require_once __DIR__ . '/../src/PitchBlade/bootstrap.php';
