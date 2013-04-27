@@ -1,0 +1,32 @@
+<phpunit bootstrap="./bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Unit-Tests">
+            <directory>./Unit</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory>../src/PitchBladeTest</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <!--
+        <log
+            type="coverage-html"
+            target="./coverage"
+            charset="UTF-8"
+            yui="true"
+            lowUpperBound="35"
+            highLowerBound="70"
+            showUncoveredFiles="true"
+        />
+        -->
+        <log
+            type="coverage-text"
+            target="php://stdout"
+            lowUpperBound="35"
+            highLowerBound="70"
+        />
+    </logging>
+</phpunit>
