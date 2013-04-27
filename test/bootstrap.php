@@ -16,10 +16,7 @@ namespace PitchBladeTest;
 session_start();
 
 /**
- * The simple autoloader for the PitchBladeTest libraries.
- *
- * This does not use the PRS-0 standards due to the namespace prefix and directory
- * structure
+ * Simple SPL autoloader for the PitchBladeTest libraries.
  *
  * @param string $class The class name to load
  *
@@ -28,7 +25,6 @@ session_start();
 spl_autoload_register(function ($class) {
     $nslen = strlen(__NAMESPACE__);
     if (substr($class, 0, $nslen) != __NAMESPACE__) {
-        //Only autoload libraries from this package
         return;
     }
     $path = substr(str_replace('\\', '/', $class), $nslen);
@@ -37,11 +33,5 @@ spl_autoload_register(function ($class) {
         require $path;
     }
 });
-
-define('PATH_ROOT', dirname(__DIR__));
-
-function getTestDataFromFile($file) {
-    return require __DIR__ . '/Data/' . $file;
-}
 
 require_once __DIR__ . '/../src/PitchBladeTest/bootstrap.php';
