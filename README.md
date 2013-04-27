@@ -3,6 +3,13 @@ PitchBlade
 
 A PHP 5.4+ standard library / "framework" thingy.
 
+What about the name "PitchBlade"?
+-
+
+`$git blame name`
+
+> [Hakre](https://github.com/hakre)
+
 Why????? another freaking framework
 -
 
