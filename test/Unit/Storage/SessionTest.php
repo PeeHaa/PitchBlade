@@ -5,7 +5,7 @@ use PitchBlade\Storage\Session;
 class SessionTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \PitchBlade\Storage\Session::set
+     * @covers PitchBlade\Storage\Session::set
      */
     public function testSet()
     {
@@ -15,9 +15,9 @@ class SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \PitchBlade\Storage\Session::set
-     * @covers \PitchBlade\Storage\Session::isKeyValid
-     * @covers \PitchBlade\Storage\Session::get
+     * @covers PitchBlade\Storage\Session::set
+     * @covers PitchBlade\Storage\Session::isKeyValid
+     * @covers PitchBlade\Storage\Session::get
      */
     public function testGetValid()
     {
@@ -28,9 +28,9 @@ class SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \PitchBlade\Storage\Session::set
-     * @covers \PitchBlade\Storage\Session::isKeyValid
-     * @covers \PitchBlade\Storage\Session::get
+     * @covers PitchBlade\Storage\Session::set
+     * @covers PitchBlade\Storage\Session::isKeyValid
+     * @covers PitchBlade\Storage\Session::get
      */
     public function testGetInvalid()
     {
@@ -41,7 +41,7 @@ class SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \PitchBlade\Storage\Session::isKeyValid
+     * @covers PitchBlade\Storage\Session::isKeyValid
      */
     public function testIsKeyValidFail()
     {
@@ -51,8 +51,8 @@ class SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \PitchBlade\Storage\Session::set
-     * @covers \PitchBlade\Storage\Session::isKeyValid
+     * @covers PitchBlade\Storage\Session::set
+     * @covers PitchBlade\Storage\Session::isKeyValid
      */
     public function testIsKeyValidSuccess()
     {
