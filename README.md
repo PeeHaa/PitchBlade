@@ -3,6 +3,8 @@ PitchBlade
 
 A PHP 5.4+ standard library / "framework" thingy.
 
+[![Build Status](https://travis-ci.org/PeeHaa/PitchBlade.png?branch=master)](https://travis-ci.org/PeeHaa/PitchBlade)
+
 What about the name "PitchBlade"?
 -
 
