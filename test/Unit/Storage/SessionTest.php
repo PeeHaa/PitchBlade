@@ -5,7 +5,7 @@ use PitchBlade\Storage\Session;
 class SessionTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Session::set
+     * @covers \PitchBlade\Storage\Session::set
      */
     public function testSet()
     {
