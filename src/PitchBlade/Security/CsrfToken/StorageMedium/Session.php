@@ -42,8 +42,8 @@ class Session implements StorageMedium
     /**
      * Creates instance
      *
-     * @param string $key The key under which to store the token
-     * @param \BareCMSLib\Storage\SessionInterface Instance of the session class
+     * @param string                               $key     The key under which to store the token
+     * @param \PitchBlade\Storage\SessionInterface $session Instance of the session class
      */
     public function __construct($key, SessionInterface $session)
     {
