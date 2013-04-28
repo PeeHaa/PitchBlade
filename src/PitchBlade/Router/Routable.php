@@ -13,8 +13,6 @@
  */
 namespace PitchBlade\Router;
 
-use PitchBlade\Http\RequestData;
-
 /**
  * Interface for a collection of routes
  *
@@ -48,9 +46,7 @@ interface Routable
     /**
      * Gets a route by requestdata
      *
-     * @param \PitchBlade\Http\RequestData $request The data of the request against which to match the route
-     *
      * @return \PitchBlade\Router\Route The matching route
      */
-    public function getRouteByRequest(RequestData $request);
+    public function getRouteByRequest();
 }

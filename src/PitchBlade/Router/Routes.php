@@ -15,7 +15,6 @@ namespace PitchBlade\Router;
 
 use PitchBlade\Router\Routable,
     PitchBlade\Router\RouteBuilder,
-    PitchBlade\Http\RequestData,
     PitchBlade\Router\InvalidRouteException;
 
 /**
@@ -81,11 +80,9 @@ class Routes implements Routable
     /**
      * Gets a route by requestdata
      *
-     * @param \PitchBlade\Http\RequestData $request The data of the request against which to match the route
-     *
      * @return \PitchBlade\Router\Route The matching route
      */
-    public function getRouteByRequest(RequestData $request)
+    public function getRouteByRequest()
     {
         foreach ($this->routes as $route) {
             if (!$route->matchesRequest()) {

@@ -14,7 +14,9 @@
  */
 namespace PitchBladeTest\Mocks\Router;
 
-use PitchBlade\Router\RouteBuilder;
+use PitchBlade\Router\RouteBuilder,
+    PitchBladeTest\Mocks\Router\Route,
+    PitchBladeTest\Mocks\Router\RequestMatcher;
 
 /**
  * This factory builds routes
@@ -39,6 +41,6 @@ class RouteFactory implements RouteBuilder
      */
     public function build($name, array $requirements, $view, array $controller, array $mapping = [])
     {
-        return $name . 'test';
+        return new Route($name, $requirements, $view, [], new RequestMatcher());
     }
 }
