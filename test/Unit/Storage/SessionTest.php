@@ -1,8 +1,10 @@
 <?php
 
+namespace PitchBladeTest\Unit\Storage;
+
 use PitchBlade\Storage\Session;
 
-class SessionTest extends PHPUnit_Framework_TestCase
+class SessionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers PitchBlade\Storage\Session::set

@@ -1,9 +1,11 @@
 <?php
 
+namespace PitchBladeTest\Unit\Security;
+
 use PitchBladeTest\Mocks\Security\CsrfToken\StorageMedium\Dummy,
     PitchBlade\Security\CsrfToken;
 
-class CsrfTokenTest extends PHPUnit_Framework_TestCase
+class CsrfTokenTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers PitchBlade\Security\CsrfToken::__construct
