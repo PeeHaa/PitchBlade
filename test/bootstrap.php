@@ -1,7 +1,6 @@
 <?php
 /**
- * Bootstrap the tests. This enables autoloading of mock classes and the library. It also provides a (global) function
- * to easily be able to load data.
+ * Bootstrap the tests. This enables autoloading of mock classes and the library.
  *
  * PHP version 5.4
  *
@@ -34,4 +33,23 @@ spl_autoload_register(function ($class) {
     }
 });
 
+/**
+ * Set the data directory for test data
+ */
+define('PITCHBLADE_TEST_DATA_DIR', __DIR__ . '/Data');
+
+/**
+ * Simple function to easily get test data
+ *
+ * @param string $file Location of the file to load
+ *
+ * @return mixed The test data from the file
+ */
+function getTestDataFromFile($file) {
+    return require $file;
+}
+
+/**
+ * Load the project's autoloader
+ */
 require_once __DIR__ . '/../src/PitchBlade/bootstrap.php';

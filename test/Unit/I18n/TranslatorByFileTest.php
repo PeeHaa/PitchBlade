@@ -13,7 +13,7 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\\PitchBlade\\I18n\\InvalidTranslationFileException');
 
-        $translator = new TranslatorByFile(__DIR__ . '/../../Data', 'unk');
+        $translator = new TranslatorByFile(PITCHBLADE_TEST_DATA_DIR . '/I18n', 'unk');
     }
 
     /**
@@ -22,7 +22,7 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUndefinedKey()
     {
-        $translator = new TranslatorByFile(__DIR__ . '/../../Data', 'eng');
+        $translator = new TranslatorByFile(PITCHBLADE_TEST_DATA_DIR . '/I18n', 'eng');
 
         $this->assertSame('{{unknown}}', $translator->get('unknown'));
     }
@@ -33,7 +33,7 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefinedKey()
     {
-        $translator = new TranslatorByFile(__DIR__ . '/../../Data', 'eng');
+        $translator = new TranslatorByFile(PITCHBLADE_TEST_DATA_DIR . '/I18n', 'eng');
 
         $this->assertSame('known value', $translator->get('known.key'));
     }
