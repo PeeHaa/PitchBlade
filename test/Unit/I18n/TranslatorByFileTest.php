@@ -7,7 +7,7 @@ use PitchBlade\I18n\TranslatorByFile;
 class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers PitchBladeTest\I18n\TranslatorByFile::__construct
+     * @covers PitchBlade\I18n\TranslatorByFile::__construct
      */
     public function testGetInvalidFile()
     {
@@ -17,8 +17,8 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBladeTest\I18n\TranslatorByFile::__construct
-     * @covers PitchBladeTest\I18n\TranslatorByFile::get
+     * @covers PitchBlade\I18n\TranslatorByFile::__construct
+     * @covers PitchBlade\I18n\TranslatorByFile::get
      */
     public function testGetUndefinedKey()
     {
@@ -28,8 +28,8 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBladeTest\I18n\TranslatorByFile::__construct
-     * @covers PitchBladeTest\I18n\TranslatorByFile::get
+     * @covers PitchBlade\I18n\TranslatorByFile::__construct
+     * @covers PitchBlade\I18n\TranslatorByFile::get
      */
     public function testGetDefinedKey()
     {
