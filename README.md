@@ -30,4 +30,6 @@ Yes I did
 License
 -
 
-[MIT License](http://opensource.org/licenses/MIT)
+[MIT License (`MIT`)][MIT]
+
+[MIT]: http://spdx.org/licenses/MIT
