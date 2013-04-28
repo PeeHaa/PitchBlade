@@ -81,6 +81,7 @@ class Routes implements Routable
      * Gets a route by requestdata
      *
      * @return \PitchBlade\Router\Route The matching route
+     * @throws \PitchBlade\Router\InvalidRouteException When no route matches the request
      */
     public function getRouteByRequest()
     {
@@ -91,5 +92,7 @@ class Routes implements Routable
 
             return $route;
         }
+
+        throw new InvalidRouteException('No route found based on the request.');
     }
 }

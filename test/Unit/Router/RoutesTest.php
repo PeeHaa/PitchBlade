@@ -66,11 +66,26 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
     {
         $routes = new Routes(new RouteFactory());
 
-        $routes->add('name', ['ssl' => true], 'view', []);
+        $routes->add('name', ['test' => true], 'view', []);
 
         $route = $routes->getRouteByRequest();
 
         $this->assertInstanceOf('\\PitchBladeTest\\Mocks\\Router\\Route', $route);
         $this->assertSame('name', $route->getName());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Routes::__construct
+     * @covers PitchBlade\Router\Routes::getRouteByRequest
+     */
+    public function testGetRouteByRequestFail()
+    {
+        $routes = new Routes(new RouteFactory());
+
+        $routes->add('name', ['test' => false], 'view', []);
+
+        $this->setExpectedException('\\PitchBlade\\Router\\InvalidRouteException');
+
+        $routes->getRouteByRequest();
     }
 }

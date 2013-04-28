@@ -32,6 +32,11 @@ class Route
     private $name;
 
     /**
+     * @var array The data to return whether the request matches
+     */
+    private $requirements;
+
+    /**
      * Creates the instance of the route
      *
      * @param string                               $name           The name of the route
@@ -51,16 +56,17 @@ class Route
         array $mapping = []
     )
     {
-        $this->name = $name;
-    }
-
-    public function matchesRequest()
-    {
-        return true;
+        $this->name         = $name;
+        $this->requirements = $requirements;
     }
 
     public function getName()
     {
         return $this->name;
+    }
+
+    public function matchesRequest()
+    {
+        return $this->requirements['test'];
     }
 }
