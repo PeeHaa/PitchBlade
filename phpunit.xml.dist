@@ -24,6 +24,17 @@
     <filter>
         <whitelist>
             <directory suffix=".php">src/</directory>
+            <exclude>
+                <file>src/bootstrap.php</file>
+                <file>src/Core/Autoloader.php</file>
+                <file>src/Http/RequestData.php</file>
+                <file>src/I18n/Translator.php</file>
+                <file>src/I18n/InvalidTranslationFileException.php</file>
+                <file>src/Security/csrfToken/StorageMedium.php</file>
+                <file>src/Storage/InvalidKeyException.php</file>
+                <file>src/Storage/KeyValuePair.php</file>
+                <file>src/Storage/SessionInterface.php</file>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
