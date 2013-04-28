@@ -36,6 +36,7 @@
                 <file>src/PitchBlade/Storage/SessionInterface.php</file>
                 <file>src/PitchBlade/Router/RequestMatchable.php</file>
                 <file>src/PitchBlade/Router/RouteBuilder.php</file>
+                <file>src/PitchBlade/Router/InvalidRouteException.php</file>
             </exclude>
         </whitelist>
     </filter>
