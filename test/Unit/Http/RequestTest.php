@@ -49,6 +49,18 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Http\Request::__construct
      * @covers PitchBlade\Http\Request::setPath
      * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::setPathVariables
+     */
+    public function testSetPathVariablesWithUndefinedIndexSuccess()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $this->assertNull($request->setPathVariables($this->mappingFailed));
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
      * @covers PitchBlade\Http\Request::getGetVariables
      */
     public function testGetGetVariables()
