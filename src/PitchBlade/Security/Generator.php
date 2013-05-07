@@ -12,7 +12,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  * @version    1.0.0
  */
-namespace PitchBlade\Security\Generator;
+namespace PitchBlade\Security;
 
 /**
  * Generates a random string using mcrypt
