@@ -18,7 +18,6 @@ namespace PitchBlade\Security;
 
 use PitchBlade\Security\CsrfToken\StorageMedium,
     PitchBlade\Security\Generator\Builder,
-    PitchBlade\Security\Generator\GeneratorBuilder,
     PitchBlade\Security\Generator\UnsupportedAlgorithmException;
 
 /**
@@ -56,7 +55,7 @@ class CsrfToken
      * @param \PitchBlade\Security\CsrfToken\StorageMedium $storageMedium    The storage medium
      * @param \PitchBlade\Security\Generator\Builder       $generatorFactory Generator factory
      */
-    public function __construct(StorageMedium $storageMedium, GeneratorBuilder $generatorFactory, $algos = null)
+    public function __construct(StorageMedium $storageMedium, Builder $generatorFactory, $algos = null)
     {
         $this->storageMedium    = $storageMedium;
         $this->generatorFactory = $generatorFactory;
@@ -115,7 +114,7 @@ class CsrfToken
 
         foreach ($this->algos as $algo) {
             try {
-                $generator = $this->factory->build($algo);
+                $generator = $this->generatorFactory->build($algo);
             } catch (UnsupportedAlgorithmException $e) {
                 continue;
             }
