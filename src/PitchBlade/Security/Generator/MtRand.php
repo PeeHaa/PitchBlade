@@ -24,7 +24,7 @@ use PitchBlade\Security\Generator;
  * @subpackage Generator
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Urandom implements Generator
+class MtRand implements Generator
 {
     /**
      * Generates a random string
