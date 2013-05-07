@@ -16,7 +16,10 @@
  */
 namespace PitchBlade\Security;
 
-use PitchBlade\Security\CsrfToken\StorageMedium;
+use PitchBlade\Security\CsrfToken\StorageMedium,
+    PitchBlade\Security\Generator\Builder,
+    PitchBlade\Security\Generator\GeneratorBuilder,
+    PitchBlade\Security\Generator\UnsupportedAlgorithmException;
 
 /**
  * Provides a csrf token to secure forms
@@ -33,13 +36,33 @@ class CsrfToken
     private $storageMedium;
 
     /**
+     * @var \PitchBlade\Security\Generator\Builder Instance of a generator factory
+     */
+    private $generatorFactory;
+
+    /**
+     * @var array List of supported algorithms sorted by strength (strongest first)
+     */
+    private $algos = [
+        '\\PitchBlade\\Security\\Generator\\Mcrypt',
+        '\\PitchBlade\\Security\\Generator\\OpenSsl',
+        '\\PitchBlade\\Security\\Generator\\Urandom',
+        '\\PitchBlade\\Security\\Generator\\MtRand',
+    ];
+
+    /**
      * Creates instance
      *
-     * @param \PitchBlade\Security\CsrfToken\StorageMedium $storageMedium The storage medium
+     * @param \PitchBlade\Security\CsrfToken\StorageMedium $storageMedium    The storage medium
+     * @param \PitchBlade\Security\Generator\Builder       $generatorFactory Generator factory
      */
-    public function __construct(StorageMedium $storageMedium)
+    public function __construct(StorageMedium $storageMedium, GeneratorBuilder $generatorFactory, $algos = null)
     {
-        $this->storageMedium = $storageMedium;
+        $this->storageMedium    = $storageMedium;
+        $this->generatorFactory = $generatorFactory;
+        if ($algos === null) {
+            $this->algos = $algos;
+        }
     }
 
     /**
@@ -80,51 +103,36 @@ class CsrfToken
     /**
      * Generates a new cryptographically secure CSRF token
      *
-     * @param int $length The length of the token to be generated
+     * @param int $rawLength The (raw) length of the token to be generated
      *
      * @return string The generated CSRF token
+     * @throws
      */
     private function generateToken($rawLength = 128)
     {
+        $rawLength = (int) ($rawLength * 3 / 4 + 1);
         $buffer = '';
-        $raw_length = (int) ($rawLength * 3 / 4 + 1);
-        $buffer_valid = false;
-        if (function_exists('mcrypt_create_iv')) {
-            $buffer = mcrypt_create_iv($raw_length, MCRYPT_DEV_URANDOM);
-            if ($buffer) {
-                $buffer_valid = true;
+
+        foreach ($this->algos as $algo) {
+            try {
+                $generator = $this->factory->build($algo);
+            } catch (UnsupportedAlgorithmException $e) {
+                continue;
+            }
+
+            $buffer .= $generator->generate($rawLength);
+
+            if (strlen($buffer) >= $rawLength) {
+                break;
             }
         }
-        if (!$buffer_valid && function_exists('openssl_random_pseudo_bytes')) {
-            $buffer = openssl_random_pseudo_bytes($raw_length);
-            if ($buffer) {
-                $buffer_valid = true;
-            }
+
+        if (strlen($buffer) < $rawLength) {
+            throw new InvalidLengthException(
+                'The generated token didn\'t met the required length (`' . $rawLength . '`). Actual length is: `' . strlen($buffer) . '`.'
+            );
         }
-        if (!$buffer_valid && file_exists('/dev/urandom')) {
-            $f = @fopen('/dev/urandom', 'r');
-            if ($f) {
-                $read = strlen($buffer);
-                while ($read < $raw_length) {
-                    $buffer .= fread($f, $raw_length - $read);
-                    $read = strlen($buffer);
-                }
-                fclose($f);
-                if ($read >= $raw_length) {
-                    $buffer_valid = true;
-                }
-            }
-        }
-        if (!$buffer_valid || strlen($buffer) < $raw_length) {
-            $bl = strlen($buffer);
-            for ($i = 0; $i < $raw_length; $i++) {
-                if ($i < $bl) {
-                    $buffer[$i] = $buffer[$i] ^ chr(mt_rand(0, 255));
-                } else {
-                    $buffer .= chr(mt_rand(0, 255));
-                }
-            }
-        }
+
         return str_replace(array('+', '"', '\'', '\\', '/', '=', '?', '&'), '', base64_encode($buffer));
     }
 }
