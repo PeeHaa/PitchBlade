@@ -18,7 +18,7 @@ class UrandomTest extends \PHPUnit_Framework_TestCase
         $generator = new Urandom();
 
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-            $this->assertInstanceOf('\\PitchBlade\\Security\\Generator');
+            $this->assertInstanceOf('\\PitchBlade\\Security\\Generator', $generator);
         }
     }
 

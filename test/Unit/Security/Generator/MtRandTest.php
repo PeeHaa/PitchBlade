@@ -7,7 +7,6 @@ use PitchBlade\Security\Generator\MtRand;
 class MtRandTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers PitchBlade\Security\Generator\MtRand::__construct
      */
     public function testConstructCorrectInterface()
     {
@@ -17,7 +16,6 @@ class MtRandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Security\Generator\MtRand::__construct
      * @covers PitchBlade\Security\Generator\MtRand::generate
      */
     public function testGenerate()
@@ -28,7 +26,6 @@ class MtRandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Security\Generator\MtRand::__construct
      * @covers PitchBlade\Security\Generator\MtRand::generate
      */
     public function testGenerateRandomTheStupidWay()

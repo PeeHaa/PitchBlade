@@ -7,7 +7,7 @@ use PitchBlade\Security\Generator\Factory;
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers PitchBladeTest\Unit\Security\GeneratorFactoryTest::build
+     * @covers PitchBladeTest\Security\GeneratorFactoryTest::build
      */
     public function testBuildCorrectInterface()
     {
@@ -17,7 +17,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBladeTest\Unit\Security\GeneratorFactoryTest::build
+     * @covers PitchBladeTest\USecurity\GeneratorFactoryTest::build
      */
     public function testBuildFakeGeneratorSuccess()
     {
@@ -29,7 +29,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBladeTest\Unit\Security\GeneratorFactoryTest::build
+     * @covers PitchBladeTest\Security\GeneratorFactoryTest::build
      */
     public function testBuildUnknownGeneratorFail()
     {
