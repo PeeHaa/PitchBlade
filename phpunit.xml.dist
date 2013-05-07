@@ -37,6 +37,8 @@
                 <file>src/PitchBlade/Router/RequestMatchable.php</file>
                 <file>src/PitchBlade/Router/RouteBuilder.php</file>
                 <file>src/PitchBlade/Router/InvalidRouteException.php</file>
+                <file>src/PitchBlade/Security/Generator/UnsupportedAlgorithmException.php</file>
+                <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
             </exclude>
         </whitelist>
     </filter>
