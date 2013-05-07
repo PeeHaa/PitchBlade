@@ -3,7 +3,8 @@
 namespace PitchBladeTest\Unit\Security;
 
 use PitchBladeTest\Mocks\Security\CsrfToken\StorageMedium\Dummy,
-    PitchBlade\Security\CsrfToken;
+    PitchBlade\Security\CsrfToken,
+    PitchBlade\Security\Generator\Factory;
 
 class CsrfTokenTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +15,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTokenNotInitialized()
     {
-        $csrfToken = new CsrfToken(new Dummy());
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
         $token = $csrfToken->getToken();
 
         $this->assertInternalType('string', $token);
@@ -26,7 +27,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTokenInitialized()
     {
-        $csrfToken = new CsrfToken(new Dummy('some value'));
+        $csrfToken = new CsrfToken(new Dummy('some value'), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
         $token = $csrfToken->getToken();
 
         $this->assertStringStartsWith('some value', $token);
@@ -40,7 +41,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateGeneratedValid()
     {
-        $csrfToken = new CsrfToken(new Dummy());
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
         $token = $csrfToken->getToken();
 
         $this->assertTrue($csrfToken->validate($token));
@@ -54,7 +55,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateGeneratedInvalid()
     {
-        $csrfToken = new CsrfToken(new Dummy());
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
         $csrfToken->getToken();
 
         $this->assertFalse($csrfToken->validate('invalid'));
@@ -67,7 +68,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateInitializedValid()
     {
-        $csrfToken = new CsrfToken(new Dummy('some token'));
+        $csrfToken = new CsrfToken(new Dummy('some token'), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
 
         $this->assertTrue($csrfToken->validate('some token'));
     }
@@ -79,7 +80,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidateInitializedInvalid()
     {
-        $csrfToken = new CsrfToken(new Dummy('some token'));
+        $csrfToken = new CsrfToken(new Dummy('some token'), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
         $csrfToken->getToken();
 
         $this->assertFalse($csrfToken->validate('invalid'));
@@ -91,7 +92,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegenerateTokenSuccess()
     {
-        $csrfToken = new CsrfToken(new Dummy());
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
         $oldToken = $csrfToken->getToken();
         $csrfToken->regenerateToken();
         $newToken = $csrfToken->getToken();
