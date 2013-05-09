@@ -54,7 +54,7 @@ class ArrayLogger implements Logger
     public function log($type, $action, $executionTime = null)
     {
         $this->log[] = [
-            'time'          => (new DateTime)->format('d-m-Y'),
+            'time'          => (new \DateTime)->format($this->timestampFormat),
             'type'          => $type,
             'action'        => $action,
             'executionTime' => $executionTime,
