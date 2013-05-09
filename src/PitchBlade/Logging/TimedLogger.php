@@ -65,6 +65,7 @@ class TimedLogger
      * @param string $type   The type of action which is being logged (e.g. PDO::query)
      * @param string $action The specific action (e.g. 'SELECT * FROM table')
      *
+     * @return int The time logged in microseconds
      * @throws \PitchBlade\Logging\UnknownTimedLogItemException When an unknown id is supplied
      */
     public function end($id, $type, $action)
@@ -75,8 +76,12 @@ class TimedLogger
             );
         }
 
-        $this->logger->log($type, $action, (microtime(true) - $this->timedLogs[$id]));
+        $executionTime = (microtime(true) - $this->timedLogs[$id]);
+
+        $this->logger->log($type, $action, $executionTime);
 
         unset($this->timedLogs[$id]);
+
+        return $executionTime;
     }
 }
