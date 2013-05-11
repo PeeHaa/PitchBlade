@@ -12,7 +12,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $recognizer = new BrowserRecognizer([], new Request([]));
+        $recognizer = new UrlRecognizer([], new Request([]));
 
         $this->assertInstanceOf('\\PitchBlade\\I18n\\Language\\Recognizer', $recognizer);
     }
@@ -23,7 +23,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageFoundLanguage()
     {
-        $recognizer = new BrowserRecognizer(['nl'], new Request(['pathVariables'=>['language' => 'nl-NL']]));
+        $recognizer = new UrlRecognizer(['nl'], new Request(['pathVariables'=>['language' => 'nl-NL']]));
 
         $this->assertSame('nl', $recognizer->getLanguage());
     }
@@ -34,7 +34,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageUnsupportedLanguage()
     {
-        $recognizer = new BrowserRecognizer(['nl'], new Request(['pathVariables'=>['language' => 'en-US']]));
+        $recognizer = new UrlRecognizer(['nl'], new Request(['pathVariables'=>['language' => 'en-US']]));
 
         $this->assertNull($recognizer->getLanguage());
     }
@@ -45,7 +45,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageWithoutLanguages()
     {
-        $recognizer = new BrowserRecognizer([], new Request(['pathVariables'=>['language' => 'en-US']]));
+        $recognizer = new UrlRecognizer([], new Request(['pathVariables'=>['language' => 'en-US']]));
 
         $this->assertNull($recognizer->getLanguage());
     }
@@ -56,7 +56,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageWithoutValidLanguageHeader()
     {
-        $recognizer = new BrowserRecognizer([], new Request(['pathVariables'=>['language' => 'e']]));
+        $recognizer = new UrlRecognizer([], new Request(['pathVariables'=>['language' => 'e']]));
 
         $this->assertNull($recognizer->getLanguage());
     }
@@ -67,7 +67,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageWithoutLanguageHeader()
     {
-        $recognizer = new BrowserRecognizer([], new Request(['serverVariables'=>[]]));
+        $recognizer = new UrlRecognizer([], new Request(['serverVariables'=>[]]));
 
         $this->assertNull($recognizer->getLanguage());
     }
