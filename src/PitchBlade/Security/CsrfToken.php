@@ -56,11 +56,11 @@ class CsrfToken
      * @param \PitchBlade\Security\CsrfToken\StorageMedium $storageMedium    The storage medium
      * @param \PitchBlade\Security\Generator\Builder       $generatorFactory Generator factory
      */
-    public function __construct(StorageMedium $storageMedium, Builder $generatorFactory, $algos = null)
+    public function __construct(StorageMedium $storageMedium, Builder $generatorFactory, $algos = [])
     {
         $this->storageMedium    = $storageMedium;
         $this->generatorFactory = $generatorFactory;
-        if ($algos === null) {
+        if (!empty($algos)) {
             $this->algos = $algos;
         }
     }
