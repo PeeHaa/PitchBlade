@@ -13,12 +13,26 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Security\CsrfToken::getToken
      * @covers PitchBlade\Security\CsrfToken::generateToken
      */
-    public function testGetTokenNotInitialized()
+    public function testGetTokenThrowsExceptionInvalidLength()
     {
-        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Fake']);
+        $this->setExpectedException('\\PitchBlade\\Security\\Generator\\InvalidLengthException');
+
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\FixedLength10Dots']);
+        $token = $csrfToken->getToken();
+    }
+
+    /**
+     * @covers PitchBlade\Security\CsrfToken::__construct
+     * @covers PitchBlade\Security\CsrfToken::getToken
+     * @covers PitchBlade\Security\CsrfToken::generateToken
+     */
+    public function testGetTokenWithCustomGenerator()
+    {
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\Dots']);
         $token = $csrfToken->getToken();
 
-        $this->assertInternalType('string', $token);
+        $this->assertSame(130, strlen($token));
+        $this->assertSame('Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg', $token);
     }
 
     /**
