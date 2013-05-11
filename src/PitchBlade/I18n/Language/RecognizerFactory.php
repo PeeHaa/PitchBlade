@@ -17,7 +17,6 @@
 namespace PitchBlade\I18n\Language;
 
 use PitchBlade\I18n\Language\RecognizerBuilder,
-    PitchBlade\Storage\SessionInterface,
     PitchBlade\Http\RequestData,
     PitchBlade\I18n\Language\InvalidRecognizerException;
 
@@ -37,11 +36,6 @@ class RecognizerFactory implements RecognizerBuilder
     private $supportedLanguages;
 
     /**
-     * @var \PitchBlade\Storage\SessionInterface The session
-     */
-    private $session;
-
-    /**
      * @var \PitchBlade\Http\RequestData The request data
      */
     private $request;
@@ -49,14 +43,12 @@ class RecognizerFactory implements RecognizerBuilder
     /**
      * Creates instance
      *
-     * @param array                                $supportedLanguages The list of supported languages
-     * @param \PitchBlade\Storage\SessionInterface $session            The session
-     * @param \PitchBlade\Http\RequestData         $request            The request data
+     * @param array                        $supportedLanguages The list of supported languages
+     * @param \PitchBlade\Http\RequestData $request            The request data
      */
-    public function __construct(array $supportedLanguages, SessionInterface $session, RequestData $request)
+    public function __construct(array $supportedLanguages, RequestData $request)
     {
         $this->supportedLanguages = $supportedLanguages;
-        $this->session            = $session;
         $this->request            = $request;
     }
 
@@ -108,10 +100,6 @@ class RecognizerFactory implements RecognizerBuilder
     {
         $arguments = [$this->supportedLanguages];
         switch ($constructor->getParameters()[1]->getClass()->name) {
-            case '\\PitchBlade\\Storage\\SessionInterface':
-                $arguments[] = $this->session;
-                break;
-
             case '\\PitchBlade\\Http\\RequestData':
                 $arguments[] = $this->request;
                 break;
