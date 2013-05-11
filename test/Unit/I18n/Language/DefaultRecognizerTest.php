@@ -17,8 +17,8 @@ class DefaultRecognizerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\DefaultRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\DefaultRecognizer::getLanguage
      */
     public function testGetLanguageFoundLanguage()
     {
@@ -28,8 +28,8 @@ class DefaultRecognizerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\DefaultRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\DefaultRecognizer::getLanguage
      */
     public function testGetLanguageFoundLanguageWithMutlipleLanguages()
     {
@@ -39,8 +39,8 @@ class DefaultRecognizerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\DefaultRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\DefaultRecognizer::getLanguage
      */
     public function testGetLanguageWithoutLanguages()
     {
