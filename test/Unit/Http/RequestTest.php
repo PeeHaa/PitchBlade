@@ -215,6 +215,60 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('nonDefault', $request->getPathVariable('unknown_var', 'nonDefault'));
     }
 
+
+
+
+
+
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getServerVariables
+     */
+    public function testGetServerVariables()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $this->assertSame($this->serverVariables, $request->getServerVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getServerVariable
+     */
+    public function testGetServerVariableWithKnownVariable()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $this->assertSame('example.com', $request->getServerVariable('SERVER_NAME'));
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getServerVariable
+     */
+    public function testGetServerVariableWithUnknownVariableDefault()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $this->assertNull($request->getServerVariable('unknownservervariable'));
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getServerVariable
+     */
+    public function testGetServerVariableWithUnknownVariableNotDefault()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $this->assertSame('nonDefault', $request->getServerVariable('unknownservervariable', 'nonDefault'));
+    }
+
     /**
      * @covers PitchBlade\Http\Request::__construct
      * @covers PitchBlade\Http\Request::setPath
