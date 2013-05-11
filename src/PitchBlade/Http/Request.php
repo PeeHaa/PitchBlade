@@ -58,9 +58,9 @@ class Request implements RequestData
      */
     public function __construct(array $serverVariables, array $getVariables, array $postVariables)
     {
-        $this->serverVariables  = $serverVariables;
-        $this->getVariables     = $getVariables;
-        $this->postVariables    = $postVariables;
+        $this->serverVariables = $serverVariables;
+        $this->getVariables    = $getVariables;
+        $this->postVariables   = $postVariables;
 
         $this->setPath();
     }
@@ -171,6 +171,26 @@ class Request implements RequestData
     public function getPathVariable($key, $defaultValue = null)
     {
         return (!empty($this->pathVariables[$key]) ? $this->pathVariables[$key] : $defaultValue);
+    }
+
+    /**
+     * Gets the server variables
+     *
+     * @return array The server variables
+     */
+    public function getServerVariables()
+    {
+        return $this->serverVariables;
+    }
+
+    /**
+     * Gets a server variable
+     *
+     * @return mixed The server variable value (or null if it doesn't exists)
+     */
+    public function getServerVariable($key, $defaultValue = null)
+    {
+        return (!empty($this->serverVariables[$key]) ? $this->serverVariables[$key] : $defaultValue);
     }
 
     /**
