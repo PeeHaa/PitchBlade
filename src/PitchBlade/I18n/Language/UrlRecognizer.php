@@ -56,6 +56,11 @@ class UrlRecognizer implements Recognizer
      */
     public function getLanguage()
     {
-        return $this->request->getPathVariable('language');
+        $language = null;
+        if (in_array($this->request->getPathVariable('language'), $this->supportedLanguages)) {
+            $language = $this->request->getPathVariable('language');
+        }
+
+        return $language;
     }
 }
