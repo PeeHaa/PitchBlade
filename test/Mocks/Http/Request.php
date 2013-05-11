@@ -64,6 +64,16 @@ class Request implements RequestData
         return (array_key_exists($key, $this->requestData['pathVariables']) ? $this->requestData['pathVariables'][$key] : $defaultValue);
     }
 
+    public function getServerVariables()
+    {
+        return $this->requestData['serverVariables'];
+    }
+
+    public function getServerVariable($key, $defaultValue = null)
+    {
+        return (array_key_exists($key, $this->requestData['serverVariables']) ? $this->requestData['serverVariables'][$key] : $defaultValue);
+    }
+
     public function getMethod()
     {
         return $this->requestData['method'];

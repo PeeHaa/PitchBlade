@@ -57,8 +57,8 @@ class BrowserRecognizer implements Recognizer
     public function getLanguage()
     {
         $language = null;
-        if (in_array(substr($this->request->getCookieVariable('HTTP_ACCEPT_LANGUAGE'), 0, 2), $this->supportedLanguages)) {
-            $language = substr($this->request->getCookieVariable('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        if (in_array(substr($this->request->getServerVariable('HTTP_ACCEPT_LANGUAGE'), 0, 2), $this->supportedLanguages)) {
+            $language = substr($this->request->getServerVariable('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         }
 
         return $language;
