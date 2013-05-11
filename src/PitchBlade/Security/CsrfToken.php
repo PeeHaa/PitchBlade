@@ -18,6 +18,7 @@ namespace PitchBlade\Security;
 
 use PitchBlade\Security\CsrfToken\StorageMedium,
     PitchBlade\Security\Generator\Builder,
+    PitchBlade\Security\Generator\UnsupportedAlgorithmException,
     PitchBlade\Security\Generator\InvalidLengthException;
 
 /**
