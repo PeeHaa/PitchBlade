@@ -56,6 +56,11 @@ class CookieRecognizer implements Recognizer
      */
     public function getLanguage()
     {
-        return $this->request->getCookieVariable('language');
+        $language = null;
+        if (in_array($this->request->getCookieVariable('language'), $this->supportedLanguages)) {
+            $language = $this->request->getCookieVariable('language');
+        }
+
+        return $language;
     }
 }
