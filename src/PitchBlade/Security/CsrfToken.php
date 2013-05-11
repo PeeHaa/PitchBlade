@@ -18,7 +18,7 @@ namespace PitchBlade\Security;
 
 use PitchBlade\Security\CsrfToken\StorageMedium,
     PitchBlade\Security\Generator\Builder,
-    PitchBlade\Security\Generator\UnsupportedAlgorithmException;
+    PitchBlade\Security\Generator\InvalidLengthException;
 
 /**
  * Provides a csrf token to secure forms
@@ -105,7 +105,7 @@ class CsrfToken
      * @param int $rawLength The (raw) length of the token to be generated
      *
      * @return string The generated CSRF token
-     * @throws
+     * @throws \PitchBlade\Security\Generator\InvalidLengthException When the generated token has an invalid length
      */
     private function generateToken($rawLength = 128)
     {
