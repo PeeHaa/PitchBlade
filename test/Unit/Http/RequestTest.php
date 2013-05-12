@@ -215,12 +215,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('nonDefault', $request->getPathVariable('unknown_var', 'nonDefault'));
     }
 
-
-
-
-
-
-
     /**
      * @covers PitchBlade\Http\Request::__construct
      * @covers PitchBlade\Http\Request::setPath
