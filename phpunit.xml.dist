@@ -29,6 +29,11 @@
                 <file>src/PitchBlade/Http/RequestData.php</file>
                 <file>src/PitchBlade/I18n/Translator.php</file>
                 <file>src/PitchBlade/I18n/InvalidTranslationFileException.php</file>
+                <file>src/PitchBlade/I18n/Language/InvalidParameterNumberException.php</file>
+                <file>src/PitchBlade/I18n/Language/InvalidParameterTypeException.php</file>
+                <file>src/PitchBlade/I18n/Language/InvalidRecognizerException.php</file>
+                <file>src/PitchBlade/I18n/Language/Recognizer.php</file>
+                <file>src/PitchBlade/I18n/Language/RecognizerBuilder.php</file>
                 <file>src/PitchBlade/Security/csrfToken/StorageMedium.php</file>
                 <file>src/PitchBlade/Storage/InvalidKeyException.php</file>
                 <file>src/PitchBlade/Storage/KeyValuePair.php</file>
@@ -38,9 +43,6 @@
                 <file>src/PitchBlade/Router/InvalidRouteException.php</file>
                 <file>src/PitchBlade/Security/Generator/UnsupportedAlgorithmException.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
-                <file>src/PitchBlade/I18n/Language/InvalidParameterNumberException.php</file>
-                <file>src/PitchBlade/I18n/Language/InvalidParameterTypeException.php</file>
-                <file>src/PitchBlade/I18n/Language/InvalidRecognizerException.php</file>
             </exclude>
         </whitelist>
     </filter>
