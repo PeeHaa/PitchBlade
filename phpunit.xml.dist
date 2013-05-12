@@ -33,13 +33,11 @@
                 <file>src/PitchBlade/I18n/Language/InvalidParameterTypeException.php</file>
                 <file>src/PitchBlade/I18n/Language/InvalidRecognizerException.php</file>
                 <file>src/PitchBlade/Logging/UnknownTimedLogItemException.php</file>
+                <file>src/PitchBlade/Router/InvalidRouteException.php</file>
                 <file>src/PitchBlade/Security/csrfToken/StorageMedium.php</file>
                 <file>src/PitchBlade/Storage/InvalidKeyException.php</file>
                 <file>src/PitchBlade/Storage/KeyValuePair.php</file>
                 <file>src/PitchBlade/Storage/SessionInterface.php</file>
-                <file>src/PitchBlade/Router/RequestMatchable.php</file>
-                <file>src/PitchBlade/Router/RouteBuilder.php</file>
-                <file>src/PitchBlade/Router/InvalidRouteException.php</file>
                 <file>src/PitchBlade/Security/Generator/UnsupportedAlgorithmException.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
             </exclude>
