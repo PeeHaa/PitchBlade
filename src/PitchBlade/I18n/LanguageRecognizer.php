@@ -13,7 +13,8 @@
  */
 namespace PitchBlade\I18n;
 
-use PitchBlade\I18n\Language\RecognizerBuilder;
+use PitchBlade\I18n\Language\Recognizer,
+    PitchBlade\I18n\Language\RecognizerBuilder;
 
 /**
  * Tries to find out the user's prefered language
@@ -22,7 +23,7 @@ use PitchBlade\I18n\Language\RecognizerBuilder;
  * @package    I18n
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class LanguageRecognizer
+class LanguageRecognizer implements Recognizer
 {
     /**
      * @var \PitchBlade\I18n\Language\RecognizerBuilder Factory which create language recognizers
