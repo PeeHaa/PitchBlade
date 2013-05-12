@@ -102,6 +102,8 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Security\CsrfToken::__construct
+     * @covers PitchBlade\Security\CsrfToken::getToken
+     * @covers PitchBlade\Security\CsrfToken::generateToken
      * @covers PitchBlade\Security\CsrfToken::regenerateToken
      */
     public function testRegenerateTokenSuccess()
@@ -115,5 +117,41 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($oldToken !== $newToken);
         $this->assertTrue($oldToken != $newToken);
+    }
+
+    /**
+     * @covers PitchBlade\Security\CsrfToken::__construct
+     * @covers PitchBlade\Security\CsrfToken::getToken
+     * @covers PitchBlade\Security\CsrfToken::generateToken
+     */
+    public function testGenerateTokenWithUnsupportedAlgoFirst()
+    {
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), [
+            '\\PitchBladeTest\\Mocks\\Security\\Generator\\UnsupportedAlgo',
+            '\\PitchBladeTest\\Mocks\\Security\\Generator\\Dots',
+        ]);
+
+        $token = $csrfToken->getToken();
+
+        $this->assertSame(130, strlen($token));
+        $this->assertSame('Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg', $token);
+    }
+
+    /**
+     * @covers PitchBlade\Security\CsrfToken::__construct
+     * @covers PitchBlade\Security\CsrfToken::getToken
+     * @covers PitchBlade\Security\CsrfToken::generateToken
+     */
+    public function testGenerateTokenWithUnsupportedAlgoLast()
+    {
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), [
+            '\\PitchBladeTest\\Mocks\\Security\\Generator\\Dots',
+            '\\PitchBladeTest\\Mocks\\Security\\Generator\\UnsupportedAlgo',
+        ]);
+
+        $token = $csrfToken->getToken();
+
+        $this->assertSame(130, strlen($token));
+        $this->assertSame('Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg', $token);
     }
 }
