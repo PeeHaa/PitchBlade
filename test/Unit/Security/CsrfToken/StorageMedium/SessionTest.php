@@ -1,6 +1,6 @@
 <?php
 
-namespace PitchBladeTest\Unit\Security\StorageMedium;
+namespace PitchBladeTest\Unit\Security\CsrfToken\StorageMedium;
 
 use PitchBladeTest\Mocks\Storage\Session as SessionStorage,
     PitchBlade\Security\CsrfToken\StorageMedium\Session;
