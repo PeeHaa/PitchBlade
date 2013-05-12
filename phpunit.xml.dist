@@ -35,11 +35,10 @@
                 <file>src/PitchBlade/Logging/UnknownTimedLogItemException.php</file>
                 <file>src/PitchBlade/Router/InvalidRouteException.php</file>
                 <file>src/PitchBlade/Security/password_compat.php</file>
-                <file>src/PitchBlade/Storage/InvalidKeyException.php</file>
-                <file>src/PitchBlade/Storage/KeyValuePair.php</file>
-                <file>src/PitchBlade/Storage/SessionInterface.php</file>
-                <file>src/PitchBlade/Security/Generator/UnsupportedAlgorithmException.php</file>
+                <file>src/PitchBlade/Security/Generator/InvalidGeneratorException.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
+                <file>src/PitchBlade/Security/Generator/UnsupportedAlgorithmException.php</file>
+                <file>src/PitchBlade/Storage/InvalidKeyException.php</file>
             </exclude>
         </whitelist>
     </filter>
