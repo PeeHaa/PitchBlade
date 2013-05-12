@@ -18,7 +18,9 @@ namespace PitchBlade\I18n\Language;
 
 use PitchBlade\I18n\Language\RecognizerBuilder,
     PitchBlade\Http\RequestData,
-    PitchBlade\I18n\Language\InvalidRecognizerException;
+    PitchBlade\I18n\Language\InvalidRecognizerException,
+    PitchBlade\I18n\Language\InvalidParameterNumberException,
+    PitchBlade\I18n\Language\InvalidParameterTypeException;
 
 /**
  * Builds instances of language recognizers
@@ -68,7 +70,7 @@ class RecognizerFactory implements RecognizerBuilder
             throw new InvalidRecognizerException('Invalid language recognizer (`' . $recognizerName . '`).');
         }
 
-        $reflectedRecognizer = new ReflectionClass($recognizerName);
+        $reflectedRecognizer = new \ReflectionClass($recognizerName);
         $constructor = $reflectedRecognizer->getConstructor();
 
         switch ($constructor->getNumberOfParameters()) {
@@ -77,7 +79,7 @@ class RecognizerFactory implements RecognizerBuilder
                 break;
 
             case 2:
-                return $recognizerName->newInstanceArgs($this->buildClassConstructorArguments($constructor));
+                return $reflectedRecognizer->newInstanceArgs($this->buildClassConstructorArguments($constructor));
                 break;
 
             default:
@@ -100,7 +102,7 @@ class RecognizerFactory implements RecognizerBuilder
     {
         $arguments = [$this->supportedLanguages];
         switch ($constructor->getParameters()[1]->getClass()->name) {
-            case '\\PitchBlade\\Http\\RequestData':
+            case 'PitchBlade\\Http\\RequestData':
                 $arguments[] = $this->request;
                 break;
 
