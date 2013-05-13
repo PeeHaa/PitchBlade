@@ -131,6 +131,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($autoloader->register());
 
-        $this->assertFalse(class_exists('IDontExistClass', true));
+        $this->assertFalse($autoloader->load('IDontExistClass'));
     }
 }
