@@ -119,4 +119,18 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($someClass->isLoaded());
     }
+
+    /**
+     * @covers PitchBlade\Core\Autoloader::__construct
+     * @covers PitchBlade\Core\Autoloader::register
+     * @covers PitchBlade\Core\Autoloader::load
+     */
+    public function testLoadUnknownClass()
+    {
+        $autoloader = new Autoloader('FakeProject', dirname(__DIR__) . '/../Mocks/Core\\\\/\\//');
+
+        $this->assertTrue($autoloader->register());
+
+        $this->assertFalse(class_exists('IDontExistClass', true));
+    }
 }
