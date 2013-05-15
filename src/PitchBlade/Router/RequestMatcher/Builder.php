@@ -29,7 +29,7 @@ use PitchBlade\Http\RequestData,
 interface Builder
 {
     /**
-     * Build instances of RequestMatchers
+     * Builds instances of RequestMatchers
      *
      * @param  string $type The type of RequestMatcher to build
      *
