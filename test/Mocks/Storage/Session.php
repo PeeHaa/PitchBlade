@@ -32,6 +32,11 @@ class Session implements SessionInterface
      */
     private $values = [];
 
+    public function __construct($data = [])
+    {
+        $this->values = $data;
+    }
+
     /**
      * Sets the value
      *
