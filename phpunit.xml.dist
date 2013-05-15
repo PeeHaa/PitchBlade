@@ -34,6 +34,8 @@
                 <file>src/PitchBlade/I18n/Language/InvalidRecognizerException.php</file>
                 <file>src/PitchBlade/Logging/UnknownTimedLogItemException.php</file>
                 <file>src/PitchBlade/Router/InvalidRouteException.php</file>
+                <file>src/PitchBlade/Router/RequestMatcher/UnknownMatcherException.php</file>
+                <file>src/PitchBlade/Router/RequestMatcher/InvalidMatcherException.php</file>
                 <file>src/PitchBlade/Security/password_compat.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidGeneratorException.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
