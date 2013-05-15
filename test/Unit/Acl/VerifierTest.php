@@ -8,7 +8,7 @@ use PitchBlade\Acl\Verifier,
 class VerifierTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers PitchBlade\Acl::__construct
+     * @covers PitchBlade\Acl\Verifier::__construct
      */
     public function testConstructCorrectInterfaceWithSingleParam()
     {
@@ -18,7 +18,7 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
+     * @covers PitchBlade\Acl\Verifier::__construct
      */
     public function testConstructCorrectInterfaceWithAllParams()
     {
@@ -28,8 +28,8 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
      */
     public function testAddRolesSuccess()
     {
@@ -43,8 +43,8 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
      */
     public function testAddRolesMissingAccesslevel()
     {
@@ -60,8 +60,8 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
      */
     public function testAddRolesInvalidAccesslevel()
     {
@@ -77,8 +77,8 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
      */
     public function testAddRolesMissingGuestRole()
     {
@@ -94,10 +94,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleNotLoggedIn()
     {
@@ -116,10 +116,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleNotLoggedInGuestLast()
     {
@@ -138,10 +138,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleLoggedInWithRole()
     {
@@ -160,10 +160,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleLoggedInWithRoleFirst()
     {
@@ -182,10 +182,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleLoggedInWithoutRoleGuestFallback()
     {
@@ -204,10 +204,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleInvalidRole()
     {
@@ -228,10 +228,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testGetUserRoleLoggedInFromCache()
     {
@@ -251,11 +251,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMinimumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMinimumAccesslevel
      */
     public function testGetAccesslevelOfRole()
     {
@@ -274,11 +274,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMinimumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMinimumAccesslevel
      */
     public function testGetAccesslevelOfRoleInvalidRole()
     {
@@ -299,9 +299,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testDoesRoleMatchSuccess()
     {
@@ -320,10 +320,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::doesRoleMatch
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatch
      */
     public function testDoesRoleMatchFail()
     {
@@ -342,11 +342,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMinimumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMinimumAccesslevel
      */
     public function testDoesRoleMatchMinimumAccesslevelSuccessExact()
     {
@@ -365,11 +365,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMinimumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMinimumAccesslevel
      */
     public function testDoesRoleMatchMinimumAccesslevelSuccessGreater()
     {
@@ -391,11 +391,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMinimumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMinimumAccesslevel
      */
     public function testDoesRoleMatchMinimumAccesslevelFail()
     {
@@ -417,11 +417,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMaximumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMaximumAccesslevel
      */
     public function testDoesRoleMatchMaximumAccesslevelSuccessExact()
     {
@@ -440,11 +440,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMaximumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMaximumAccesslevel
      */
     public function testDoesRoleMatchMaximumAccesslevelSuccessSmaller()
     {
@@ -466,11 +466,11 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Acl::__construct
-     * @covers PitchBlade\Acl::addRoles
-     * @covers PitchBlade\Acl::getUserRole
-     * @covers PitchBlade\Acl::getAccesslevelOfRole
-     * @covers PitchBlade\Acl::doesRoleMatchMaximumAccesslevel
+     * @covers PitchBlade\Acl\Verifier::__construct
+     * @covers PitchBlade\Acl\Verifier::addRoles
+     * @covers PitchBlade\Acl\Verifier::getUserRole
+     * @covers PitchBlade\Acl\Verifier::getAccesslevelOfRole
+     * @covers PitchBlade\Acl\Verifier::doesRoleMatchMaximumAccesslevel
      */
     public function testDoesRoleMatchMaximumAccesslevelFail()
     {
