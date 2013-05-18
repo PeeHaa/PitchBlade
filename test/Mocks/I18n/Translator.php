@@ -45,5 +45,6 @@ class Translator implements TranslatorInterface
      */
     public function get($key)
     {
+        return $key;
     }
 }
