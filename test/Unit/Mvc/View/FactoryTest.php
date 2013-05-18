@@ -16,8 +16,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
-            '',
-            '\\PitchBladeTest\\Mocks\\Mvc\\View\\DummyView'
+            __DIR__ . '/../../../Data/Templates/base.phtml',
+            '\\PitchBladeTest\\Mocks\\Mvc\\View\\DummyView',
+            'en'
         );
 
         $this->assertInstanceOf('\\PitchBlade\\Mvc\\View\\Builder', $factory);
@@ -32,7 +33,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
-            '',
+            __DIR__ . '/../../../Data/Templates/base.phtml',
+            'en',
             '\\PitchBladeTest\\Mocks\\Mvc\\View'
         );
 
@@ -48,7 +50,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
-            '',
+            __DIR__ . '/../../../Data/Templates/base.phtml',
+            'en',
             '\\PitchBladeTest\\Mocks\\Mvc\\View'
         );
 
@@ -64,7 +67,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
-            '',
+            __DIR__ . '/../../../Data/Templates/base.phtml',
+            'en',
             '\\PitchBladeTest\\Mocks\\Mvc\\View'
         );
 

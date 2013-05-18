@@ -45,6 +45,11 @@ class Factory implements Builder
     private $baseTemplate;
 
     /**
+     * @var string The currently used language
+     */
+    private $language;
+
+    /**
      * @var string The base namespace used to load views from
      */
     private $namespace;
@@ -56,6 +61,7 @@ class Factory implements Builder
      * @param \PitchBlade\Mvc\Model\ServicesBuilder $serviceFactory Instance of the service factory
      * @param \PitchBlade\I18n\Translator           $translator     Instance of the translation service
      * @param string                                $baseTemplate   The base template
+     * @param string                                $language       The currently used language
      * @param string                                $namespace      The base namespace used to load views from. This is
      *                                                              useful when unit testing to easily be able to swap
      *                                                              for mocked views
@@ -64,12 +70,14 @@ class Factory implements Builder
         ServiceBuilder $serviceFactory,
         Translator $translator,
         $baseTemplate,
+        $language,
         $namespace
     )
     {
         $this->serviceFactory = $serviceFactory;
         $this->translator     = $translator;
         $this->baseTemplate   = $baseTemplate;
+        $this->language       = $language;
         $this->namespace      = '\\' . trim($namespace, '\\') . '\\';
     }
 
@@ -88,10 +96,9 @@ class Factory implements Builder
         }
 
         if (!class_exists($viewClass)) {
-            //var_dump($viewClass);die;
             throw new InvalidViewException('Invalid view (`' . $viewClass . '`).');
         }
 
-        return new $viewClass($this, $this->serviceFactory, $this->translator, $this->baseTemplate);
+        return new $viewClass($this, $this->serviceFactory, $this->translator, $this->baseTemplate, $this->language);
     }
 }
