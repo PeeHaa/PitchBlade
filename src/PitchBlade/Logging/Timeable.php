@@ -20,7 +20,7 @@ namespace PitchBlade\Logging;
  * @package    Logging
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-interface Timed
+interface Timeable
 {
     /**
      * Starts the timer to log the current action

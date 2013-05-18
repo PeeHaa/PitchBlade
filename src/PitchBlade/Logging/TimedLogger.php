@@ -13,7 +13,7 @@
  */
 namespace PitchBlade\Logging;
 
-use PitchBlade\Logging\Timed,
+use PitchBlade\Logging\Timeable,
     PitchBlade\Logging\Logger;
 
 /**
@@ -23,7 +23,7 @@ use PitchBlade\Logging\Timed,
  * @package    Logging
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class TimedLogger implements Timed
+class TimedLogger implements Timeable
 {
     /**
      * @var array List of the timed logs based on the unique identifiers
