@@ -256,6 +256,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Mvc\View\View::renderPage
      * @covers PitchBlade\Mvc\View\View::__set
      * @covers PitchBlade\Mvc\View\View::__get
+     * @covers PitchBlade\Mvc\View\View::translate
      */
     public function testTranslate()
     {
