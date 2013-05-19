@@ -52,6 +52,27 @@ function getTestDataFromFile($file) {
 }
 
 /**
+ * Function which provides database info so that we can easily switch between environments
+ *
+ * @return array List of database info including: dsn, user, pass and driver options
+ */
+function getDatabaseInfo()
+{
+    $databaseInfo = [
+        'dsn' => 'pgsql:dbname=pitchblade_test;host=127.0.0.1',
+        'username' => 'postgres',
+        'password' => '',
+        'driverOptions' => [
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+        ],
+    ];
+
+    return $databaseInfo;
+}
+
+/**
  * Load the project's autoloader
  */
 require_once __DIR__ . '/../src/PitchBlade/bootstrap.php';
