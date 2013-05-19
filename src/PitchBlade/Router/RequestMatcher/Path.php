@@ -1,0 +1,60 @@
+<?php
+/**
+ * Check whether a request matches with path requirements
+ *
+ * PHP version 5.4
+ *
+ * @category   PitchBlade
+ * @package    Router
+ * @package    RequestMatcher
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2012 Pieter Hordijk
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0.0
+ */
+namespace PitchBlade\Router\RequestMatcher;
+
+use PitchBlade\Http\RequestData,
+    PitchBlade\Router\RequestMatcher\Matchable;
+
+/**
+ * Check whether a request matches with path requirements
+ *
+ * @category   PitchBlade
+ * @package    Router
+ * @package    RequestMatcher
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ */
+class Path implements Matchable
+{
+    /**
+     * @var \PitchBlade\Http\RequestData The request
+     */
+    private $request;
+
+    /**
+     * Creates instance
+     *
+     * @param \PitchBlade\Http\RequestData $request The request to check for requirements
+     */
+    public function __construct(RequestData $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Check whether the requirements match
+     *
+     * @param string $requirement The requirement to check against (regex pattern)
+     *
+     * @return boolean Whether the requirement matches
+     */
+    public function doesMatch($requirement)
+    {
+        if (preg_match($requirement, $this->request->getPath()) === 1) {
+            return true;
+        }
+
+        return false;
+    }
+}
