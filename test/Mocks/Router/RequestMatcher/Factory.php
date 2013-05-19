@@ -14,7 +14,7 @@
  */
 namespace PitchBladeTest\Mocks\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Buildable;
+use PitchBlade\Router\RequestMatcher\Builder;
 
 /**
  * Builds the request matchers for the different types in the request
@@ -24,7 +24,7 @@ use PitchBlade\Router\RequestMatcher\Buildable;
  * @package    RequestMatcher
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Factory implements Buildable
+class Factory implements Builder
 {
     /**
      * Builds instances of RequestMatchers
