@@ -70,6 +70,7 @@ function getDatabaseInfo()
                 '\\PitchBlade\\Storage\\Database\\PDOStatement',
                 [new \PitchBladeTest\Mocks\Logging\TimedLogger()],
             ],
+            \PDO::ATTR_STRINGIFY_FETCHES  => true,
         ],
     ];
 
