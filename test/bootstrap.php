@@ -80,3 +80,25 @@ function getDatabaseInfo()
  * Load the project's autoloader
  */
 require_once __DIR__ . '/../src/PitchBlade/bootstrap.php';
+
+/**
+ * Create the table used for testing
+ */
+function createTestDatabase() {
+    $dbInfo = getDatabaseInfo();
+    $dbConnection = new \PDO($dbInfo['dsn'], $dbInfo['username'], $dbInfo['password'], $dbInfo['driverOptions']);
+    $data = file_get_contents(__DIR__ . '/Data/Database/pitchblade.sql');
+    $data = str_replace('{username}', $dbInfo['username'], $data);
+
+    $statements = explode(';', $data);
+
+    foreach ($statements as $statement) {
+        if (empty($statement)) {
+            continue;
+        }
+
+        $dbConnection->exec($statement);
+    }
+}
+
+createTestDatabase();
