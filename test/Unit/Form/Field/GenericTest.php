@@ -79,7 +79,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Form\Field\Generic::__construct
-     * @covers PitchBlade\Form\Field\Generic::getName
+     * @covers PitchBlade\Form\Field\Generic::getType
      */
     public function testGetType()
     {
