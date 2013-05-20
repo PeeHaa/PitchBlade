@@ -31,6 +31,7 @@
                 <file>src/PitchBlade/Acl/MissingGuestException.php</file>
                 <file>src/PitchBlade/Acl/InvalidRoleException.php</file>
                 <file>src/PitchBlade/Http/RequestData.php</file>
+                <file>src/PitchBlade/Form/InvalidFieldException.php</file>
                 <file>src/PitchBlade/I18n/Translator.php</file>
                 <file>src/PitchBlade/I18n/InvalidTranslationFileException.php</file>
                 <file>src/PitchBlade/I18n/Language/InvalidParameterNumberException.php</file>
