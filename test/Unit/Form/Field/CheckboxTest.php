@@ -18,6 +18,16 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Form\Field\Checkbox::__construct
+     */
+    public function testConstructCorrectType()
+    {
+        $field = new Checkbox('checkboxField', ['label' => 'labelText']);
+
+        $this->assertSame('checkbox', $field->getType());
+    }
+
+    /**
+     * @covers PitchBlade\Form\Field\Checkbox::__construct
      * @covers PitchBlade\Form\Field\Checkbox::getLabel
      */
     public function testGetLabel()

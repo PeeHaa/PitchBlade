@@ -19,6 +19,16 @@ class CsrfTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Form\Field\Csrf::__construct
+     */
+    public function testConstructCorrectType()
+    {
+        $field = new Csrf('csrfField', ['default' => 'defaultValue']);
+
+        $this->assertSame('hidden', $field->getType());
+    }
+
+    /**
+     * @covers PitchBlade\Form\Field\Csrf::__construct
      * @covers PitchBlade\Form\Field\Csrf::getValue
      */
     public function testGetValue()

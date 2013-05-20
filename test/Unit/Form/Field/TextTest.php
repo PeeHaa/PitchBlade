@@ -18,6 +18,16 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Form\Field\Text::__construct
+     */
+    public function testConstructCorrectType()
+    {
+        $field = new Text('textField', ['placeholder' => 'placeholder']);
+
+        $this->assertSame('text', $field->getType());
+    }
+
+    /**
+     * @covers PitchBlade\Form\Field\Text::__construct
      * @covers PitchBlade\Form\Field\Text::getPlaceholder
      */
     public function testGetPlaceholder()
