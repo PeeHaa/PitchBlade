@@ -46,7 +46,7 @@ class Request implements RequestData
 
     public function getPostVariables()
     {
-        return $requestData['postVariables'];
+        return $this->requestData['postVariables'];
     }
 
     public function getPostVariable($key, $defaultValue = null)
