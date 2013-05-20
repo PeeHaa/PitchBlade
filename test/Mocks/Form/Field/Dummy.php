@@ -10,4 +10,13 @@ class Dummy extends Generic
     {
         parent::__construct($name, $data);
     }
+
+    public function setRawValue($data)
+    {
+    }
+
+    public function isValid()
+    {
+        return true;
+    }
 }
