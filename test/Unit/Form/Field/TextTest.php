@@ -26,4 +26,15 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('placeholderText', $field->getPlaceHolder());
     }
+
+    /**
+     * @covers PitchBlade\Form\Field\Text::__construct
+     * @covers PitchBlade\Form\Field\Text::getPlaceholder
+     */
+    public function testGetPlaceholderWithoutPlaceholder()
+    {
+        $field = new Text('textField', []);
+
+        $this->assertNull($field->getPlaceHolder());
+    }
 }
