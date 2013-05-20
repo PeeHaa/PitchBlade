@@ -10,6 +10,16 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers PitchBlade\Security\CsrfToken::__construct
+     */
+    public function testConstructCorrectInterface()
+    {
+        $csrfToken = new CsrfToken(new Dummy(), new Factory(), ['\\PitchBladeTest\\Mocks\\Security\\Generator\\FixedLength10Dots']);
+
+        $this->assertInstanceOf('\\PitchBlade\\Security\\TokenGenerator', $csrfToken);
+    }
+
+    /**
+     * @covers PitchBlade\Security\CsrfToken::__construct
      * @covers PitchBlade\Security\CsrfToken::getToken
      * @covers PitchBlade\Security\CsrfToken::generateToken
      */
