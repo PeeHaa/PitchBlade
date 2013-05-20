@@ -16,7 +16,8 @@
  */
 namespace PitchBlade\Security;
 
-use PitchBlade\Security\CsrfToken\StorageMedium,
+use PitchBlade\Security\TokenGenerator,
+    PitchBlade\Security\CsrfToken\StorageMedium,
     PitchBlade\Security\Generator\Builder,
     PitchBlade\Security\Generator\UnsupportedAlgorithmException,
     PitchBlade\Security\Generator\InvalidLengthException;
@@ -28,7 +29,7 @@ use PitchBlade\Security\CsrfToken\StorageMedium,
  * @package    Security
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class CsrfToken
+class CsrfToken implements TokenGenerator
 {
     /**
      * @var \PitchBlade\Security\CsrfToken\StorageMedium
