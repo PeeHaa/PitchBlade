@@ -24,7 +24,7 @@ use PitchBlade\Router\RequestMatchable;
  * @subpackage Router
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Route
+class RouteWithMappingWithoutDependencies
 {
     /**
      * @var string The name of the route
@@ -72,5 +72,26 @@ class Route
 
     public function getMapping()
     {
+        return [1 => 'someMapping'];
+    }
+
+    public function getView()
+    {
+        return '\\PitchBladeTest\\Mocks\\Mvc\\View\\DummyView';
+    }
+
+    public function getController()
+    {
+        return '\\PitchBladeTest\\Mocks\\Mvc\\Controller\\DummyController';
+    }
+
+    public function getDependencies()
+    {
+        return [];
+    }
+
+    public function getAction()
+    {
+        return 'testAction';
     }
 }
