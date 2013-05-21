@@ -193,19 +193,28 @@ class Message implements Deliverable
         $message = '';
 
         if ($this->plainTextBody !== null) {
-            $message.= '--PHP-alt-' . $this->boundary . "\r\n";
-            $message.= 'Content-Type: text/plain; charset="' . $this->charset . '"' . "\r\n";
-            $message.= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
-            $message.= $this->plainTextBody ."\r\n\r\n";
+            $message .= $this->getBodyPart('plain', $this->plainTextBody);
         }
 
         if ($this->htmlBody !== null) {
-            $message.= '--PHP-alt-' . $this->boundary . "\r\n";
-            $message.= 'Content-Type: text/html; charset="' . $this->charset . '"' . "\r\n";
-            $message.= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
-            $message.= $this->htmlBody . "\r\n\r\n";
+            $message .= $this->getBodyPart('html', $this->htmlBody);
         }
 
         return $message . '--PHP-alt-' . $this->boundary . '--' . "\r\n";
+    }
+
+    /**
+     * Gets part of the body based on the type (plain text vs html)
+     *
+     * @return string The message body part
+     */
+    private function getBodyPart($type, $content)
+    {
+        $message = '--PHP-alt-' . $this->boundary . "\r\n";
+        $message.= 'Content-Type: text/' . $type . '; charset="' . $this->charset . '"' . "\r\n";
+        $message.= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
+        $message.= $content ."\r\n\r\n";
+
+        return $message;
     }
 }
