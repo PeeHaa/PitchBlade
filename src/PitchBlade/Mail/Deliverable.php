@@ -22,7 +22,7 @@ use PitchBlade\Mail\Recipient;
  * @package    Mail
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Message implements Deliverable
+interface Deliverable
 {
     /**
      * Sets a custom reply-to address
