@@ -5,7 +5,7 @@
  * PHP version 5.4
  *
  * @category   PitchBlade
- * @package    Logging
+ * @package    Mail
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2013 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -17,7 +17,7 @@ namespace PitchBlade\Mail;
  * Exception which gets thrown when trying to create an instance with an invalid e-mailaddress
  *
  * @category   PitchBlade
- * @package    Logging
+ * @package    Mail
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class InvalidAddressException extends \Exception
