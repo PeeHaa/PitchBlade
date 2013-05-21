@@ -14,7 +14,8 @@
 namespace PitchBlade\Mail;
 
 use PitchBlade\Mail\Deliverable,
-    PitchBlade\Mail\Address;
+    PitchBlade\Mail\Address,
+    PitchBlade\Mail\MissingBodyException;
 
 /**
  * Represents an email message
@@ -131,7 +132,7 @@ class Message implements Deliverable
      *
      * @param string $html The HTML of the body
      */
-    public function setBodyHtml($html)
+    public function setHtmlBody($html)
     {
         $this->htmlBody = $html;
     }
@@ -181,9 +182,14 @@ class Message implements Deliverable
      * Builds the mail body (the actual message to be send)
      *
      * return string The message body
+     * @throws \PitchBlade\Mail\MissingBodyException
      */
     public function getMessageBody()
     {
+        if ($this->plainTextBody === null && $this->htmlBody === null) {
+            throw new MissingBodyException('The mail message doesn\'t contain a body.');
+        }
+
         $message = '';
 
         if ($this->plainTextBody !== null) {
@@ -195,7 +201,7 @@ class Message implements Deliverable
 
         if ($this->htmlBody !== null) {
             $message.= '--PHP-alt-' . $this->boundary . "\r\n";
-            $message.= 'Content-Type: text/html; charset="' . $this->boundary . '"' . "\r\n";
+            $message.= 'Content-Type: text/html; charset="' . $this->charset . '"' . "\r\n";
             $message.= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
             $message.= $this->htmlBody . "\r\n\r\n";
         }

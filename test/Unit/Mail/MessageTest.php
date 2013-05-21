@@ -73,13 +73,13 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
-     * @covers PitchBlade\Mail\Message::setBodyHtml
+     * @covers PitchBlade\Mail\Message::setHtmlBody
      */
     public function testSetHtmlBody()
     {
         $message = new Message(new Recipient('peehaa@php.net'), 'test');
 
-        $this->assertNull($message->setBodyHtml('<p>html</p>'));
+        $this->assertNull($message->setHtmlBody('<p>html</p>'));
     }
 
     /**
@@ -97,6 +97,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addCc
      * @covers PitchBlade\Mail\Message::getHeaders
      * @covers PitchBlade\Mail\Message::addRecipientsHeader
      */
@@ -114,6 +115,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addCc
      * @covers PitchBlade\Mail\Message::getHeaders
      * @covers PitchBlade\Mail\Message::addRecipientsHeader
      */
@@ -132,6 +134,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addBcc
      * @covers PitchBlade\Mail\Message::getHeaders
      * @covers PitchBlade\Mail\Message::addRecipientsHeader
      */
@@ -149,6 +152,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addBcc
      * @covers PitchBlade\Mail\Message::getHeaders
      * @covers PitchBlade\Mail\Message::addRecipientsHeader
      */
@@ -167,6 +171,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addCc
+     * @covers PitchBlade\Mail\Message::addBcc
      * @covers PitchBlade\Mail\Message::getHeaders
      * @covers PitchBlade\Mail\Message::addRecipientsHeader
      */
@@ -184,32 +190,71 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('pieter@php.net', $message->getHeaders()['Bcc']);
     }
 
+    /**
+     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::setPlainTextBody
+     * @covers PitchBlade\Mail\Message::getMessageBody
+     */
+    public function testGetMessageBodyThrowsExceptionOnNoContent()
+    {
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+
+        $this->setExpectedException('\\PitchBlade\\Mail\\MissingBodyException');
+
+        $message->getMessageBody();
+    }
 
     /**
-     * Builds the mail body (the actual message to be send)
-     *
-     * return string The message body
+     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::setPlainTextBody
+     * @covers PitchBlade\Mail\Message::getMessageBody
      */
-     /*
-    public function getMessageBody()
+    public function testGetMessageBodyPlainTextOnly()
     {
-        $message = '';
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
 
-        if ($this->plainTextBody !== null) {
-            $message.= '--PHP-alt-' . $this->boundary . "\r\n";
-            $message.= 'Content-Type: text/plain; charset="' . $this->charset . '"' . "\r\n";
-            $message.= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
-            $message.= $this->plainTextBody ."\r\n\r\n";
-        }
+        $message->setPlainTextBody('plainText');
 
-        if ($this->htmlBody !== null) {
-            $message.= '--PHP-alt-' . $this->boundary . "\r\n";
-            $message.= 'Content-Type: text/html; charset="' . $this->boundary . '"' . "\r\n";
-            $message.= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
-            $message.= $this->htmlBody . "\r\n\r\n";
-        }
+        $pattern = '/^--PHP-alt-(.+)\\r\\nContent-Type: text\/plain; charset="iso-8859-1"\\r\\nContent-Transfer-Encoding: 7bit\\r\\n\\r\\nplainText\\r\\n\\r\\n--PHP-alt-(.+)--\\r\\n$/';
 
-        return $message . '--PHP-alt-' . $this->boundary . '--' . "\r\n";
+        $this->assertSame(1, preg_match($pattern, $message->getMessageBody()));
     }
-    */
+
+    /**
+     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::setHtmlBody
+     * @covers PitchBlade\Mail\Message::getMessageBody
+     */
+    public function testGetMessageBodyHtmlOnly()
+    {
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+
+        $message->setHtmlBody('<p>html</p>');
+
+        $pattern = '/^--PHP-alt-(.+)\\r\\nContent-Type: text\/html; charset="iso-8859-1"\\r\\nContent-Transfer-Encoding: 7bit\\r\\n\\r\\n<p>html<\/p>\\r\\n\\r\\n--PHP-alt-(.+)--\\r\\n$/';
+
+        $this->assertSame(1, preg_match($pattern, $message->getMessageBody()));
+    }
+
+    /**
+     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::setPlainTextBody
+     * @covers PitchBlade\Mail\Message::setHtmlBody
+     * @covers PitchBlade\Mail\Message::getMessageBody
+     */
+    public function testGetMessageBothPlainTextAndHtml()
+    {
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+
+        $message->setPlainTextBody('plainText');
+        $message->setHtmlBody('<p>html</p>');
+
+        $pattern = '--PHP-alt-(.+)\\r\\nContent-Type: text\/plain; charset="iso-8859-1"\\r\\nContent-Transfer-Encoding: 7bit\\r\\n\\r\\nplainText\\r\\n\\r\\n';
+        $pattern.= '--PHP-alt-(.+)\\r\\nContent-Type: text\/html; charset="iso-8859-1"\\r\\nContent-Transfer-Encoding: 7bit\\r\\n\\r\\n<p>html<\/p>\\r\\n\\r\\n';
+        $pattern.= '--PHP-alt-(.+)--\\r\\n';
+
+        $pattern = '/^' . $pattern . '$/';
+
+        $this->assertSame(1, preg_match($pattern, $message->getMessageBody()));
+    }
 }
