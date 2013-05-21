@@ -38,6 +38,7 @@
                 <file>src/PitchBlade/I18n/Language/InvalidParameterTypeException.php</file>
                 <file>src/PitchBlade/I18n/Language/InvalidRecognizerException.php</file>
                 <file>src/PitchBlade/Logging/UnknownTimedLogItemException.php</file>
+                <file>src/PitchBlade/Mail/InvalidAddressException.php</file>
                 <file>src/PitchBlade/Mvc/Model/InvalidServiceException.php</file>
                 <file>src/PitchBlade/Mvc/View/InvalidTemplateException.php</file>
                 <file>src/PitchBlade/Mvc/View/InvalidViewException.php</file>
