@@ -2,12 +2,12 @@
 /**
  * Interface for classes that represent an RFC 2822 emailaddress
  *
- * PHP version 5.3
+ * PHP version 5.4
  *
  * @category   PitchBlade
  * @package    Mail
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 Pieter Hordijk
+ * @copyright  Copyright (c) 2013 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  * @version    1.0.0
  */
