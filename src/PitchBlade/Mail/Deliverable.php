@@ -13,7 +13,7 @@
  */
 namespace PitchBlade\Mail;
 
-use PitchBlade\Mail\Recipient;
+use PitchBlade\Mail\Address;
 
 /**
  * Interface for mail messages
@@ -29,21 +29,21 @@ interface Deliverable
      *
      * @param \PitchBlade\Mail\Recipient $address The reply-to address
      */
-    public function setReplyTo(Recipient $address);
+    public function setReplyTo(Address $address);
 
     /**
      * Adds a CC emailaddress
      *
      * @param \PitchBlade\Mail\Recipient $address The recipient address
      */
-    public function addCc(Recipient $address);
+    public function addCc(Address $address);
 
     /**
      * Adds a BCC emailaddress
      *
      * @param \PitchBlade\Mail\Recipient $address The recipient address
      */
-    public function addBcc(Recipient $address);
+    public function addBcc(Address $address);
 
     /**
      * Adds the plain text version of the body of the email
