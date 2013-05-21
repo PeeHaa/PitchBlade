@@ -57,7 +57,7 @@ interface Deliverable
      *
      * @param string $html The HTML of the body
      */
-    public function setBodyHtml($html);
+    public function setHtmlBody($html);
 
     /**
      * Builds the headers using all the options specified
