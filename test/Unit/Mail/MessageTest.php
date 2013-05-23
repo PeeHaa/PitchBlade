@@ -236,7 +236,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PitchBlade\Mail\Message::__construct
      * @covers PitchBlade\Mail\Message::setPlainTextBody
-     * @covers PitchBlade\Mail\Message::getMessageBody
+     * @covers PitchBlade\Mail\Message::getBody
      */
     public function testGetMessageBodyThrowsExceptionOnNoContent()
     {
@@ -250,7 +250,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PitchBlade\Mail\Message::__construct
      * @covers PitchBlade\Mail\Message::setPlainTextBody
-     * @covers PitchBlade\Mail\Message::getMessageBody
+     * @covers PitchBlade\Mail\Message::getBody
      * @covers PitchBlade\Mail\Message::getBodyPart
      */
     public function testGetMessageBodyPlainTextOnly()
@@ -267,7 +267,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PitchBlade\Mail\Message::__construct
      * @covers PitchBlade\Mail\Message::setHtmlBody
-     * @covers PitchBlade\Mail\Message::getMessageBody
+     * @covers PitchBlade\Mail\Message::getBody
      * @covers PitchBlade\Mail\Message::getBodyPart
      */
     public function testGetMessageBodyHtmlOnly()
@@ -285,7 +285,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Mail\Message::__construct
      * @covers PitchBlade\Mail\Message::setPlainTextBody
      * @covers PitchBlade\Mail\Message::setHtmlBody
-     * @covers PitchBlade\Mail\Message::getMessageBody
+     * @covers PitchBlade\Mail\Message::getBody
      * @covers PitchBlade\Mail\Message::getBodyPart
      */
     public function testGetMessageBothPlainTextAndHtml()
