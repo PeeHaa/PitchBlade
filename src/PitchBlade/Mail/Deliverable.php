@@ -74,6 +74,13 @@ interface Deliverable
     public function setHtmlBody($html);
 
     /**
+     * Gets the subject of the message
+     *
+     * @return string The subject
+     */
+    public function getSubject();
+
+    /**
      * Builds the headers using all the options specified
      *
      * @return array The headers
