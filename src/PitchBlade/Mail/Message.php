@@ -37,6 +37,11 @@ class Message implements Deliverable
     private $replyToAddress;
 
     /**
+     * @var array The emailaddress(es) of the recipients (to address)
+     */
+    private $recipientAddresses = [];
+
+    /**
      * @var array The emailaddress(es) of the carbon copy
      */
     private $ccAddresses = [];
@@ -98,6 +103,26 @@ class Message implements Deliverable
     }
 
     /**
+     * Adds a recipient emailaddress (to address)
+     *
+     * @param \PitchBlade\Mail\Address $address The recipient address
+     */
+    public function addRecipient(Address $address)
+    {
+        $this->recipientAddresses[] = $address;
+    }
+
+    /**
+     * Gets all the recipients of the message
+     *
+     * @return array The recipients
+     */
+    public function getRecipients()
+    {
+        return $this->recipientAddresses;
+    }
+
+    /**
      * Adds a CC emailaddress
      *
      * @param \PitchBlade\Mail\Address $address The recipient address
@@ -135,6 +160,16 @@ class Message implements Deliverable
     public function setHtmlBody($html)
     {
         $this->htmlBody = $html;
+    }
+
+    /**
+     * Gets the subject of the message
+     *
+     * @return string The subject
+     */
+    public function getSubject()
+    {
+        return $this->subject;
     }
 
     /**
@@ -184,7 +219,7 @@ class Message implements Deliverable
      * return string The message body
      * @throws \PitchBlade\Mail\MissingBodyException
      */
-    public function getMessageBody()
+    public function getBody()
     {
         if ($this->plainTextBody === null && $this->htmlBody === null) {
             throw new MissingBodyException('The mail message doesn\'t contain a body.');

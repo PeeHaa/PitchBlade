@@ -40,6 +40,38 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addRecipient
+     */
+    public function testAddRecipient()
+    {
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+
+        $this->assertNull($message->addRecipient(new Recipient('peehaa@php.net')));
+    }
+
+    /**
+     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::addRecipient
+     * @covers PitchBlade\Mail\Message::getRecipients
+     */
+    public function testGetRecipients()
+    {
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+
+        $this->assertNull($message->addRecipient(new Recipient('recipient1@php.net')));
+        $this->assertNull($message->addRecipient(new Recipient('recipient2@php.net')));
+
+        $recipients = $message->getRecipients();
+
+        $this->assertSame(2, count($recipients));
+
+        foreach ($recipients as $recipient) {
+            $this->assertInstanceof('\\PitchBlade\\Mail\\Address', $recipient);
+        }
+    }
+
+    /**
+     * @covers PitchBlade\Mail\Message::__construct
      * @covers PitchBlade\Mail\Message::addCc
      */
     public function testAddCc()
@@ -192,6 +224,17 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Message::getSubject
+     */
+    public function testGetSubject()
+    {
+        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+
+        $this->assertSame('test', $message->getSubject());
+    }
+
+    /**
+     * @covers PitchBlade\Mail\Message::__construct
      * @covers PitchBlade\Mail\Message::setPlainTextBody
      * @covers PitchBlade\Mail\Message::getMessageBody
      */
@@ -201,7 +244,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('\\PitchBlade\\Mail\\MissingBodyException');
 
-        $message->getMessageBody();
+        $message->getBody();
     }
 
     /**
@@ -218,7 +261,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $pattern = '/^--PHP-alt-(.+)\\r\\nContent-Type: text\/plain; charset="iso-8859-1"\\r\\nContent-Transfer-Encoding: 7bit\\r\\n\\r\\nplainText\\r\\n\\r\\n--PHP-alt-(.+)--\\r\\n$/';
 
-        $this->assertSame(1, preg_match($pattern, $message->getMessageBody()));
+        $this->assertSame(1, preg_match($pattern, $message->getBody()));
     }
 
     /**
@@ -235,7 +278,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $pattern = '/^--PHP-alt-(.+)\\r\\nContent-Type: text\/html; charset="iso-8859-1"\\r\\nContent-Transfer-Encoding: 7bit\\r\\n\\r\\n<p>html<\/p>\\r\\n\\r\\n--PHP-alt-(.+)--\\r\\n$/';
 
-        $this->assertSame(1, preg_match($pattern, $message->getMessageBody()));
+        $this->assertSame(1, preg_match($pattern, $message->getBody()));
     }
 
     /**
@@ -258,6 +301,6 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $pattern = '/^' . $pattern . '$/';
 
-        $this->assertSame(1, preg_match($pattern, $message->getMessageBody()));
+        $this->assertSame(1, preg_match($pattern, $message->getBody()));
     }
 }
