@@ -32,6 +32,20 @@ interface Deliverable
     public function setReplyTo(Address $address);
 
     /**
+     * Adds a recipient emailaddress (to address)
+     *
+     * @param \PitchBlade\Mail\Address $address The recipient address
+     */
+    public function addRecipient(Address $address);
+
+    /**
+     * Gets all the recipients of the message
+     *
+     * @return array The recipients
+     */
+    public function getRecipients();
+
+    /**
      * Adds a CC emailaddress
      *
      * @param \PitchBlade\Mail\Recipient $address The recipient address
@@ -71,5 +85,5 @@ interface Deliverable
      *
      * return string The message body
      */
-    public function getMessageBody();
+    public function getBody();
 }
