@@ -1,6 +1,6 @@
 <?php
 
-namespace PitchBladeTest\Acl;
+namespace PitchBladeTest\Unit\Acl;
 
 use PitchBlade\Acl\Verifier,
     PitchBladeTest\Mocks\Storage\Session;;

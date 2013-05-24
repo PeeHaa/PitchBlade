@@ -1,6 +1,6 @@
 <?php
 
-namespace PitchBladeTest\Logging;
+namespace PitchBladeTest\Unit\Logging;
 
 use PitchBlade\Logging\TimedLogger,
     PitchBladeTest\Mocks\Logging\Logger;

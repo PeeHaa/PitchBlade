@@ -1,6 +1,6 @@
 <?php
 
-namespace PitchBladeTest\Core;
+namespace PitchBladeTest\Unit\Core;
 
 use PitchBlade\Core\Autoloader;
 
