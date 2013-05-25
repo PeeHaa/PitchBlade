@@ -54,6 +54,7 @@
                 <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
                 <file>src/PitchBlade/Security/Generator/UnsupportedAlgorithmException.php</file>
                 <file>src/PitchBlade/Storage/InvalidKeyException.php</file>
+                <directory>demo</directory>
             </exclude>
         </whitelist>
     </filter>
