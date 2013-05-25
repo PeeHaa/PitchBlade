@@ -16,7 +16,8 @@ use PitchBlade\Core\Autoloader,
     PitchBlade\Storage\Session,
     PitchBlade\Security\CsrfToken\StorageMedium\Session as CsrfTokenStorage,
     PitchBlade\Security\Generator\Factory as RandomGeneratorFactory,
-    PitchBlade\Security\CsrfToken;
+    PitchBlade\Security\CsrfToken,
+    PitchBlade\Http\Request;
 
 /**
  * Bootstrap the PitchBlade library
@@ -49,3 +50,8 @@ require_once __DIR__ . '/init.example.php';
 $csrfTokenStorage = new CsrfTokenStorage('PitchBladeDemoCsrfToken', $sessionStorage);
 $randomGeneratorFactory = new RandomGeneratorFactory();
 $csrfToken = new CsrfToken($csrfTokenStorage, $randomGeneratorFactory);
+
+/**
+ * Setup the request object
+ */
+$request = new Request($_SERVER, $_GET, $_POST);
