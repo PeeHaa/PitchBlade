@@ -1,6 +1,6 @@
 <?php
 /**
- * This bootstraps the `project
+ * This bootstraps the project
  *
  * PHP version 5.4
  *
