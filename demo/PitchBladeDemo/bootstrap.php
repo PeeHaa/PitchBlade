@@ -18,8 +18,20 @@ use PitchBlade\Core\Autoloader,
     PitchBlade\Security\Generator\Factory as RandomGeneratorFactory,
     PitchBlade\Security\CsrfToken,
     PitchBlade\Http\Request,
+    PitchBlade\I18n\LanguageRecognizer,
     PitchBlade\I18n\Language\RecognizerFactory as LanguageRecognizerFactory,
-    PitchBlade\I18n\TranslatorByFile;
+    PitchBlade\I18n\TranslatorByFile,
+    PitchBlade\Acl\Verifier,
+    PitchBlade\Router\RequestMatcher\Factory as RequestMatcherFactory,
+    PitchBlade\Router\RequestMatcher,
+    PitchBlade\Router\RouteFactory,
+    PitchBlade\Router\Routes,
+    PitchBlade\Router\RouteParser\ArrayParser as RoutesArrayParser,
+    PitchBlade\Router\RouteParser\FileArrayParser as RoutesFileParser,
+    PitchBlade\Mvc\Model\ServiceFactory,
+    PitchBlade\Mvc\View\Factory as ViewFactory,
+    PitchBlade\Form\Field\Factory as FormFieldFactory,
+    PitchBlade\Router\FrontController;
 
 /**
  * Bootstrap the PitchBlade library
@@ -62,4 +74,39 @@ $request = new Request($_SERVER, $_GET, $_POST);
  * Setup i18n
  */
 $languageRecognizerFactory = new LanguageRecognizerFactory(['en'], $request);
-$translator = new TranslatorByFile(__DIR__ . '/I18n', $languageRecognizerFactory->getLanguage());
+$languageRecognizer = new LanguageRecognizer($languageRecognizerFactory);
+$translator = new TranslatorByFile(__DIR__ . '/I18n', $languageRecognizer->getLanguage());
+
+/**
+ * Setup ACL
+ */
+$aclVerifier = new Verifier($sessionStorage);
+
+/**
+ * Setup the routes of the system
+ */
+$requestMatcherFactory = new RequestMatcherFactory($request, $aclVerifier);
+$requestMatcher = new RequestMatcher($requestMatcherFactory);
+$routeFactory = new RouteFactory($requestMatcher);
+$routes = new Routes($routeFactory);
+
+$routesParser = new RoutesArrayParser($routes);
+$routesFileParser = new RoutesFileParser($routesParser);
+$routesFileParser->parse(__DIR__ . '/routes.php');
+
+/**
+ * Setup the view and service factories
+ */
+$serviceFactory = new ServiceFactory('PitchBladeDemo\\Model');
+$viewfactory = new ViewFactory(
+    $serviceFactory,
+    $translator,
+    __DIR__ . '/Templates/blocks/page.phtml',
+    $languageRecognizer->getLanguage(),
+    'PitchBladeDemo\Views'
+);
+
+/**
+ * Dispatch the request
+ */
+ $frontController = new FrontController($request, $routes, $viewfactory, new FormFieldFactory(), $csrfToken);
