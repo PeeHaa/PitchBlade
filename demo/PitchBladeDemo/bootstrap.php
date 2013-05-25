@@ -17,7 +17,9 @@ use PitchBlade\Core\Autoloader,
     PitchBlade\Security\CsrfToken\StorageMedium\Session as CsrfTokenStorage,
     PitchBlade\Security\Generator\Factory as RandomGeneratorFactory,
     PitchBlade\Security\CsrfToken,
-    PitchBlade\Http\Request;
+    PitchBlade\Http\Request,
+    PitchBlade\I18n\Language\RecognizerFactory as LanguageRecognizerFactory,
+    PitchBlade\I18n\TranslatorByFile;
 
 /**
  * Bootstrap the PitchBlade library
@@ -55,3 +57,9 @@ $csrfToken = new CsrfToken($csrfTokenStorage, $randomGeneratorFactory);
  * Setup the request object
  */
 $request = new Request($_SERVER, $_GET, $_POST);
+
+/**
+ * Setup i18n
+ */
+$languageRecognizerFactory = new LanguageRecognizerFactory(['en'], $request);
+$translator = new TranslatorByFile(__DIR__ . '/I18n', $languageRecognizerFactory->getLanguage());
