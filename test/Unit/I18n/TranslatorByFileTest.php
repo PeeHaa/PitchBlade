@@ -9,7 +9,27 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PitchBlade\I18n\TranslatorByFile::__construct
      */
-    public function testGetInvalidFile()
+    public function testConstructCorrectInterfaceWithTrailingSlash()
+    {
+        $translator = new TranslatorByFile(PITCHBLADE_TEST_DATA_DIR . '/I18n/', 'eng');
+
+        $this->assertInstanceOf('\\PitchBlade\\I18n\Translator', $translator);
+    }
+
+    /**
+     * @covers PitchBlade\I18n\TranslatorByFile::__construct
+     */
+    public function testConstructCorrectInterfaceWithoutTrailingSlash()
+    {
+        $translator = new TranslatorByFile(PITCHBLADE_TEST_DATA_DIR . '/I18n', 'eng');
+
+        $this->assertInstanceOf('\\PitchBlade\\I18n\Translator', $translator);
+    }
+
+    /**
+     * @covers PitchBlade\I18n\TranslatorByFile::__construct
+     */
+    public function testConstructInvalidFile()
     {
         $this->setExpectedException('\\PitchBlade\\I18n\\InvalidTranslationFileException');
 

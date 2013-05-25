@@ -48,7 +48,7 @@ class TranslatorByFile implements Translator
      */
     public function __construct($path, $language)
     {
-        $translationFile = $path . '/texts.' . $language . '.php';
+        $translationFile = rtrim($path, '/') . '/texts.' . $language . '.php';
 
         if (!file_exists($translationFile)) {
             throw new InvalidTranslationFileException('The translation file (`' . $translationFile . '`) could not be found.');
