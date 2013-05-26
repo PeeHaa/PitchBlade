@@ -1,0 +1,16 @@
+<ul>
+    <?php foreach ($this->mainMenuTree as $menuItem) { ?>
+    <li <?php if ($menuItem['isActive']) { echo 'class="active"'; } ?>>
+        <a href="<?php echo $menuItem['url']; ?>"><?php echo $menuItem['title']; ?></a>
+        <?php if (count($menuItem['children'])) { ?>
+        <ul>
+            <?php foreach ($menuItem['children'] as $child) { ?>
+            <li <?php if ($child['isActive']) { echo 'class="active"'; } ?>>
+                <a href="<?php echo $child['url']; ?>"><?php echo $child['title']; ?></a>
+            </li>
+            <?php } ?>
+        </ul>
+        <?php } ?>
+    </li>
+    <?php } ?>
+</ul>
