@@ -110,3 +110,4 @@ $viewfactory = new ViewFactory(
  * Dispatch the request
  */
  $frontController = new FrontController($request, $routes, $viewfactory, new FormFieldFactory(), $csrfToken);
+$frontController->dispatch();
