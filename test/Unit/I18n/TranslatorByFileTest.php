@@ -38,6 +38,16 @@ class TranslatorByFileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\I18n\TranslatorByFile::__construct
+     */
+    public function testConstructInvalidFileFormat()
+    {
+        $this->setExpectedException('\\PitchBlade\\I18n\\InvalidTranslationFileFormatException');
+
+        $translator = new TranslatorByFile(PITCHBLADE_TEST_DATA_DIR . '/I18n', 'invalid');
+    }
+
+    /**
+     * @covers PitchBlade\I18n\TranslatorByFile::__construct
      * @covers PitchBlade\I18n\TranslatorByFile::get
      */
     public function testGetUndefinedKey()

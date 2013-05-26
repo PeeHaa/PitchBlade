@@ -22,7 +22,8 @@
 namespace PitchBlade\I18n;
 
 use PitchBlade\I18n\Translator,
-    PitchBlade\I18n\InvalidTranslationFileException;
+    PitchBlade\I18n\InvalidTranslationFileException,
+    PitchBlade\I18n\InvalidTranslationFileFormatException;
 
 /**
  * This class provides an easy API to translate texts
@@ -45,16 +46,25 @@ class TranslatorByFile implements Translator
      * @param string $language The ISO code of the language to get the translations for
      *
      * @throws \PitchBlade\I18n\InvalidTranslationFileException When the file could not be found
+     * @throws \PitchBlade\I18n\InvalidTranslationFileFormatException When the format of the file is invalid
      */
     public function __construct($path, $language)
     {
         $translationFile = rtrim($path, '/') . '/texts.' . $language . '.php';
 
         if (!file_exists($translationFile)) {
-            throw new InvalidTranslationFileException('The translation file (`' . $translationFile . '`) could not be found.');
+            throw new InvalidTranslationFileException(
+                'The translation file (`' . $translationFile . '`) could not be found.'
+            );
         }
 
         require $translationFile;
+
+        if (!isset($translations)) {
+            throw new InvalidTranslationFileFormatException(
+                'The translation file (`' . $translationFile . '`) has an invalid format.'
+            );
+        }
 
         $this->translations = $translations;
     }
