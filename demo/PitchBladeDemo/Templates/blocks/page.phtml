@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <?php //echo $this->renderView('Blocks\PageTitle', $this->getTitle()); ?>
+    <script>'article aside footer header nav section time'.replace(/\w+/g,function(n){document.createElement(n)})</script>
+    <link rel="stylesheet" type="text/css" href="/style/style.css">
+  <head>
+  <body>
+    <header>
+      <h1><a href="/"><?php echo $this->translate('site.title'); ?></a></h1>
+    </header>
+    <div id="content">
+      <aside>
+        <nav>
+          <?php echo $this->renderView('Blocks\MainMenu', ['activeItem' => 'home']); ?>
+        </nav>
+      </aside>
+      <div id="main">
+        <div class="content">
+          <?php echo $this->content; ?>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <ul>
+        <li><?php echo $this->translate('footer.poweredby'); ?></li>
+      </ul>
+    </footer>
+    <script src="/js/jquery/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
