@@ -34,6 +34,7 @@
                 <file>src/PitchBlade/Form/InvalidFieldException.php</file>
                 <file>src/PitchBlade/I18n/Translator.php</file>
                 <file>src/PitchBlade/I18n/InvalidTranslationFileException.php</file>
+                <file>src/PitchBlade/I18n/InvalidTranslationFileFormatException.php</file>
                 <file>src/PitchBlade/I18n/Language/InvalidParameterNumberException.php</file>
                 <file>src/PitchBlade/I18n/Language/InvalidParameterTypeException.php</file>
                 <file>src/PitchBlade/I18n/Language/InvalidRecognizerException.php</file>
