@@ -14,7 +14,7 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Buildable,
+use PitchBlade\Router\RequestMatcher\Builder,
     PitchBlade\Http\RequestData,
     PitchBlade\Acl\Verifiable,
     PitchBlade\Router\RequestMatcher\Matchable,
@@ -29,7 +29,7 @@ use PitchBlade\Router\RequestMatcher\Buildable,
  * @package    RequestMatcher
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Factory implements Buildable
+class Factory implements Builder
 {
     /**
      * @var \PitchBlade\Http\Request The request to check whether it matches with the requirements
@@ -65,7 +65,11 @@ class Factory implements Buildable
      */
     public function build($type)
     {
-        $class = '\\BareCMSLib\\Router\\RequestMatcher\\' . ucfirst(strtolower($type));
+        if (strpos($type, '\\') === 0) {
+            $class = $type;
+        } else {
+            $class = '\\PitchBlade\\Router\\RequestMatcher\\' . ucfirst(strtolower($type));
+        }
 
         if (!class_exists($class)) {
             throw new UnknownMatcherException('Unknown RequestMatcher (`' . $class . '`).');
