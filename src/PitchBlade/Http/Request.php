@@ -40,6 +40,11 @@ class Request implements RequestData
     private $postVariables = [];
 
     /**
+     * @var array The cookie variables
+     */
+    private $cookieVariables = [];
+
+    /**
      * @var array The elements in the path
      */
     private $path = [];
@@ -55,12 +60,19 @@ class Request implements RequestData
      * @param array $serverVariables The variables from the $_SERVER superglobal
      * @param array $getVariables    The variables from the $_GET superglobal
      * @param array $postVariables   The variables from the $_POST superglobal
+     * @param array $cookieVariables The variables from the $_COOKIE superglobal
      */
-    public function __construct(array $serverVariables, array $getVariables, array $postVariables)
+    public function __construct(
+        array $serverVariables,
+        array $getVariables,
+        array $postVariables,
+        array $cookieVariables
+    )
     {
         $this->serverVariables = $serverVariables;
         $this->getVariables    = $getVariables;
         $this->postVariables   = $postVariables;
+        $this->cookieVariables = $cookieVariables;
 
         $this->setPath();
     }
@@ -151,6 +163,26 @@ class Request implements RequestData
     public function getPostVariable($key, $defaultValue = null)
     {
         return (array_key_exists($key, $this->postVariables) ? $this->postVariables[$key] : $defaultValue);
+    }
+
+    /**
+     * Gets the cookie variables
+     *
+     * @return array The cookie variables
+     */
+    public function getCookieVariables()
+    {
+        return $this->cookieVariables;
+    }
+
+    /**
+     * Gets a cookie variable
+     *
+     * @return mixed The cookie variable value (or null if it doesn't exists)
+     */
+    public function getCookieVariable($key, $defaultValue = null)
+    {
+        return (array_key_exists($key, $this->cookieVariables) ? $this->cookieVariables[$key] : $defaultValue);
     }
 
     /**

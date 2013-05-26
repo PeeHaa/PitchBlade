@@ -67,6 +67,20 @@ interface RequestData
     public function getPostVariable($key, $defaultValue = null);
 
     /**
+     * Gets the cookie variables
+     *
+     * @return array The cookie variables
+     */
+    public function getCookieVariables();
+
+    /**
+     * Gets a cookie variable
+     *
+     * @return mixed The cookie variable value (or null if it doesn't exists)
+     */
+    public function getCookieVariable($key, $defaultValue = null);
+
+    /**
      * Gets the path variables
      *
      * @return array The path variables

@@ -54,6 +54,16 @@ class Request implements RequestData
         return (array_key_exists($key, $this->requestData['postVariables']) ? $this->requestData['postVariables'][$key] : $defaultValue);
     }
 
+    public function getCookieVariables()
+    {
+        return $this->requestData['cookieVariables'];
+    }
+
+    public function getCookieVariable($key, $defaultValue = null)
+    {
+        return (array_key_exists($key, $this->requestData['cookieVariables']) ? $this->requestData['cookieVariables'][$key] : $defaultValue);
+    }
+
     public function getPathVariables()
     {
         return $this->requestData['pathVariables'];

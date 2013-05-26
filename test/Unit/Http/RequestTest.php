@@ -9,6 +9,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     protected $serverVariables;
     protected $getVariables;
     protected $postVariables;
+    protected $cookieVariables;
     protected $mapping;
     protected $mappingFailed;
 
@@ -17,6 +18,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->serverVariables = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/server-variables.php');
         $this->getVariables    = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/get-variables.php');
         $this->postVariables   = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/post-variables.php');
+        $this->cookieVariables = ['key' => 'value'];
         $this->mapping         = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/request-mapper.php');
         $this->mappingFailed   = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/request-mapper-fail.php');
     }
@@ -29,7 +31,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPath()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('/some/deep/path', $request->getPath());
     }
 
@@ -41,7 +43,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetPathVariablesSuccess()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertNull($request->setPathVariables($this->mapping));
     }
 
@@ -53,7 +55,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetPathVariablesWithUndefinedIndexSuccess()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertNull($request->setPathVariables($this->mappingFailed));
     }
 
@@ -65,7 +67,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGetVariables()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame($this->getVariables, $request->getGetVariables());
     }
 
@@ -77,7 +79,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGetVariableWithKnownVariable()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('value1', $request->getGetVariable('var1'));
     }
 
@@ -89,7 +91,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGetVariableWithUnknownVariableDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertNull($request->getGetVariable('var99'));
     }
 
@@ -101,7 +103,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGetVariableWithUnknownVariableNotDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('nonDefault', $request->getGetVariable('var99', 'nonDefault'));
     }
 
@@ -113,7 +115,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPostVariables()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame($this->postVariables, $request->getPostVariables());
     }
 
@@ -125,7 +127,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPostVariableWithKnownVariable()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('postvalue1', $request->getPostVariable('postvar1'));
     }
 
@@ -137,7 +139,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPostVariableWithUnknownVariableDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertNull($request->getPostVariable('postvar99'));
     }
 
@@ -149,8 +151,56 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPostVariableWithUnknownVariableNotDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('nonDefault', $request->getPostVariable('postvar99', 'nonDefault'));
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getCookieVariables
+     */
+    public function testGetCookieVariables()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
+        $this->assertSame($this->cookieVariables, $request->getCookieVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getCookieVariable
+     */
+    public function testGetCookieVariableWithKnownVariable()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
+        $this->assertSame('value', $request->getCookieVariable('key'));
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getCookieVariable
+     */
+    public function testGetCookieVariableWithUnknownVariableDefault()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
+        $this->assertNull($request->getCookieVariable('cookievar99'));
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::getCookieVariable
+     */
+    public function testGetCookieVariableWithUnknownVariableNotDefault()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
+        $this->assertSame('nonDefault', $request->getCookieVariable('postvar99', 'nonDefault'));
     }
 
     /**
@@ -161,7 +211,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPathVariablesWithoutMapping()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame([], $request->getPathVariables());
     }
 
@@ -173,7 +223,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPathVariablesWithMapping()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $request->setPathVariables($this->mapping);
         $this->assertSame(['first_var' => 'some', 'second_var' => 'deep'], $request->getPathVariables());
     }
@@ -186,7 +236,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPathVariableWithKnownVariable()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $request->setPathVariables($this->mapping);
         $this->assertSame('some', $request->getPathVariable('first_var'));
     }
@@ -199,7 +249,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPathVariableWithUnknownVariableDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertNull($request->getPostVariable('unknown_var'));
     }
 
@@ -211,7 +261,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPathVariableWithUnknownVariableNotDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('nonDefault', $request->getPathVariable('unknown_var', 'nonDefault'));
     }
 
@@ -223,7 +273,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetServerVariables()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame($this->serverVariables, $request->getServerVariables());
     }
 
@@ -235,7 +285,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetServerVariableWithKnownVariable()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('example.com', $request->getServerVariable('SERVER_NAME'));
     }
 
@@ -247,7 +297,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetServerVariableWithUnknownVariableDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertNull($request->getServerVariable('unknownservervariable'));
     }
 
@@ -259,7 +309,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetServerVariableWithUnknownVariableNotDefault()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('nonDefault', $request->getServerVariable('unknownservervariable', 'nonDefault'));
     }
 
@@ -271,7 +321,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('POST', $request->getMethod());
     }
 
@@ -283,7 +333,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHost()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame('www.example.com', $request->getHost());
     }
 
@@ -295,7 +345,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsSslWithOn()
     {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertTrue($request->isSsl());
     }
 
@@ -310,7 +360,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverVariables = $this->serverVariables;
         $serverVariables['HTTPS'] = 'off';
 
-        $request = new Request($serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertFalse($request->isSsl());
     }
 
@@ -325,7 +375,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverVariables = $this->serverVariables;
         $serverVariables['HTTPS'] = '';
 
-        $request = new Request($serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertFalse($request->isSsl());
     }
 
@@ -340,7 +390,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverVariables = $this->serverVariables;
         $serverVariables['HTTPS'] = 'somerandomstring';
 
-        $request = new Request($serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertTrue($request->isSsl());
     }
 
@@ -355,7 +405,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverVariables = $this->serverVariables;
         unset($serverVariables['HTTPS']);
 
-        $request = new Request($serverVariables, $this->getVariables, $this->postVariables);
+        $request = new Request($serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertFalse($request->isSsl());
     }
 }
