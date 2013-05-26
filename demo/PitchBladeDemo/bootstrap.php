@@ -68,7 +68,7 @@ $csrfToken = new CsrfToken($csrfTokenStorage, $randomGeneratorFactory);
 /**
  * Setup the request object
  */
-$request = new Request($_SERVER, $_GET, $_POST);
+$request = new Request($_SERVER, $_GET, $_POST, $_COOKIE);
 
 /**
  * Setup i18n
@@ -97,7 +97,7 @@ $routesFileParser->parse(__DIR__ . '/routes.php');
 /**
  * Setup the view and service factories
  */
-$serviceFactory = new ServiceFactory('PitchBladeDemo\\Model');
+$serviceFactory = new ServiceFactory('PitchBladeDemo\\Models');
 $viewfactory = new ViewFactory(
     $serviceFactory,
     $translator,
@@ -109,5 +109,5 @@ $viewfactory = new ViewFactory(
 /**
  * Dispatch the request
  */
- $frontController = new FrontController($request, $routes, $viewfactory, new FormFieldFactory(), $csrfToken);
-$frontController->dispatch();
+$frontController = new FrontController($request, $routes, $viewfactory, new FormFieldFactory(), $csrfToken);
+echo $frontController->dispatch();
