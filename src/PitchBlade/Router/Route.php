@@ -93,6 +93,16 @@ class Route
     }
 
     /**
+     * Gets the path of the route
+     *
+     * @return string The path of the route
+     */
+    public function getPath()
+    {
+        return $this->requirements['path'];
+    }
+
+    /**
      * Get the controller of the route
      *
      * @return string The controller
