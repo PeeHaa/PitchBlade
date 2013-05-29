@@ -14,7 +14,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatchesRequest()
     {
-        $route = new Route('name', [], 'view', [], new RequestMatcher());
+        $route = new Route('name', '/path/of/route', [], 'view', [], new RequestMatcher());
 
         $this->assertTrue($route->matchesRequest(new Request(['host' => 'http://example.com'])));
     }
@@ -25,9 +25,9 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPath()
     {
-        $route = new Route('name', ['path' => '/path'], 'view', [], new RequestMatcher());
+        $route = new Route('name', '/path/of/route', [], 'view', [], new RequestMatcher());
 
-        $this->assertSame('/path', $route->getPath());
+        $this->assertSame('/path/of/route', $route->getPath());
     }
 
     /**
@@ -36,7 +36,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetController()
     {
-        $route = new Route('name', [], 'view', ['name' => 'myController'], new RequestMatcher());
+        $route = new Route('name', '/path/of/route', [], 'view', ['name' => 'myController'], new RequestMatcher());
 
         $this->assertSame('myController', $route->getController());
     }
@@ -47,7 +47,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAction()
     {
-        $route = new Route('name', [], 'view', ['action' => 'myAction'], new RequestMatcher());
+        $route = new Route('name', '/path/of/route', [], 'view', ['action' => 'myAction'], new RequestMatcher());
 
         $this->assertSame('myAction', $route->getAction());
     }
@@ -59,7 +59,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetControllerAndGetAction()
     {
-        $route = new Route('name', [], 'view', ['name' => 'myController', 'action' => 'myAction'], new RequestMatcher());
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['name' => 'myController', 'action' => 'myAction'],
+            new RequestMatcher()
+        );
 
         $this->assertSame('myController', $route->getController());
         $this->assertSame('myAction', $route->getAction());
@@ -71,7 +78,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDependenciesWithoutDependencies()
     {
-        $route = new Route('name', [], 'view', [], new RequestMatcher());
+        $route = new Route('name', '/path/of/route', [], 'view', [], new RequestMatcher());
 
         $this->assertSame([], $route->getDependencies());
     }
@@ -82,7 +89,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDependenciesWithEmptyDependencies()
     {
-        $route = new Route('name', [], 'view', ['dependencies' => []], new RequestMatcher());
+        $route = new Route('name', '/path/of/route', [], 'view', ['dependencies' => []], new RequestMatcher());
 
         $this->assertSame([], $route->getDependencies());
     }
@@ -93,7 +100,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDependenciesFilled()
     {
-        $route = new Route('name', [], 'view', ['dependencies' => ['some dependency', 'another dependency']], new RequestMatcher());
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher()
+        );
 
         $this->assertSame(['some dependency', 'another dependency'], $route->getDependencies());
     }
@@ -104,7 +118,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetView()
     {
-        $route = new Route('name', [], 'view', ['dependencies' => ['some dependency', 'another dependency']], new RequestMatcher());
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher()
+        );
 
         $this->assertSame('view', $route->getView());
     }
@@ -115,7 +136,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMappingWithoutMapping()
     {
-        $route = new Route('name', [], 'view', ['dependencies' => ['some dependency', 'another dependency']], new RequestMatcher());
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher()
+        );
 
         $this->assertSame([], $route->getMapping());
     }
@@ -126,7 +154,15 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMappingWithEmptyMapping()
     {
-        $route = new Route('name', [], 'view', ['dependencies' => ['some dependency', 'another dependency']], new RequestMatcher(), []);
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            []
+        );
 
         $this->assertSame([], $route->getMapping());
     }
@@ -137,7 +173,15 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMappingFilled()
     {
-        $route = new Route('name', [], 'view', ['dependencies' => ['some dependency', 'another dependency']], new RequestMatcher(), ['somemapping' => 0]);
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 0]
+        );
 
         $this->assertSame(['somemapping' => 0], $route->getMapping());
     }

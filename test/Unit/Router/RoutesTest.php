@@ -15,7 +15,7 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
     {
         $routes = new Routes(new RouteFactory());
 
-        $this->assertNull($routes->add('name', [], 'view', []));
+        $this->assertNull($routes->add('name', '/path/of/route', [], 'view', []));
     }
 
     /**
@@ -26,7 +26,7 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
     {
         $routes = new Routes(new RouteFactory());
 
-        $this->assertNull($routes->add('name', [], 'view', [], []));
+        $this->assertNull($routes->add('name', '/path/of/route', [], 'view', [], []));
     }
 
     /**
@@ -37,7 +37,7 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
     public function testGetRouteByNameValid()
     {
         $routes = new Routes(new RouteFactory());
-        $routes->add('name', [], 'view', []);
+        $routes->add('name', '/path/of/route', [], 'view', []);
 
         $route = $routes->getRouteByName('name');
 
@@ -66,7 +66,7 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
     {
         $routes = new Routes(new RouteFactory());
 
-        $routes->add('name', ['test' => true], 'view', []);
+        $routes->add('name', '/path/of/route', ['test' => true], 'view', []);
 
         $route = $routes->getRouteByRequest();
 
@@ -82,7 +82,7 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
     {
         $routes = new Routes(new RouteFactory());
 
-        $routes->add('name', ['test' => false], 'view', []);
+        $routes->add('name', '/path/of/route', ['test' => false], 'view', []);
 
         $this->setExpectedException('\\PitchBlade\\Router\\InvalidRouteException');
 

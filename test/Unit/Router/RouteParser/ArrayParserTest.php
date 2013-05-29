@@ -27,6 +27,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
 
         $routes = [
             'with mapping' => [
+                'path' => '/path/of/route',
                 'requirements' => [],
                 'view' => null,
                 'controller' => [],
@@ -46,6 +47,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
 
         $routes = [
             'with mapping' => [
+                'path' => '/path/of/route',
                 'requirements' => [],
                 'view' => null,
                 'controller' => [],

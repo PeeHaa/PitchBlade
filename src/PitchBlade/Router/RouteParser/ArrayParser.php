@@ -53,6 +53,7 @@ class ArrayParser implements Parser
             if (array_key_exists('mapping', $route)) {
                 $this->routesCollection->add(
                     $name,
+                    $route['path'],
                     $route['requirements'],
                     $route['view'],
                     $route['controller'],
@@ -61,6 +62,7 @@ class ArrayParser implements Parser
             } else {
                 $this->routesCollection->add(
                     $name,
+                    $route['path'],
                     $route['requirements'],
                     $route['view'],
                     $route['controller']

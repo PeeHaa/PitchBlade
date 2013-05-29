@@ -45,6 +45,7 @@ class RouteFactory implements RouteBuilder
      * Builds instance of a route
      *
      * @param string $name         The name of the route
+     * @param string $path         The path of the route
      * @param array  $requirements Array of requirements to match the route against
      * @param string $view         The view belonging to the route
      * @param array  $controller   The controller and action belonging to the route
@@ -52,8 +53,8 @@ class RouteFactory implements RouteBuilder
      *
      * @return \PitchBlade\Router\Route Instance of a route
      */
-    public function build($name, array $requirements, $view, array $controller, array $mapping = [])
+    public function build($name, $path, array $requirements, $view, array $controller, array $mapping = [])
     {
-        return new Route($name,  $requirements, $view, $controller, $this->requestMatcher, $mapping);
+        return new Route($name, $path, $requirements, $view, $controller, $this->requestMatcher, $mapping);
     }
 }

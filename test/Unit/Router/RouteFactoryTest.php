@@ -28,7 +28,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\PitchBlade\\Router\\Route',
-            $factory->build('test', [], 'view', ['controller', 'action'])
+            $factory->build('test', '/path/of/route', [], 'view', ['controller', 'action'])
         );
     }
 
@@ -42,7 +42,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\PitchBlade\\Router\\Route',
-            $factory->build('test', [], 'view', ['controller', 'action'], [])
+            $factory->build('test', '/path/of/route', [], 'view', ['controller', 'action'], [])
         );
     }
 }
