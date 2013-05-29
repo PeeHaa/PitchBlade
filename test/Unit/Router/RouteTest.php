@@ -198,6 +198,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::containsPathVariable
      * @covers PitchBlade\Router\Route::getPathVariables
      */
     public function testGetPathVariablesWithoutVariables()
@@ -217,6 +218,8 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::containsPathVariable
+     * @covers PitchBlade\Router\Route::getVariablesFromPath
      * @covers PitchBlade\Router\Route::getPathVariables
      */
     public function testGetPathVariablesWithTwoInvalidVariables()
@@ -236,6 +239,8 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::containsPathVariable
+     * @covers PitchBlade\Router\Route::getVariablesFromPath
      * @covers PitchBlade\Router\Route::getPathVariables
      */
     public function testGetPathVariablesWithTwoValidVariables()
@@ -255,6 +260,8 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::containsPathVariable
+     * @covers PitchBlade\Router\Route::getVariablesFromPath
      * @covers PitchBlade\Router\Route::getPathVariables
      */
     public function testGetPathVariablesWithInvalidAndValidVariablesValidFirst()
@@ -274,6 +281,8 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::containsPathVariable
+     * @covers PitchBlade\Router\Route::getVariablesFromPath
      * @covers PitchBlade\Router\Route::getPathVariables
      */
     public function testGetPathVariablesWithInvalidAndValidVariablesValidLast()
