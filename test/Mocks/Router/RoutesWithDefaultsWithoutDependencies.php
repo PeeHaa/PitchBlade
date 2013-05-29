@@ -65,7 +65,7 @@ class RoutesWithDefaultsWithoutDependencies implements Routable
             'view',
             ['controller', 'action'],
             new \PitchBladeTest\Mocks\Router\RequestMatcher(),
-            []
+            ['key1' => 'value1']
         );
     }
 }

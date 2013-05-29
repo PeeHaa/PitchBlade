@@ -72,7 +72,7 @@ class RouteWithDefaultsWithoutDependencies
         return $this->requirements['test'];
     }
 
-    public function getMapping()
+    public function getDefaults()
     {
         return [1 => 'someMapping'];
     }
