@@ -132,9 +132,9 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route::__construct
-     * @covers PitchBlade\Router\Route::getMapping
+     * @covers PitchBlade\Router\Route::getDefaults
      */
-    public function testGetMappingWithoutMapping()
+    public function testGetDefaultsWithoutDefaults()
     {
         $route = new Route(
             'name',
@@ -145,14 +145,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
             new RequestMatcher()
         );
 
-        $this->assertSame([], $route->getMapping());
+        $this->assertSame([], $route->getDefaults());
     }
 
     /**
      * @covers PitchBlade\Router\Route::__construct
-     * @covers PitchBlade\Router\Route::getMapping
+     * @covers PitchBlade\Router\Route::getDefaults
      */
-    public function testGetMappingWithEmptyMapping()
+    public function testGetDefaultsWithEmptyDefaults()
     {
         $route = new Route(
             'name',
@@ -164,14 +164,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
             []
         );
 
-        $this->assertSame([], $route->getMapping());
+        $this->assertSame([], $route->getDefaults());
     }
 
     /**
      * @covers PitchBlade\Router\Route::__construct
-     * @covers PitchBlade\Router\Route::getMapping
+     * @covers PitchBlade\Router\Route::getDefaults
      */
-    public function testGetMappingFilled()
+    public function testGetDefaultsFilled()
     {
         $route = new Route(
             'name',
@@ -180,9 +180,9 @@ class RouteTest extends \PHPUnit_Framework_TestCase
             'view',
             ['dependencies' => ['some dependency', 'another dependency']],
             new RequestMatcher(),
-            ['somemapping' => 0]
+            ['somemapping' => 'somevalue']
         );
 
-        $this->assertSame(['somemapping' => 0], $route->getMapping());
+        $this->assertSame(['somemapping' => 'somevalue'], $route->getDefaults());
     }
 }

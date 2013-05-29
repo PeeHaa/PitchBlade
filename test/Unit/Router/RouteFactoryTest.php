@@ -22,7 +22,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\RouteFactory::__construct
      * @covers PitchBlade\Router\RouteFactory::build
      */
-    public function testBuildWithoutMapping()
+    public function testBuildWithoutDefaults()
     {
         $factory = new RouteFactory(new RequestMatcher());
 
@@ -36,7 +36,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\RouteFactory::__construct
      * @covers PitchBlade\Router\RouteFactory::build
      */
-    public function testBuildWithMapping()
+    public function testBuildWithDefaults()
     {
         $factory = new RouteFactory(new RequestMatcher());
 

@@ -50,14 +50,14 @@ class ArrayParser implements Parser
     public function parse(array $routes)
     {
         foreach ($routes as $name => $route) {
-            if (array_key_exists('mapping', $route)) {
+            if (array_key_exists('defaults', $route)) {
                 $this->routesCollection->add(
                     $name,
                     $route['path'],
                     $route['requirements'],
                     $route['view'],
                     $route['controller'],
-                    $route['mapping']
+                    $route['defaults']
                 );
             } else {
                 $this->routesCollection->add(

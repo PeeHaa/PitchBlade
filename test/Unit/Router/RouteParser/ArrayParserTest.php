@@ -21,7 +21,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\RouteParser\ArrayParser::__construct
      * @covers PitchBlade\Router\RouteParser\ArrayParser::parse
      */
-    public function testParseWithoutMapping()
+    public function testParseWithoutDefaults()
     {
         $parser = new ArrayParser(new Routes());
 
@@ -41,7 +41,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\RouteParser\ArrayParser::__construct
      * @covers PitchBlade\Router\RouteParser\ArrayParser::parse
      */
-    public function testParseWithMapping()
+    public function testParseWithDefaults()
     {
         $parser = new ArrayParser(new Routes());
 
@@ -51,7 +51,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
                 'requirements' => [],
                 'view' => null,
                 'controller' => [],
-                'mapping' => [],
+                'defaults' => [],
             ],
         ];
 

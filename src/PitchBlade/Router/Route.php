@@ -57,7 +57,7 @@ class Route
     /**
      * @var array The (optional) mapping of path variable in the route
      */
-    private $mapping;
+    private $defaults;
 
     /**
      * Creates the instance of the route
@@ -69,7 +69,7 @@ class Route
      * @param array                                $controller     The controller and action belonging to this route
      * @param \PitchBlade\Router\RequestMatchable  $requestMatcher The request matcher which check whether the route
      *                                                             matches with a request
-     * @param array                                $mapping        Optional mapping of path parts to request variables
+     * @param array                                $defaults       Optional defaults for path variables
      */
     public function __construct(
         $name,
@@ -78,7 +78,7 @@ class Route
         $view,
         array $controller,
         RequestMatchable $requestMatcher,
-        array $mapping = []
+        array $defaults = []
     )
     {
         $this->name           = $name;
@@ -87,7 +87,7 @@ class Route
         $this->view           = $view;
         $this->controller     = $controller;
         $this->requestMatcher = $requestMatcher;
-        $this->mapping        = $mapping;
+        $this->defaults       = $defaults;
     }
 
     /**
@@ -111,7 +111,7 @@ class Route
     }
 
     /**
-     * Get the controller of the route
+     * Gets the controller of the route
      *
      * @return string The controller
      */
@@ -131,7 +131,7 @@ class Route
     }
 
     /**
-     * Get the dependencies
+     * Gets the dependencies
      *
      * @return array The dependencies
      */
@@ -145,7 +145,7 @@ class Route
     }
 
     /**
-     * Get the view of the route
+     * Gets the view of the route
      *
      * @return string The view
      */
@@ -155,12 +155,12 @@ class Route
     }
 
     /**
-     * Get the mapping of the route
+     * Gets the default values of the path variables
      *
-     * @return array The mapping
+     * @return array The default values of the path variables
      */
-    public function getMapping()
+    public function getDefaults()
     {
-        return $this->mapping;
+        return $this->defaults;
     }
 }

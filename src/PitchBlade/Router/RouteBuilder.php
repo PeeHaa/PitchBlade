@@ -32,9 +32,9 @@ interface RouteBuilder
      * @param array  $requirements Array of requirements to match the route against
      * @param string $view         The view belonging to the route
      * @param array  $controller   The controller and action belonging to the route
-     * @param array  $mapping      Optional mapping of path parts to request variables
+     * @param array  $defaults     Optional default values of path variables
      *
      * @return \PitchBlade\Router\Route Instance of a route
      */
-    public function build($name, $path, array $requirements, $view, array $controller, array $mapping = []);
+    public function build($name, $path, array $requirements, $view, array $controller, array $defaults = []);
 }

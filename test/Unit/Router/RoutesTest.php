@@ -9,6 +9,16 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers PitchBlade\Router\Routes::__construct
+     */
+    public function testConstructCorrectInterface()
+    {
+        $routes = new Routes(new RouteFactory());
+
+        $this->assertInstanceOf('\\PitchBlade\\Router\\Routable', $routes);
+    }
+
+    /**
+     * @covers PitchBlade\Router\Routes::__construct
      * @covers PitchBlade\Router\Routes::add
      */
     public function testAdd()
@@ -22,7 +32,7 @@ class RoutesTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\Routes::__construct
      * @covers PitchBlade\Router\Routes::add
      */
-    public function testAddWithEmptyMapping()
+    public function testAddWithEmptyDefaults()
     {
         $routes = new Routes(new RouteFactory());
 
