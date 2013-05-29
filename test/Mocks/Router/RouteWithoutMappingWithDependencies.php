@@ -40,6 +40,7 @@ class RouteWithoutMappingWithDependencies
      * Creates the instance of the route
      *
      * @param string                               $name           The name of the route
+     * @param string                               $path           The path of the route
      * @param array                                $requirements   Array of requirements to match the route against
      * @param string                               $view           The view belonging to this route
      * @param array                                $controller     The controller and action belonging to this route
@@ -49,6 +50,7 @@ class RouteWithoutMappingWithDependencies
      */
     public function __construct(
         $name,
+        $path,
         array $requirements,
         $view,
         array $controller,

@@ -32,6 +32,11 @@ class Route
     private $name;
 
     /**
+     * @var string The path of the route
+     */
+    private $path;
+
+    /**
      * @var array The data to return whether the request matches
      */
     private $requirements;
@@ -40,6 +45,7 @@ class Route
      * Creates the instance of the route
      *
      * @param string                               $name           The name of the route
+     * @param string                               $path           The path of the route
      * @param array                                $requirements   Array of requirements to match the route against
      * @param string                               $view           The view belonging to this route
      * @param array                                $controller     The controller and action belonging to this route
@@ -49,6 +55,7 @@ class Route
      */
     public function __construct(
         $name,
+        $path,
         array $requirements,
         $view,
         array $controller,
@@ -57,12 +64,18 @@ class Route
     )
     {
         $this->name         = $name;
+        $this->path         = $path;
         $this->requirements = $requirements;
     }
 
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getPath()
+    {
+        return $this->path;
     }
 
     public function matchesRequest()

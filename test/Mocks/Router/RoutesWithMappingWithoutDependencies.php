@@ -28,12 +28,13 @@ class RoutesWithMappingWithoutDependencies implements Routable
      * Adds a route to the list
      *
      * @param string $name         The name of the route
+     * @param string $path         The path of the route
      * @param array  $requirements Array of requirements to match the route against
      * @param string $view         The view belonging to the new route
      * @param array  $controller   The controller and action belonging to the new route
      * @param array  $mapping      Optional mapping of path parts to request variables
      */
-    public function add($name, array $requirements, $view, array $controller, array $mapping = [])
+    public function add($name, $path, array $requirements, $view, array $controller, array $mapping = [])
     {
     }
 
@@ -59,6 +60,7 @@ class RoutesWithMappingWithoutDependencies implements Routable
     {
         return new \PitchBladeTest\Mocks\Router\RouteWithMappingWithoutDependencies(
             'mockRoute',
+            '/path/of/route',
             [],
             'view',
             ['controller', 'action'],
