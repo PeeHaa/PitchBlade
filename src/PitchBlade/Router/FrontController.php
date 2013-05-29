@@ -87,10 +87,10 @@ class FrontController
     public function dispatch()
     {
         $route = $this->routes->getRouteByRequest($this->request);
-        $routeMapping = $route->getMapping();
+        $pathVariables = $route->getPathVariables();
 
-        if (!empty($routeMapping)) {
-            $this->request->setPathVariables($routeMapping);
+        if (!empty($pathVariables)) {
+            $this->request->setPathVariables($route);
         }
 
         $view = $this->viewFactory->build($route->getView());
