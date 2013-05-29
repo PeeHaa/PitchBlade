@@ -59,7 +59,7 @@ class RoutesWithoutDefaultsOrDependencies implements Routable
      */
     public function getRouteByRequest()
     {
-        return new \PitchBladeTest\Mocks\Router\RouteWithoutMappingOrDependencies(
+        return new \PitchBladeTest\Mocks\Router\RouteWithoutDefaultsOrDependencies(
             'mockRoute',
             '/path/of/route',
             [],

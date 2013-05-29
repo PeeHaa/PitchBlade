@@ -24,7 +24,7 @@ use PitchBlade\Router\RequestMatchable;
  * @subpackage Router
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class RouteWithoutMappingOrDependencies
+class RouteWithoutDefaultsWithDependencies
 {
     /**
      * @var string The name of the route
@@ -46,7 +46,7 @@ class RouteWithoutMappingOrDependencies
      * @param array                                $controller     The controller and action belonging to this route
      * @param \BareCMSLIb\Router\RequestMatchable  $requestMatcher The request matcher which check whether the route
      *                                                             matches with a request
-     * @param array                                $mapping        Optional mapping of path parts to request variables
+     * @param array                                $defaults       Optional defaults for path variables
      */
     public function __construct(
         $name,
@@ -55,7 +55,7 @@ class RouteWithoutMappingOrDependencies
         $view,
         array $controller,
         RequestMatchable $requestMatcher,
-        array $mapping = []
+        array $defaults = []
     )
     {
         $this->name         = $name;
@@ -89,11 +89,11 @@ class RouteWithoutMappingOrDependencies
 
     public function getDependencies()
     {
-        return [];
+        return ['\\PitchBladeTest\\Mocks\\Mvc\\Model\\DummyDependency'];
     }
 
     public function getAction()
     {
-        return 'testAction';
+        return 'testActionWithDependency';
     }
 }
