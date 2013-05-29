@@ -31,11 +31,11 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\FrontController::__construct
      * @covers PitchBlade\Router\FrontController::dispatch
      */
-    public function testConstructCorrectInterfaceWithoutMappingWithoutDependencies()
+    public function testConstructCorrectInterfaceWithoutDefaultsWithoutDependencies()
     {
         $frontController = new FrontController(
             new Request([]),
-            new \PitchBladeTest\Mocks\Router\RoutesWithoutMappingOrDependencies(),
+            new \PitchBladeTest\Mocks\Router\RoutesWithoutDefaultsOrDependencies(),
             new ViewFactory(),
             new FieldFactory(),
             new CsrfToken()
@@ -48,11 +48,11 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\FrontController::__construct
      * @covers PitchBlade\Router\FrontController::dispatch
      */
-    public function testConstructCorrectInterfaceWithMappingWithoutDependencies()
+    public function testConstructCorrectInterfaceWithDefaultsWithoutDependencies()
     {
         $frontController = new FrontController(
             new Request([]),
-            new \PitchBladeTest\Mocks\Router\RoutesWithMappingWithoutDependencies(),
+            new \PitchBladeTest\Mocks\Router\RoutesWithDefaultsWithoutDependencies(),
             new ViewFactory(),
             new FieldFactory(),
             new CsrfToken()
@@ -65,11 +65,11 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\FrontController::__construct
      * @covers PitchBlade\Router\FrontController::dispatch
      */
-    public function testConstructCorrectInterfaceWithoutMappingWithDependencies()
+    public function testConstructCorrectInterfaceWithoutDefaultsWithDependencies()
     {
         $frontController = new FrontController(
             new Request([]),
-            new \PitchBladeTest\Mocks\Router\RoutesWithoutMappingWithDependencies(),
+            new \PitchBladeTest\Mocks\Router\RoutesWithoutDefaultsWithDependencies(),
             new ViewFactory(),
             new FieldFactory(),
             new CsrfToken()

@@ -22,7 +22,7 @@ use PitchBlade\Router\Routable;
  * @package    Router
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class RoutesWithoutMappingWithDependencies implements Routable
+class RoutesWithoutDefaultsOrDependencies implements Routable
 {
     /**
      * Adds a route to the list
@@ -33,8 +33,9 @@ class RoutesWithoutMappingWithDependencies implements Routable
      * @param string $view         The view belonging to the new route
      * @param array  $controller   The controller and action belonging to the new route
      * @param array  $mapping      Optional mapping of path parts to request variables
+     * @param array  $defaults     Optional default values of path variables
      */
-    public function add($name, $path, array $requirements, $view, array $controller, array $mapping = [])
+    public function add($name, $path, array $requirements, $view, array $controller, array $defaults = [])
     {
     }
 
@@ -58,7 +59,7 @@ class RoutesWithoutMappingWithDependencies implements Routable
      */
     public function getRouteByRequest()
     {
-        return new \PitchBladeTest\Mocks\Router\RouteWithoutMappingWithDependencies(
+        return new \PitchBladeTest\Mocks\Router\RouteWithoutMappingOrDependencies(
             'mockRoute',
             '/path/of/route',
             [],
