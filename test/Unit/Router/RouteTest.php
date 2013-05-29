@@ -255,7 +255,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
             ['somemapping' => 'somevalue']
         );
 
-        $this->assertSame(['path', 'route'], $route->getPathVariables());
+        $this->assertSame([0 => 'path', 2 => 'route'], $route->getPathVariables());
     }
 
     /**
@@ -276,7 +276,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
             ['somemapping' => 'somevalue']
         );
 
-        $this->assertSame(['path'], $route->getPathVariables());
+        $this->assertSame([0 => 'path'], $route->getPathVariables());
     }
 
     /**
@@ -297,6 +297,27 @@ class RouteTest extends \PHPUnit_Framework_TestCase
             ['somemapping' => 'somevalue']
         );
 
-        $this->assertSame(['route'], $route->getPathVariables());
+        $this->assertSame([2 => 'route'], $route->getPathVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::containsPathVariable
+     * @covers PitchBlade\Router\Route::getVariablesFromPath
+     * @covers PitchBlade\Router\Route::getPathVariables
+     */
+    public function testGetPathVariablesWithInvalidAndValidVariablesValidLastWithoutLeadingSlashWithTrailingSlash()
+    {
+        $route = new Route(
+            'name',
+            'pa:th/of/:route/',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 'somevalue']
+        );
+
+        $this->assertSame([2 => 'route'], $route->getPathVariables());
     }
 }

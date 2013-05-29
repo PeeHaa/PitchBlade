@@ -2,7 +2,9 @@
 
 namespace PitchBladeTest\Unit\Http;
 
-use PitchBlade\Http\Request;
+use PitchBlade\Http\Request,
+    PitchBladeTest\Mocks\Router\RouteWithoutPathVariables,
+    PitchBladeTest\Mocks\Router\RouteWithPathVariables;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,8 +12,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     protected $getVariables;
     protected $postVariables;
     protected $cookieVariables;
-    protected $mapping;
-    protected $mappingFailed;
 
     public function setUp()
     {
@@ -19,8 +19,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->getVariables    = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/get-variables.php');
         $this->postVariables   = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/post-variables.php');
         $this->cookieVariables = ['key' => 'value'];
-        $this->mapping         = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/request-mapper.php');
-        $this->mappingFailed   = \PitchBladeTest\getTestDataFromFile(PITCHBLADE_TEST_DATA_DIR . '/Http/request-mapper-fail.php');
+    }
+
+    /**
+     * @covers PitchBlade\Http\Request::__construct
+     * @covers PitchBlade\Http\Request::setPath
+     * @covers PitchBlade\Http\Request::getBarePath
+     */
+    public function testConstructCorrectInterface()
+    {
+        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
+        $this->assertInstanceOf('\\PitchBlade\\Http\\Request', $request);
     }
 
     /**
@@ -41,22 +50,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Http\Request::getBarePath
      * @covers PitchBlade\Http\Request::setPathVariables
      */
-    public function testSetPathVariablesSuccess()
+    public function testSetPathVariablesSuccessWithoutPathVariables()
     {
         $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
-        $this->assertNull($request->setPathVariables($this->mapping));
-    }
-
-    /**
-     * @covers PitchBlade\Http\Request::__construct
-     * @covers PitchBlade\Http\Request::setPath
-     * @covers PitchBlade\Http\Request::getBarePath
-     * @covers PitchBlade\Http\Request::setPathVariables
-     */
-    public function testSetPathVariablesWithUndefinedIndexSuccess()
-    {
-        $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
-        $this->assertNull($request->setPathVariables($this->mappingFailed));
+        $this->assertNull($request->setPathVariables(new RouteWithoutPathVariables()));
     }
 
     /**
@@ -209,7 +206,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Http\Request::getBarePath
      * @covers PitchBlade\Http\Request::getPathVariables
      */
-    public function testGetPathVariablesWithoutMapping()
+    public function testGetPathVariablesWithoutPathVariables()
     {
         $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
         $this->assertSame([], $request->getPathVariables());
@@ -219,26 +216,38 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Http\Request::__construct
      * @covers PitchBlade\Http\Request::setPath
      * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::setPathVariables
      * @covers PitchBlade\Http\Request::getPathVariables
      */
-    public function testGetPathVariablesWithMapping()
+    public function testGetPathVariablesWithPathVariables()
     {
+        $ori = $this->serverVariables['REQUEST_URI'];
+        $this->serverVariables['REQUEST_URI'] = '/test1/test2/test3';
+
         $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
-        $request->setPathVariables($this->mapping);
-        $this->assertSame(['first_var' => 'some', 'second_var' => 'deep'], $request->getPathVariables());
+        $request->setPathVariables(new RouteWithPathVariables());
+        $this->assertSame(['var1' => 'test1', 'var2' => 'test2'], $request->getPathVariables());
+
+        $this->serverVariables['REQUEST_URI'] = $ori;
     }
 
     /**
      * @covers PitchBlade\Http\Request::__construct
      * @covers PitchBlade\Http\Request::setPath
      * @covers PitchBlade\Http\Request::getBarePath
+     * @covers PitchBlade\Http\Request::setPathVariables
      * @covers PitchBlade\Http\Request::getPathVariable
      */
     public function testGetPathVariableWithKnownVariable()
     {
+        $ori = $this->serverVariables['REQUEST_URI'];
+        $this->serverVariables['REQUEST_URI'] = '/test1/test2/test3';
+
         $request = new Request($this->serverVariables, $this->getVariables, $this->postVariables, $this->cookieVariables);
-        $request->setPathVariables($this->mapping);
-        $this->assertSame('some', $request->getPathVariable('first_var'));
+        $request->setPathVariables(new RouteWithPathVariables());
+        $this->assertSame('test1', $request->getPathVariable('var1'));
+
+        $this->serverVariables['REQUEST_URI'] = $ori;
     }
 
     /**

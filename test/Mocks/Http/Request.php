@@ -14,7 +14,8 @@
  */
 namespace PitchBladeTest\Mocks\Http;
 
-use PitchBlade\Http\RequestData;
+use PitchBlade\Http\RequestData,
+    PitchBlade\Router\AccessPoint;
 
 class Request implements RequestData
 {
@@ -30,7 +31,7 @@ class Request implements RequestData
         return $this->requestData['path'];
     }
 
-    public function setPathVariables(array $mapping)
+    public function setPathVariables(AccessPoint $route)
     {
     }
 

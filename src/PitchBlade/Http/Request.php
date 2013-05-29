@@ -13,7 +13,8 @@
  */
 namespace PitchBlade\Http;
 
-use PitchBlade\Http\RequestData;
+use PitchBlade\Http\RequestData,
+    PitchBlade\Router\AccessPoint;
 
 /**
  * Contains all the information of a HTTP request
@@ -112,16 +113,12 @@ class Request implements RequestData
     /**
      * Sets up the mapping of path parts to request variables
      *
-     * @param array $mapping The mapping from path parts to request variables
+     * @param \PitchBlade\Router\AccessPoint $route The route from which to parse the path variables
      */
-    public function setPathVariables(array $mapping)
+    public function setPathVariables(AccessPoint $route)
     {
-        foreach ($mapping as $key => $pathPartIndex) {
-            if (!array_key_exists($pathPartIndex, $this->path)) {
-                continue;
-            }
-
-            $this->pathVariables[$key] = $this->path[$pathPartIndex];
+        foreach ($route->getPathVariables() as $positionInPath => $key) {
+            $this->pathVariables[$key] = $this->path[$positionInPath];
         }
     }
 

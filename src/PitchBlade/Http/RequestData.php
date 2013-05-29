@@ -13,6 +13,8 @@
  */
 namespace PitchBlade\Http;
 
+use PitchBlade\Router\AccessPoint;
+
 /**
  * Interface for HTTP request classes
  *
@@ -32,11 +34,9 @@ interface RequestData
     /**
      * Sets up the mapping of path parts to request variables
      *
-     * @param array $mapping The mapping from path parts to request variables
-     *
-     * @throws \UnexpectedValueException When trying to map an path part which doesn't exist
+     * @param \PitchBlade\Router\AccessPoint $route The route from which to parse the path variables
      */
-    public function setPathVariables(array $mapping);
+    public function setPathVariables(AccessPoint $route);
 
     /**
      * Gets the get variables

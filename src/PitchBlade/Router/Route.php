@@ -190,13 +190,13 @@ class Route implements AccessPoint
     {
         $pathVariables = [];
 
-        $pathParts = explode('/', $this->path);
-        foreach ($pathParts as $pathPart) {
+        $pathParts = explode('/', trim($this->path, '/'));
+        foreach ($pathParts as $index => $pathPart) {
             if (strpos($pathPart, ':') !== 0) {
                 continue;
             }
 
-            $pathVariables[] = substr($pathPart, 1);
+            $pathVariables[$index] = substr($pathPart, 1);
         }
 
         return $pathVariables;
