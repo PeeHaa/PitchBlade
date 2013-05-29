@@ -155,6 +155,53 @@ class Route
     }
 
     /**
+     * Gets the path variables
+     *
+     * @return array The variables in the path
+     */
+    public function getPathVariables()
+    {
+        if (!$this->containsPathVariable()) {
+            return [];
+        }
+
+        return $this->getVariablesFromPath();
+    }
+
+    /**
+     * Checks whether the path contains variables
+     *
+     * Variables in paths are denoted by a leading colon
+     *
+     * @return boolean True when the path contains variables
+     */
+    private function containsPathVariable()
+    {
+        return strpos($this->path, ':') !== false;
+    }
+
+    /**
+     * Gets the variables from the path
+     *
+     * @return array The path variables
+     */
+    private function getVariablesFromPath()
+    {
+        $pathVariables = [];
+
+        $pathParts = explode('/', $this->path);
+        foreach ($pathParts as $pathPart) {
+            if (strpos($pathPart, ':') !== 0) {
+                continue;
+            }
+
+            $pathVariables[] = substr($pathPart, 1);
+        }
+
+        return $pathVariables;
+    }
+
+    /**
      * Gets the default values of the path variables
      *
      * @return array The default values of the path variables

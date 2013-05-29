@@ -185,4 +185,99 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(['somemapping' => 'somevalue'], $route->getDefaults());
     }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::getPathVariables
+     */
+    public function testGetPathVariablesWithoutVariables()
+    {
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 'somevalue']
+        );
+
+        $this->assertSame([], $route->getPathVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::getPathVariables
+     */
+    public function testGetPathVariablesWithTwoInvalidVariables()
+    {
+        $route = new Route(
+            'name',
+            '/pa:th/of/ro:ute',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 'somevalue']
+        );
+
+        $this->assertSame([], $route->getPathVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::getPathVariables
+     */
+    public function testGetPathVariablesWithTwoValidVariables()
+    {
+        $route = new Route(
+            'name',
+            '/:path/of/:route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 'somevalue']
+        );
+
+        $this->assertSame(['path', 'route'], $route->getPathVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::getPathVariables
+     */
+    public function testGetPathVariablesWithInvalidAndValidVariablesValidFirst()
+    {
+        $route = new Route(
+            'name',
+            '/:path/of/ro:ute',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 'somevalue']
+        );
+
+        $this->assertSame(['path'], $route->getPathVariables());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
+     * @covers PitchBlade\Router\Route::getPathVariables
+     */
+    public function testGetPathVariablesWithInvalidAndValidVariablesValidLast()
+    {
+        $route = new Route(
+            'name',
+            '/pa:th/of/:route',
+            [],
+            'view',
+            ['dependencies' => ['some dependency', 'another dependency']],
+            new RequestMatcher(),
+            ['somemapping' => 'somevalue']
+        );
+
+        $this->assertSame(['route'], $route->getPathVariables());
+    }
 }

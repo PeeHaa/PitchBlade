@@ -96,4 +96,9 @@ class RouteWithDefaultsWithoutDependencies
     {
         return 'testAction';
     }
+
+    public function getPathVariables()
+    {
+        return [];
+    }
 }
