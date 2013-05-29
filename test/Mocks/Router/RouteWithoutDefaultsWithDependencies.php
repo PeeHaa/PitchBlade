@@ -100,7 +100,7 @@ class RouteWithoutDefaultsWithDependencies implements AccessPoint
 
     public function getPathVariables()
     {
-        return [];
+        return ['var1'];
     }
 
     public function getPath()

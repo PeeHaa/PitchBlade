@@ -31,7 +31,7 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\FrontController::__construct
      * @covers PitchBlade\Router\FrontController::dispatch
      */
-    public function testConstructCorrectInterfaceWithoutDefaultsWithoutDependencies()
+    public function testDispatchWithoutDefaultsWithoutDependencies()
     {
         $frontController = new FrontController(
             new Request([]),
@@ -48,7 +48,7 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\FrontController::__construct
      * @covers PitchBlade\Router\FrontController::dispatch
      */
-    public function testConstructCorrectInterfaceWithDefaultsWithoutDependencies()
+    public function testDispatchWithDefaultsWithoutDependencies()
     {
         $frontController = new FrontController(
             new Request([]),
@@ -65,7 +65,7 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\FrontController::__construct
      * @covers PitchBlade\Router\FrontController::dispatch
      */
-    public function testConstructCorrectInterfaceWithoutDefaultsWithDependencies()
+    public function testDispatchWithoutDefaultsWithDependencies()
     {
         $frontController = new FrontController(
             new Request([]),
