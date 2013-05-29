@@ -14,7 +14,8 @@
  */
 namespace PitchBladeTest\Mocks\Router;
 
-use PitchBlade\Router\RequestMatchable;
+use PitchBlade\Router\AccessPoint,
+    PitchBlade\Router\RequestMatchable;
 
 /**
  * This class represents a single route
@@ -24,7 +25,7 @@ use PitchBlade\Router\RequestMatchable;
  * @subpackage Router
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class RouteWithoutDefaultsOrDependencies
+class RouteWithoutDefaultsOrDependencies implements AccessPoint
 {
     /**
      * @var string The name of the route
@@ -100,5 +101,10 @@ class RouteWithoutDefaultsOrDependencies
     public function getPathVariables()
     {
         return [];
+    }
+
+    public function getPath()
+    {
+        return '';
     }
 }

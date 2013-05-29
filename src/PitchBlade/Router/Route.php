@@ -13,7 +13,8 @@
  */
 namespace PitchBlade\Router;
 
-use PitchBlade\Router\RequestMatchable;
+use PitchBlade\Router\AccessPoint,
+    PitchBlade\Router\RequestMatchable;
 
 /**
  * This class represents a single route
@@ -22,7 +23,7 @@ use PitchBlade\Router\RequestMatchable;
  * @package    Router
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Route
+class Route implements AccessPoint
 {
     /**
      * @var string The name of this route

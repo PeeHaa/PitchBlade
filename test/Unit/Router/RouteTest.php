@@ -10,6 +10,16 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers PitchBlade\Router\Route::__construct
+     */
+    public function testConstructCorrectInterface()
+    {
+        $route = new Route('name', '/path/of/route', [], 'view', [], new RequestMatcher());
+
+        $this->assertInstanceOf('\\PitchBlade\\Router\\AccessPoint', $route);
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route::__construct
      * @covers PitchBlade\Router\Route::matchesRequest
      */
     public function testMatchesRequest()
