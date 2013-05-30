@@ -48,6 +48,7 @@
                 <file>src/PitchBlade/Mvc/View/InvalidViewException.php</file>
                 <file>src/PitchBlade/Mvc/View/UndefinedVariableException.php</file>
                 <file>src/PitchBlade/Router/InvalidRouteException.php</file>
+                <file>src/PitchBlade/Router/MissingUrlParameterException.php</file>
                 <file>src/PitchBlade/Router/RequestMatcher/UnknownMatcherException.php</file>
                 <file>src/PitchBlade/Router/RequestMatcher/InvalidMatcherException.php</file>
                 <file>src/PitchBlade/Router/RouteParser/MissingFileException.php</file>
