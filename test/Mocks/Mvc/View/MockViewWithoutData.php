@@ -6,7 +6,8 @@ use PitchBlade\Mvc\View\View,
     PitchBlade\Mvc\View\Viewable,
     PitchBlade\Mvc\View\Builder,
     PitchBlade\Mvc\Model\ServiceBuilder,
-    PitchBlade\I18n\Translator;
+    PitchBlade\I18n\Translator,
+    PitchBlade\Router\UrlBuildable;
 
 class MockViewWithoutData extends View implements Viewable
 {
@@ -14,11 +15,12 @@ class MockViewWithoutData extends View implements Viewable
         Builder $viewFactory,
         ServiceBuilder $serviceFactory,
         Translator $translator,
+        UrlBuildable $urlBuilder,
         $baseTemplate,
         $language
     )
     {
-        parent::__construct($viewFactory, $serviceFactory, $translator, $baseTemplate, $language);
+        parent::__construct($viewFactory, $serviceFactory, $translator, $urlBuilder, $baseTemplate, $language);
     }
 
     /**

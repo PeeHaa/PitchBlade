@@ -21,6 +21,7 @@ namespace PitchBlade\Mvc\View;
 use PitchBlade\Mvc\View\Builder as ViewBuilder,
     PitchBlade\Mvc\Model\Servicebuilder,
     PitchBlade\I18n\Translator,
+    PitchBlade\Router\UrlBuildable,
     PitchBlade\Mvc\View\InvalidBaseTemplateException,
     PitchBlade\Mvc\View\UndefinedVariableException,
     PitchBlade\Mvc\View\InvalidTemplateException;
@@ -51,6 +52,11 @@ abstract class View
     protected $translator;
 
     /**
+     * @var \PitchBlade\Router\UrlBuildable Instance of the URl builder
+     */
+    protected $urlBuilder;
+
+    /**
      * @var string The base page in which all content will be loaded
      */
      protected $baseTemplate;
@@ -71,6 +77,7 @@ abstract class View
      * @param \PitchBlade\Mvc\View\Builder         $viewFactory    Instance of a view factory
      * @param \PitchBlade\Mvc\Model\Servicebuilder $serviceFactory Instance of a service factory
      * @param \PitchBlade\I18n\Translator          $translator     Instance of the translator service
+     * @param \PitchBlade\Router\UrlBuildable      $urlBuilder     Instance of the URL builder
      * @param string                               $baseTemplate   The base page in which all content will be loaded
      * @param string                               $language       The currently used language
      */
@@ -78,6 +85,7 @@ abstract class View
         ViewBuilder $viewFactory,
         Servicebuilder $serviceFactory,
         Translator $translator,
+        UrlBuildable $urlBuilder,
         $baseTemplate,
         $language
     )
@@ -85,6 +93,7 @@ abstract class View
         $this->viewFactory    = $viewFactory;
         $this->serviceFactory = $serviceFactory;
         $this->translator     = $translator;
+        $this->urlBuilder     = $urlBuilder;
         $this->baseTemplate   = $baseTemplate;
         $this->language       = $language;
 
@@ -202,5 +211,18 @@ abstract class View
     protected function translate($key)
     {
         return $this->translator->get($key);
+    }
+
+    /**
+     * Builds URLs
+     *
+     * @param string $name       The name of the route
+     * @param array  $parameters The optional parameters to build the URL
+     *
+     * @return string The built URL
+     */
+    protected function buildUrl($name, array $parameters = [])
+    {
+        return $this->urlBuilder->build($name, $parameters);
     }
 }

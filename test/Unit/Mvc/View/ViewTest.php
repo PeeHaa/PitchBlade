@@ -6,10 +6,8 @@ use PitchBlade\Mvc\View,
     PitchBladeTest\Mocks\Mvc\View\DummyView,
     PitchBladeTest\Mocks\Mvc\View\Factory as ViewFactory,
     PitchBladeTest\Mocks\Mvc\Model\ServiceFactory,
-    PitchBladeTest\Mocks\I18n\Translator;
-    /*
-    PitchBlade\Mvc\View\InvalidTemplateException;
-    */
+    PitchBladeTest\Mocks\I18n\Translator,
+    PitchBladeTest\Mocks\Router\UrlBuilder;
 
 class ViewTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,6 +19,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new Viewfactory(),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en',
         ];
@@ -43,7 +42,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\\PitchBlade\\Mvc\\View\\InvalidBaseTemplateException');
 
-        $this->constructorParams[3] = __DIR__ . '/../../../Data/Templates/unknown-template.phtml';
+        $this->constructorParams[4] = __DIR__ . '/../../../Data/Templates/unknown-template.phtml';
 
         $view = $this->getMockForAbstractClass('\\PitchBlade\\Mvc\\View\\View', $this->constructorParams);
     }
@@ -121,6 +120,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new Viewfactory(),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -138,6 +138,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new Viewfactory(),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -161,6 +162,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new Viewfactory(),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -181,6 +183,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new Viewfactory(),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -204,12 +207,14 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new \PitchBlade\Mvc\View\Factory(
                 new ServiceFactory(),
                 new Translator(),
+                new UrlBuilder(),
                 __DIR__ . '/../../../Data/Templates/base.phtml',
                 'en',
                 '\\PitchBladeTest\\Mocks\\Mvc\\View'
             ),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -234,12 +239,14 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new \PitchBlade\Mvc\View\Factory(
                 new ServiceFactory(),
                 new Translator(),
+                new UrlBuilder(),
                 __DIR__ . '/../../../Data/Templates/base.phtml',
                 'en',
                 '\\PitchBladeTest\\Mocks\\Mvc\\View'
             ),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -264,6 +271,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
             new Viewfactory(),
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en'
         );
@@ -271,6 +279,56 @@ class ViewTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             'TESTBASETRANSLATION',
             $view->renderPageMock(__DIR__ . '/../../../Data/Templates/content-with-translation.phtml')
+        );
+    }
+
+    /**
+     * @covers PitchBlade\Mvc\View\View::__construct
+     * @covers PitchBlade\Mvc\View\View::render
+     * @covers PitchBlade\Mvc\View\View::renderPage
+     * @covers PitchBlade\Mvc\View\View::__set
+     * @covers PitchBlade\Mvc\View\View::__get
+     * @covers PitchBlade\Mvc\View\View::buildUrl
+     */
+    public function testBuildUrlWithParams()
+    {
+        $view = new DummyView(
+            new Viewfactory(),
+            new ServiceFactory(),
+            new Translator(),
+            new UrlBuilder(),
+            __DIR__ . '/../../../Data/Templates/base.phtml',
+            'en'
+        );
+
+        $this->assertSame(
+            'TESTBASE/the/path',
+            $view->renderPageMock(__DIR__ . '/../../../Data/Templates/content-with-url-with-params.phtml')
+        );
+    }
+
+    /**
+     * @covers PitchBlade\Mvc\View\View::__construct
+     * @covers PitchBlade\Mvc\View\View::render
+     * @covers PitchBlade\Mvc\View\View::renderPage
+     * @covers PitchBlade\Mvc\View\View::__set
+     * @covers PitchBlade\Mvc\View\View::__get
+     * @covers PitchBlade\Mvc\View\View::buildUrl
+     */
+    public function testBuildUrlWithoutParams()
+    {
+        $view = new DummyView(
+            new Viewfactory(),
+            new ServiceFactory(),
+            new Translator(),
+            new UrlBuilder(),
+            __DIR__ . '/../../../Data/Templates/base.phtml',
+            'en'
+        );
+
+        $this->assertSame(
+            'TESTBASE/the/path',
+            $view->renderPageMock(__DIR__ . '/../../../Data/Templates/content-with-url-without-params.phtml')
         );
     }
 }

@@ -4,7 +4,8 @@ namespace PitchBladeTest\Mvc\View;
 
 use PitchBlade\Mvc\View\Factory,
     PitchBladeTest\Mocks\Mvc\Model\ServiceFactory,
-    PitchBladeTest\Mocks\I18n\Translator;
+    PitchBladeTest\Mocks\I18n\Translator,
+    PitchBladeTest\Mocks\Router\UrlBuilder;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,6 +17,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             '\\PitchBladeTest\\Mocks\\Mvc\\View\\DummyView',
             'en'
@@ -33,6 +35,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en',
             '\\PitchBladeTest\\Mocks\\Mvc\\View'
@@ -50,6 +53,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en',
             '\\PitchBladeTest\\Mocks\\Mvc\\View'
@@ -67,6 +71,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory(
             new ServiceFactory(),
             new Translator(),
+            new UrlBuilder(),
             __DIR__ . '/../../../Data/Templates/base.phtml',
             'en',
             '\\PitchBladeTest\\Mocks\\Mvc\\View'
