@@ -14,7 +14,8 @@
  */
 namespace PitchBlade\Form\Field;
 
-use PitchBlade\Form\Field\Builder;
+use PitchBlade\Form\Field\Builder,
+    PitchBlade\Form\Field\InvalidFieldException;
 
 /**
  * Form field factory
@@ -33,12 +34,17 @@ class Factory implements Builder
      * @param array  $data The data to build the field
      *
      * @return \BareCMSLib\Form\Field\Generic The field
+     * @throws \PitchBlade\Form\Field\InvalidFieldException When trying to build an invalid field
      */
     public function build($name, array $data = [])
     {
         $formFieldClass = $data['type'];
         if (strpos($data['type'], '\\') !== 0) {
             $formFieldClass = '\\PitchBlade\\Form\\Field\\' . ucfirst($data['type']);
+        }
+
+        if (!class_exists($formFieldClass)) {
+            throw new InvalidFieldException('Invalid service (`' . $formFieldClass . '`).');
         }
 
         return new $formFieldClass($name, $data);

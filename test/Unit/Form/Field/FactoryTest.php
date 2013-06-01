@@ -38,4 +38,16 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             $factory->build('textField', ['type' => 'text'])
         );
     }
+
+    /**
+     * @covers PitchBlade\Form\Field\Factory::build
+     */
+    public function testBuildThrowsExceptionForUnsupportField()
+    {
+        $factory = new Factory();
+
+        $this->setExpectedException('\\PitchBlade\\Form\\Field\\InvalidFieldException');
+
+        $factory->build('dummyField', ['type' => '\\PitchBlade\\Form\\Field\\UnsupportedField']);
+    }
 }
