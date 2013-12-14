@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Security\Generator;
 
-use PitchBlade\Security\Generator\Builder,
-    PitchBlade\Security\Generator\InvalidGeneratorException;
+use PitchBlade\Security\Generator\Builder;
 
 /**
  * Factory which returns different generators

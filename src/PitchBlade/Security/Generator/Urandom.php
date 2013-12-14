@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Security\Generator;
 
-use PitchBlade\Security\Generator,
-    PitchBlade\Security\Generator\UnsupportedAlgorithmException;
+use PitchBlade\Security\Generator;
 
 /**
  * Generates a random string using /dev/urandom
