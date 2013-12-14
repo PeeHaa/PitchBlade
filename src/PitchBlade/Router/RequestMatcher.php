@@ -13,8 +13,7 @@
  */
 namespace PitchBlade\Router;
 
-use PitchBlade\Router\RequestMatchable,
-    PitchBlade\Router\RequestMatcher\Builder;
+use PitchBlade\Router\RequestMatcher\Builder;
 
 /**
  * Matches a request against a set of requirements
