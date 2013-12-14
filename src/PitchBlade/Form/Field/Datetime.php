@@ -14,8 +14,6 @@
  */
 namespace PitchBlade\Form\Field;
 
-use PitchBlade\Form\Field\Text;
-
 /**
  * Datetime field
  *

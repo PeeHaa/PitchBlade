@@ -14,9 +14,6 @@
  */
 namespace PitchBlade\Form\Field;
 
-use PitchBlade\Form\Field\Builder,
-    PitchBlade\Form\Field\InvalidFieldException;
-
 /**
  * Form field factory
  *

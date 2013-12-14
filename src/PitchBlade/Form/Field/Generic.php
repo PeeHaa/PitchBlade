@@ -42,7 +42,17 @@ abstract class Generic
     /**
      * @var null|string The class of the field
      */
-     protected $class;
+    protected $class;
+
+    /**
+     * @var int The tab index of the field
+     */
+    protected $tabIndex;
+
+    /**
+     * @var array List of custom attributes
+     */
+    protected $attributes;
 
     /**
      * @var array The requirements of the data
@@ -88,6 +98,14 @@ abstract class Generic
 
         if (array_key_exists('default', $data)) {
             $this->default = $data['default'];
+        }
+
+        if (array_key_exists('tabIndex', $data)) {
+            $this->tabIndex = $data['tabIndex'];
+        }
+
+        if (array_key_exists('attributes', $data)) {
+            $this->attributes = $data['attributes'];
         }
     }
 
@@ -153,6 +171,26 @@ abstract class Generic
         }
 
         return $this->default;
+    }
+
+    /**
+     * Gets the tabindex of the field
+     *
+     * @return null|int The tab index of the field
+     */
+    public function getTabIndex()
+    {
+        return $this->tabIndex;
+    }
+
+    /**
+     * Gets the custom attributes of the field
+     *
+     * @return array The custom attributes of the field
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     /**

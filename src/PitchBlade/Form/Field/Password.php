@@ -1,6 +1,6 @@
 <?php
 /**
- * Hidden field
+ * Password field
  *
  * PHP version 5.4
  *
@@ -15,15 +15,20 @@
 namespace PitchBlade\Form\Field;
 
 /**
- * Hidden field
+ * Password field
  *
  * @category   PitchBlade
  * @package    Form
  * @subpackage Field
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Hidden extends Generic
+class Password extends Text
 {
+    /**
+     * @var null|string The placeholder of the field
+     */
+    private $placeholder;
+
     /**
      * Create instance
      *
@@ -34,6 +39,20 @@ class Hidden extends Generic
     {
         parent::__construct($name, $data);
 
-        $this->type = 'hidden';
+        if (array_key_exists('placeholder', $data)) {
+            $this->placeholder = $data['placeholder'];
+        }
+
+        $this->type = 'password';
+    }
+
+    /**
+     * Get the optional placeholder
+     *
+     * @return null|string The placeholder of the field
+     */
+    public function getPlaceholder()
+    {
+        return $this->placeholder;
     }
 }
