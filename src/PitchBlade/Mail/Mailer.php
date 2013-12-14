@@ -13,11 +13,6 @@
  */
 namespace PitchBlade\Mail;
 
-use PitchBlade\Mail\Transporter,
-    PitchBlade\Mail\Deliverable,
-    PitchBlade\Mail\SendFailureException,
-    PitchBlade\Mail\MissingRecipientException;
-
 /**
  * Sends emails
  *

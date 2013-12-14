@@ -13,8 +13,6 @@
  */
 namespace PitchBlade\Mail;
 
-use PitchBlade\Mail\Address;
-
 /**
  * Interface for mail messages
  *

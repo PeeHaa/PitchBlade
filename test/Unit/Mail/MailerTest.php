@@ -2,39 +2,41 @@
 
 namespace PitchBladeTest\Unit\Mail;
 
-use PitchBlade\Mail\Mailer,
-    PitchBladeTest\Mocks\Mail\Message,
-    PitchBlade\Mail\Recipient;
+use PitchBlade\Mail\Mailer;
 
 class MailerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Mailer::__construct
      */
     public function testConstructCorrectInterfaceWithoutXMailer()
     {
-        $mailer = new Mailer(new Message());
+        $mailer = new Mailer($this->getMock('\\PitchBlade\\Mail\\Deliverable'));
         $this->assertInstanceOf('\\PitchBlade\\Mail\\Transporter', $mailer);
     }
 
     /**
-     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Mailer::__construct
      */
     public function testConstructCorrectInterfaceWithXMailer()
     {
-        $mailer = new Mailer(new Message(), 'TEST');
+        $mailer = new Mailer($this->getMock('\\PitchBlade\\Mail\\Deliverable'), 'TEST');
         $this->assertInstanceOf('\\PitchBlade\\Mail\\Transporter', $mailer);
     }
 
     /**
-     * @covers PitchBlade\Mail\Message::__construct
-     * @covers PitchBlade\Mail\Message::getRecipients
-     * @covers PitchBlade\Mail\Message::getHeaders
-     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Mailer::__construct
+     * @covers PitchBlade\Mail\Mailer::getRecipients
+     * @covers PitchBlade\Mail\Mailer::getHeaders
      */
     public function testSendThrowsExceptionMissingRecipient()
     {
-        $mailer = new Mailer(new Message(['recipients' => []]));
+        $message = $this->getMock('\\PitchBlade\\Mail\\Deliverable');
+        $message->expects($this->once())
+            ->method('getRecipients')
+            ->will($this->returnValue([]));
+
+        $mailer = new Mailer($message);
 
         $this->setExpectedException('\\PitchBlade\\Mail\\MissingRecipientException');
 
@@ -42,36 +44,26 @@ class MailerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\Mail\Message::__construct
-     * @covers PitchBlade\Mail\Message::getRecipients
-     * @covers PitchBlade\Mail\Message::getHeaders
-     * @covers PitchBlade\Mail\Message::__construct
+     * @covers PitchBlade\Mail\Mailer::__construct
+     * @covers PitchBlade\Mail\Mailer::getRecipients
+     * @covers PitchBlade\Mail\Mailer::getHeaders
      */
     public function testSendThrowsExceptionFailedToDeliver()
     {
-        $mailer = new Mailer(new Message(['recipients' => [new Recipient('peehaa@php.net')]]));
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->once())
+            ->method('getRfcAddress')
+            ->$this->returnValue('peehaa@xshghxgsxhjsdgbchdsgchjsdgcbhdsg');
+
+        $message = $this->getMock('\\PitchBlade\\Mail\\Deliverable');
+        $message->expects($this->any())
+            ->method('getRecipients')
+            ->will($this->returnValue([$recipient]));
+
+        $mailer = new Mailer($message);
 
         $this->setExpectedException('\\PitchBlade\\Mail\\SendFailureException');
 
         $mailer->send();
     }
-
-    /**
-     * @covers PitchBlade\Mail\Message::__construct
-     * @covers PitchBlade\Mail\Message::getRecipients
-     * @covers PitchBlade\Mail\Message::getHeaders
-     * @covers PitchBlade\Mail\Message::__construct
-     */
-    /*
-    public function testSendSuccess()
-    {
-        $mailer = new Mailer(new Message([
-            'recipients' => [new Recipient('peehaa@php.net')],
-            'headers' => ['From' => 'peehaa@php.net'],
-            'subject' => 'My test subject',
-        ]));
-
-        $this->assertNull($mailer->send());
-    }
-    */
 }
