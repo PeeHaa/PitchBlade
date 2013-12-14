@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Http\RequestData,
-    PitchBlade\Router\RequestMatcher\Matchable;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Check whether a request matches with method requirements

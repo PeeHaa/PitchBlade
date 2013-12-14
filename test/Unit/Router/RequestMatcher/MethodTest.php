@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Method,
-    PitchBladeTest\Mocks\Http\Request;
+use PitchBlade\Router\RequestMatcher\Method;
 
 class MethodTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrentInterface()
     {
-        $matcher = new Method(new Request([]));
+        $matcher = new Method($this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RequestMatcher\\Matchable', $matcher);
     }
@@ -23,7 +22,12 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchTrue()
     {
-        $matcher = new Method(new Request(['method' => 'POST']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('getMethod')
+            ->will($this->returnValue('POST'));
+
+        $matcher = new Method($request);
 
         $this->assertTrue($matcher->doesMatch('POST'));
     }
@@ -34,7 +38,12 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchTrueDifferentCasing()
     {
-        $matcher = new Method(new Request(['method' => 'POST']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('getMethod')
+            ->will($this->returnValue('POST'));
+
+        $matcher = new Method($request);
 
         $this->assertTrue($matcher->doesMatch('post'));
     }
@@ -45,7 +54,12 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchFalse()
     {
-        $matcher = new Method(new Request(['method' => 'POST']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('getMethod')
+            ->will($this->returnValue('POST'));
+
+        $matcher = new Method($request);
 
         $this->assertFalse($matcher->doesMatch('GET'));
     }
@@ -56,7 +70,12 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchFalseDifferentCasing()
     {
-        $matcher = new Method(new Request(['method' => 'POST']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('getMethod')
+            ->will($this->returnValue('POST'));
+
+        $matcher = new Method($request);
 
         $this->assertFalse($matcher->doesMatch('get'));
     }
