@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Permissions,
-    PitchBladeTest\Mocks\Acl\Verifier;
+use PitchBlade\Router\RequestMatcher\Permissions;
 
 class PermissionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrentInterface()
     {
-        $matcher = new Permissions(new Verifier([]));
+        $matcher = new Permissions($this->getMock('\\PitchBlade\\Acl\\Verifiable'));
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RequestMatcher\\Matchable', $matcher);
     }
@@ -23,7 +22,7 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchEmptyRequirements()
     {
-        $matcher = new Permissions(new Verifier([]));
+        $matcher = new Permissions($this->getMock('\\PitchBlade\\Acl\\Verifiable'));
 
         $this->assertTrue($matcher->doesMatch([]));
     }
@@ -34,7 +33,7 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchNonMatchingRequirements()
     {
-        $matcher = new Permissions(new Verifier([]));
+        $matcher = new Permissions($this->getMock('\\PitchBlade\\Acl\\Verifiable'));
 
         $this->assertTrue($matcher->doesMatch(['nonMatching' => 1]));
     }
@@ -45,7 +44,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['match' => 1]));
     }
@@ -56,7 +60,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1]));
     }
@@ -67,7 +76,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumValid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['minimum' => 1]));
     }
@@ -78,7 +92,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1]));
     }
@@ -89,7 +108,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['maximum' => 1]));
     }
@@ -100,7 +124,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1]));
     }
@@ -111,7 +140,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMinimumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'minimum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['match' => 1, 'minimum' => 1]));
     }
@@ -122,7 +159,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMinimumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'minimum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1]));
     }
@@ -133,7 +178,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMinimumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'minimum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1]));
     }
@@ -144,7 +194,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMinimumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'minimum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1]));
     }
@@ -155,7 +210,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['match' => 1, 'maximum' => 1]));
     }
@@ -166,7 +229,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'maximum' => 1]));
     }
@@ -177,7 +248,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'maximum' => 1]));
     }
@@ -188,7 +264,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'maximum' => 1]));
     }
@@ -199,7 +280,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumValidAndMatchValid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => true, 'match' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['minimum' => 1, 'match' => 1]));
     }
@@ -210,7 +299,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumInvalidAndMatchValid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => false, 'match' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1, 'match' => 1]));
     }
@@ -221,7 +315,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumValidAndMatchInvalid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => true, 'match' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1, 'match' => 1]));
     }
@@ -232,7 +334,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumInvalidAndMatchInvalid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => false, 'match' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1, 'match' => 1]));
     }
@@ -243,7 +350,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumValidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => true, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['minimum' => 1, 'maximum' => 1]));
     }
@@ -254,7 +369,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumInvalidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => false, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1, 'maximum' => 1]));
     }
@@ -265,7 +385,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumValidAndMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => true, 'maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1, 'maximum' => 1]));
     }
@@ -276,7 +404,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMinimumInvalidAndMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['minimum' => false, 'maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['minimum' => 1, 'maximum' => 1]));
     }
@@ -287,7 +420,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumValidAndMatchValid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => true, 'match' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['maximum' => 1, 'match' => 1]));
     }
@@ -298,7 +439,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumInvalidAndMatchValid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => false, 'match' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1, 'match' => 1]));
     }
@@ -309,7 +455,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumValidAndMatchInvalid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => true, 'match' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1, 'match' => 1]));
     }
@@ -320,7 +474,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumInvalidAndMatchInvalid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => false, 'match' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1, 'match' => 1]));
     }
@@ -331,7 +490,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumValidAndMinimumValid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => true, 'minimum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['maximum' => 1, 'minimum' => 1]));
     }
@@ -342,7 +509,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumInvalidAndMinimumValid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => false, 'minimum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1, 'minimum' => 1]));
     }
@@ -353,7 +525,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumValidAndMinimumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => true, 'minimum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1, 'minimum' => 1]));
     }
@@ -364,7 +544,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMaximumInvalidAndMinimumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['maximum' => false, 'minimum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['maximum' => 1, 'minimum' => 1]));
     }
@@ -375,7 +560,18 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMinimumValidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'minimum' => true, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(true));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertTrue($matcher->doesMatch(['match' => 1, 'minimum' => 1, 'maximum' => 1]));
     }
@@ -386,7 +582,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMinimumValidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'minimum' => true, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1, 'maximum' => 1]));
     }
@@ -397,7 +598,15 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMinimumInvalidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'minimum' => false, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1, 'maximum' => 1]));
     }
@@ -408,7 +617,18 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchValidAndMinimumValidAndMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => true, 'minimum' => true, 'maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMinimumAccesslevel')
+            ->will($this->returnValue(true));
+        $verifier->expects($this->once())
+            ->method('doesRoleMatchMaximumAccesslevel')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1, 'maximum' => 1]));
     }
@@ -419,7 +639,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMinimumInvalidAndMaximumValid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'minimum' => false, 'maximum' => true]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1, 'maximum' => 1]));
     }
@@ -430,7 +655,12 @@ class PermissionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchMatchInvalidAndMinimumInvalidAndMaximumInvalid()
     {
-        $matcher = new Permissions(new Verifier(['match' => false, 'minimum' => false, 'maximum' => false]));
+        $verifier = $this->getMock('\\PitchBlade\\Acl\\Verifiable');
+        $verifier->expects($this->once())
+            ->method('doesRoleMatch')
+            ->will($this->returnValue(false));
+
+        $matcher = new Permissions($verifier);
 
         $this->assertFalse($matcher->doesMatch(['match' => 1, 'minimum' => 1, 'maximum' => 1]));
     }

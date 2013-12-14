@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Acl\Verifiable,
-    PitchBlade\Router\RequestMatcher\Matchable;
+use PitchBlade\Acl\Verifiable;
 
 /**
  * Check whether a request matches with permission requirements
