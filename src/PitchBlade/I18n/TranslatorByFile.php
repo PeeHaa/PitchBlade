@@ -21,10 +21,6 @@
  */
 namespace PitchBlade\I18n;
 
-use PitchBlade\I18n\Translator,
-    PitchBlade\I18n\InvalidTranslationFileException,
-    PitchBlade\I18n\InvalidTranslationFileFormatException;
-
 /**
  * This class provides an easy API to translate texts
  *
