@@ -13,8 +13,8 @@
  */
 namespace PitchBlade\I18n;
 
-use PitchBlade\I18n\Language\Recognizer,
-    PitchBlade\I18n\Language\RecognizerBuilder;
+use PitchBlade\I18n\Language\Recognizer;
+use PitchBlade\I18n\Language\RecognizerBuilder;
 
 /**
  * Tries to find out the user's prefered language
