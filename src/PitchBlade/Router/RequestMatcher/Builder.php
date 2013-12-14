@@ -14,9 +14,8 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Http\RequestData,
-    PitchBlade\Acl\Verifiable,
-    PitchBlade\Router\RequestMatcher\Matchable;
+use PitchBlade\Network\Http\RequestData;
+use PitchBlade\Acl\Verifiable;
 
 /**
  * Interface for request matcher factories
