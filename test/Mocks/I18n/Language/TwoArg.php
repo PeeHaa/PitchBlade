@@ -15,7 +15,7 @@
 namespace PitchBladeTest\Mocks\I18n\Language;
 
 use PitchBlade\I18n\Language\Recognizer,
-    PitchBlade\Http\RequestData;
+    PitchBlade\Network\Http\RequestData;
 
 /**
  * Language recognizer based on the browser

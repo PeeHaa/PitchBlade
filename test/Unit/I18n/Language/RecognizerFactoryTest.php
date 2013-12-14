@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\I18n\Language;
 
-use PitchBlade\I18n\Language\RecognizerFactory,
-    PitchBladeTest\Mocks\Http\Request;
+use PitchBlade\I18n\Language\RecognizerFactory;
 
 class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $factory = new RecognizerFactory([], new Request([]));
+        $factory = new RecognizerFactory([], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->assertInstanceOf('\\PitchBlade\\I18n\\Language\\RecognizerBuilder', $factory);
     }
@@ -23,7 +22,7 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildRecognizerWithSingleArgument()
     {
-        $factory = new RecognizerFactory(['nl'], new Request([]));
+        $factory = new RecognizerFactory(['nl'], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $recognizer = $factory->build('\\PitchBladeTest\\Mocks\\I18n\\Language\\SingleArg');
 
@@ -38,7 +37,7 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildRecognizerWithTwoArguments()
     {
-        $factory = new RecognizerFactory(['nl'], new Request([]));
+        $factory = new RecognizerFactory(['nl'], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $recognizer = $factory->build('\\PitchBladeTest\\Mocks\\I18n\\Language\\TwoArg');
 
@@ -52,7 +51,7 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildRecognizerInvalidRecognizer()
     {
-        $factory = new RecognizerFactory(['nl'], new Request([]));
+        $factory = new RecognizerFactory(['nl'], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->setExpectedException('\\PitchBlade\\I18n\\Language\\InvalidRecognizerException');
 
@@ -66,7 +65,7 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildRecognizerInvalidParameterNumber()
     {
-        $factory = new RecognizerFactory(['nl'], new Request([]));
+        $factory = new RecognizerFactory(['nl'], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->setExpectedException('\\PitchBlade\\I18n\\Language\\InvalidParameterNumberException');
 
@@ -80,7 +79,7 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildRecognizerInvalidParameterType()
     {
-        $factory = new RecognizerFactory(['nl'], new Request([]));
+        $factory = new RecognizerFactory(['nl'], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->setExpectedException('\\PitchBlade\\I18n\\Language\\InvalidParameterTypeException');
 

@@ -16,11 +16,7 @@
  */
 namespace PitchBlade\I18n\Language;
 
-use PitchBlade\I18n\Language\RecognizerBuilder,
-    PitchBlade\Http\RequestData,
-    PitchBlade\I18n\Language\InvalidRecognizerException,
-    PitchBlade\I18n\Language\InvalidParameterNumberException,
-    PitchBlade\I18n\Language\InvalidParameterTypeException;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Builds instances of language recognizers
@@ -38,7 +34,7 @@ class RecognizerFactory implements RecognizerBuilder
     private $supportedLanguages;
 
     /**
-     * @var \PitchBlade\Http\RequestData The request data
+     * @var \PitchBlade\Network\Http\RequestData The request data
      */
     private $request;
 
@@ -46,7 +42,7 @@ class RecognizerFactory implements RecognizerBuilder
      * Creates instance
      *
      * @param array                        $supportedLanguages The list of supported languages
-     * @param \PitchBlade\Http\RequestData $request            The request data
+     * @param \PitchBlade\Network\Http\RequestData $request            The request data
      */
     public function __construct(array $supportedLanguages, RequestData $request)
     {
@@ -84,7 +80,8 @@ class RecognizerFactory implements RecognizerBuilder
 
             default:
                 throw new InvalidParameterNumberException(
-                    'The number of supported parameters is either 1 or 2. The number of supplied parameters is `' . $constructor->getNumberOfParameters() . '`.'
+                    'The number of supported parameters is either 1 or 2. The number of supplied parameters is `'
+                    . $constructor->getNumberOfParameters() . '`.'
                 );
                 break;
         }
@@ -102,13 +99,15 @@ class RecognizerFactory implements RecognizerBuilder
     {
         $arguments = [$this->supportedLanguages];
         switch ($constructor->getParameters()[1]->getClass()->name) {
-            case 'PitchBlade\\Http\\RequestData':
+            case 'PitchBlade\\Network\\Http\\RequestData':
                 $arguments[] = $this->request;
                 break;
 
             default:
                 throw new InvalidParameterTypeException(
-                    'Invalid parameter type (`' . $constructor->getParameters()[1]->getClass()->name . '`) found in constructor of class (`' . $constructor->class . '`).'
+                    'Invalid parameter type (`'
+                    . $constructor->getParameters()[1]->getClass()->name
+                    . '`) found in constructor of class (`' . $constructor->class . '`).'
                 );
                 break;
         }
