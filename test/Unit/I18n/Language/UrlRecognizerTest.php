@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\I18n\Language;
 
-use PitchBlade\I18n\Language\UrlRecognizer,
-    PitchBladeTest\Mocks\Http\Request;
+use PitchBlade\I18n\Language\UrlRecognizer;
 
 class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $recognizer = new UrlRecognizer([], new Request([]));
+        $recognizer = new UrlRecognizer([], $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->assertInstanceOf('\\PitchBlade\\I18n\\Language\\Recognizer', $recognizer);
     }
@@ -23,7 +22,15 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageFoundLanguage()
     {
-        $recognizer = new UrlRecognizer(['nl'], new Request(['pathVariables'=>['language' => 'nl']]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->at(0))
+            ->method('path')
+            ->will($this->returnValue('nl'));
+        $request->expects($this->at(1))
+            ->method('path')
+            ->will($this->returnValue('nl'));
+
+        $recognizer = new UrlRecognizer(['nl'], $request);
 
         $this->assertSame('nl', $recognizer->getLanguage());
     }
@@ -34,7 +41,12 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageUnsupportedLanguage()
     {
-        $recognizer = new UrlRecognizer(['nl'], new Request(['pathVariables'=>['language' => 'en']]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('path')
+            ->will($this->returnValue('en'));
+
+        $recognizer = new UrlRecognizer(['nl'], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
@@ -45,7 +57,12 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageWithoutLanguages()
     {
-        $recognizer = new UrlRecognizer([], new Request(['pathVariables'=>['language' => 'en']]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('path')
+            ->will($this->returnValue('en'));
+
+        $recognizer = new UrlRecognizer([], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
@@ -56,7 +73,12 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageWithoutValidLanguageHeader()
     {
-        $recognizer = new UrlRecognizer([], new Request(['pathVariables'=>['language' => 'e']]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('path')
+            ->will($this->returnValue('e'));
+
+        $recognizer = new UrlRecognizer([], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
@@ -67,7 +89,12 @@ class UrlRecognizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLanguageWithoutLanguageHeader()
     {
-        $recognizer = new UrlRecognizer([], new Request(['pathVariables'=>[]]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('path')
+            ->will($this->returnValue(null));
+
+        $recognizer = new UrlRecognizer([], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }

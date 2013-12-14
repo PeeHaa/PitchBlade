@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\I18n\Language;
 
-use PitchBlade\I18n\Language\Recognizer,
-    PitchBlade\Http\RequestData;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Language recognizer based on the URL of the current request
@@ -57,8 +56,8 @@ class CookieRecognizer implements Recognizer
     public function getLanguage()
     {
         $language = null;
-        if (in_array($this->request->getCookieVariable('language'), $this->supportedLanguages)) {
-            $language = $this->request->getCookieVariable('language');
+        if (in_array($this->request->cookie('language'), $this->supportedLanguages)) {
+            $language = $this->request->cookie('language');
         }
 
         return $language;

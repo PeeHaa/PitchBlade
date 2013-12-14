@@ -16,8 +16,6 @@
  */
 namespace PitchBlade\I18n\Language;
 
-use PitchBlade\I18n\Language\Recognizer;
-
 /**
  * Language recognizer based on the default language
  *

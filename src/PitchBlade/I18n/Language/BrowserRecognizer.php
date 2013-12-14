@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\I18n\Language;
 
-use PitchBlade\I18n\Language\Recognizer,
-    PitchBlade\Http\RequestData;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Language recognizer based on the browser
@@ -57,8 +56,8 @@ class BrowserRecognizer implements Recognizer
     public function getLanguage()
     {
         $language = null;
-        if (in_array(substr($this->request->getServerVariable('HTTP_ACCEPT_LANGUAGE'), 0, 2), $this->supportedLanguages)) {
-            $language = substr($this->request->getServerVariable('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        if (in_array(substr($this->request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2), $this->supportedLanguages)) {
+            $language = substr($this->request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         }
 
         return $language;

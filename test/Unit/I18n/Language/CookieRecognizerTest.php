@@ -2,16 +2,16 @@
 
 namespace PitchBladeTest\Unit\I18n\Language;
 
-use PitchBlade\I18n\Language\BrowserRecognizer;
+use PitchBlade\I18n\Language\CookieRecognizer;
 
-class BrowserRecognizerTest extends \PHPUnit_Framework_TestCase
+class CookieRecognizerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::__construct
      */
     public function testConstructCorrectInterface()
     {
-        $recognizer = new BrowserRecognizer(
+        $recognizer = new CookieRecognizer(
             [],
             $this->getMock('\\PitchBlade\\Network\\Http\\RequestData')
         );
@@ -23,84 +23,84 @@ class BrowserRecognizerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::getLanguage
      */
     public function testGetLanguageFoundLanguage()
     {
         $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
         $request->expects($this->at(0))
-            ->method('server')
-            ->will($this->returnValue('nl-NL'));
+            ->method('cookie')
+            ->will($this->returnValue('nl'));
         $request->expects($this->at(1))
-            ->method('server')
-            ->will($this->returnValue('nl-NL'));
+            ->method('cookie')
+            ->will($this->returnValue('nl'));
 
-        $recognizer = new BrowserRecognizer(['nl'], $request);
+        $recognizer = new CookieRecognizer(['nl'], $request);
 
         $this->assertSame('nl', $recognizer->getLanguage());
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::getLanguage
      */
     public function testGetLanguageUnsupportedLanguage()
     {
         $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
         $request->expects($this->at(0))
-            ->method('server')
+            ->method('cookie')
             ->will($this->returnValue('en-US'));
 
-        $recognizer = new BrowserRecognizer(['nl'], $request);
+        $recognizer = new CookieRecognizer(['nl'], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::getLanguage
      */
     public function testGetLanguageWithoutLanguages()
     {
         $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
         $request->expects($this->at(0))
-            ->method('server')
+            ->method('cookie')
             ->will($this->returnValue('en-US'));
 
-        $recognizer = new BrowserRecognizer([], $request);
+        $recognizer = new CookieRecognizer([], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::getLanguage
      */
     public function testGetLanguageWithoutValidLanguageHeader()
     {
         $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
         $request->expects($this->at(0))
-            ->method('server')
+            ->method('cookie')
             ->will($this->returnValue('e'));
 
-        $recognizer = new BrowserRecognizer([], $request);
+        $recognizer = new CookieRecognizer([], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
 
     /**
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::__construct
-     * @covers PitchBlade\I18n\Language\BrowserRecognizer::getLanguage
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::__construct
+     * @covers PitchBlade\I18n\Language\CookieRecognizer::getLanguage
      */
     public function testGetLanguageWithoutLanguageHeader()
     {
         $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
         $request->expects($this->at(0))
-            ->method('server')
+            ->method('cookie')
             ->will($this->returnValue(null));
 
-        $recognizer = new BrowserRecognizer([], $request);
+        $recognizer = new CookieRecognizer([], $request);
 
         $this->assertNull($recognizer->getLanguage());
     }
