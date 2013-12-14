@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Http\RequestData,
-    PitchBlade\Router\RequestMatcher\Matchable;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Check whether a request matches with path requirements
@@ -28,14 +27,14 @@ use PitchBlade\Http\RequestData,
 class Path implements Matchable
 {
     /**
-     * @var \PitchBlade\Http\RequestData The request
+     * @var \PitchBlade\Network\Http\RequestData The request
      */
     private $request;
 
     /**
      * Creates instance
      *
-     * @param \PitchBlade\Http\RequestData $request The request to check for requirements
+     * @param \PitchBlade\Network\Http\RequestData $request The request to check for requirements
      */
     public function __construct(RequestData $request)
     {

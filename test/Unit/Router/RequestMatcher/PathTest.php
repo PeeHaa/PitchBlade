@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Path,
-    PitchBladeTest\Mocks\Http\Request;
+use PitchBlade\Router\RequestMatcher\Path;
 
 class PathTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrentInterface()
     {
-        $matcher = new Path(new Request([]));
+        $matcher = new Path($this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RequestMatcher\\Matchable', $matcher);
     }
@@ -23,7 +22,12 @@ class PathTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchTrue()
     {
-        $matcher = new Path(new Request(['path' => '/path/to/resource']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('getPath')
+            ->will($this->returnValue('/path/to/resource'));
+
+        $matcher = new Path($request);
 
         $this->assertTrue($matcher->doesMatch('/^\/path\/to\/resource$/'));
     }
@@ -34,7 +38,12 @@ class PathTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchFalse()
     {
-        $matcher = new Path(new Request(['path' => '/path/to/resource']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('getPath')
+            ->will($this->returnValue('/path/to/resource'));
+
+        $matcher = new Path($request);
 
         $this->assertFalse($matcher->doesMatch('/^\/path\/to\/resourcex$/'));
     }
