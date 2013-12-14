@@ -15,8 +15,8 @@
  */
 namespace PitchBlade\Security\CsrfToken\StorageMedium;
 
-use PitchBlade\Security\CsrfToken\StorageMedium,
-    PitchBlade\Storage\SessionInterface;
+use PitchBlade\Security\CsrfToken\StorageMedium;
+use PitchBlade\Storage\SessionInterface;
 
 /**
  * Provides a storage mechanism for CSRF tokens based on a sessions

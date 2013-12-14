@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Security\CsrfToken\StorageMedium;
 
-use PitchBladeTest\Mocks\Storage\Session as SessionStorage,
-    PitchBlade\Security\CsrfToken\StorageMedium\Session;
+use PitchBlade\Security\CsrfToken\StorageMedium\Session;
 
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +12,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSet()
     {
-        $session = new Session('somekey', new SessionStorage());
+        $session = new Session('somekey', $this->getMock('\\PitchBlade\\Storage\\SessionInterface'));
 
         $this->assertSame(null, $session->set('whatever'));
     }
@@ -24,7 +23,31 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWithoutValue()
     {
-        $session = new Session('somekey', new SessionStorage());
+        $sessionStorage = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $sessionStorage->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $sessionStorage->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(null));
+
+        $session = new Session('somekey', $sessionStorage);
+
+        $this->assertSame(null, $session->get());
+    }
+
+    /**
+     * @covers PitchBlade\Security\CsrfToken\StorageMedium\Session::__construct
+     * @covers PitchBlade\Security\CsrfToken\StorageMedium\Session::get
+     */
+    public function testGetWithoutValidKey()
+    {
+        $sessionStorage = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $sessionStorage->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(false));
+
+        $session = new Session('somekey', $sessionStorage);
 
         $this->assertSame(null, $session->get());
     }
@@ -36,7 +59,15 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWithValue()
     {
-        $session = new Session('somekey', new SessionStorage());
+        $sessionStorage = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $sessionStorage->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $sessionStorage->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue('yay value'));
+
+        $session = new Session('somekey', $sessionStorage);
         $session->set('yay value');
 
         $this->assertSame('yay value', $session->get());
