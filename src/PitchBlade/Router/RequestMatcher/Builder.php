@@ -32,7 +32,7 @@ interface Builder
      *
      * @param  string $type The type of RequestMatcher to build
      *
-     * @return \PitchBlade\Http\RequestMatcher\Matchable The instance of the matchable
+     * @return \PitchBlade\Network\Http\RequestMatcher\Matchable         The instance of the matchable
      * @throws \PitchBlade\Router\RequestMatcher\UnknownMatcherException When the matchable class doesn't exists
      * @throws \PitchBlade\Router\RequestMatcher\InvalidMatcherException When the possible matchable class doesn't
      *                                                                   implement the Matchable interface

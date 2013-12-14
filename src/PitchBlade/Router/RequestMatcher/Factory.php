@@ -14,12 +14,8 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Builder,
-    PitchBlade\Http\RequestData,
-    PitchBlade\Acl\Verifiable,
-    PitchBlade\Router\RequestMatcher\Matchable,
-    PitchBlade\Router\RequestMatcher\UnknownMatcherException,
-    PitchBlade\Router\RequestMatcher\InvalidMatcherException;
+use PitchBlade\Network\Http\RequestData;
+use PitchBlade\Acl\Verifiable;
 
 /**
  * Builds the request matchers for the different types in the request
@@ -32,7 +28,7 @@ use PitchBlade\Router\RequestMatcher\Builder,
 class Factory implements Builder
 {
     /**
-     * @var \PitchBlade\Http\Request The request to check whether it matches with the requirements
+     * @var \PitchBlade\Network\Http\Request The request to check whether it matches with the requirements
      */
     private $request;
 
@@ -44,8 +40,8 @@ class Factory implements Builder
     /**
      * Creates instance
      *
-     * @param \PitchBlade\Http\RequestData $request The request to check whether it matches with the requirements
-     * @param \PitchBlade\Acl\Verifiable   $acl     The access control list
+     * @param \PitchBlade\Network\Http\RequestData $request The request to check whether it matches with the requirements
+     * @param \PitchBlade\Acl\Verifiable           $acl     The access control list
      */
     public function __construct(RequestData $request, Verifiable $acl)
     {
@@ -82,7 +78,9 @@ class Factory implements Builder
         }
 
         if (!($matcher instanceof Matchable)) {
-            throw new InvalidMatcherException('Class (`' . $class . '`) does not implement the RequestMatcher interface.');
+            throw new InvalidMatcherException(
+                'Class (`' . $class . '`) does not implement the RequestMatcher interface.'
+            );
         }
 
         return $matcher;

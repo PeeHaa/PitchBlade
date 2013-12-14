@@ -2,9 +2,7 @@
 
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Factory,
-    PitchBladeTest\Mocks\Http\Request,
-    PitchBladeTest\Mocks\Acl\Verifier;
+use PitchBlade\Router\RequestMatcher\Factory;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +11,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RequestMatcher\\Builder', $factory);
     }
@@ -24,7 +25,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildUnknownClassStandard()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $this->setExpectedException('\\PitchBlade\\Router\\RequestMatcher\\UnknownMatcherException');
 
@@ -37,7 +41,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildUnknownClassCustom()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $this->setExpectedException('\\PitchBlade\\Router\\RequestMatcher\\UnknownMatcherException');
 
@@ -50,7 +57,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildStandardClassLowercase()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $matcher = $factory->build('ssl');
 
@@ -64,7 +74,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildStandardClassUppercase()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $matcher = $factory->build('SSL');
 
@@ -78,7 +91,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildStandardClassReversedcase()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $matcher = $factory->build('sSL');
 
@@ -92,7 +108,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildStandardClassCorrectcase()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $matcher = $factory->build('Ssl');
 
@@ -106,7 +125,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildCustomCorrect()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $matcher = $factory->build('\\PitchBladeTest\\Mocks\\Router\\RequestMatcher\\Custom');
 
@@ -120,7 +142,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildPermissions()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $matcher = $factory->build('permissions');
 
@@ -134,7 +159,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildCustomWrongInterface()
     {
-        $factory = new Factory(new Request([]), new Verifier([]));
+        $factory = new Factory(
+            $this->getMock('\\PitchBlade\\Network\\Http\\RequestData'),
+            $this->getMock('\\PitchBlade\\Acl\\Verifiable')
+        );
 
         $this->setExpectedException('\\PitchBlade\\Router\\RequestMatcher\\InvalidMatcherException');
 
