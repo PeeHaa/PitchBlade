@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Ssl,
-    PitchBladeTest\Mocks\Http\Request;
+use PitchBlade\Router\RequestMatcher\Ssl;
 
 class SslTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class SslTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrentInterface()
     {
-        $matcher = new Ssl(new Request([]));
+        $matcher = new Ssl($this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RequestMatcher\\Matchable', $matcher);
     }
@@ -23,7 +22,12 @@ class SslTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchTrue()
     {
-        $matcher = new Ssl(new Request(['ssl' => true]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('isSecure')
+            ->will($this->returnValue(true));
+
+        $matcher = new Ssl($request);
 
         $this->assertTrue($matcher->doesMatch(true));
     }
@@ -34,7 +38,12 @@ class SslTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchFalse()
     {
-        $matcher = new Ssl(new Request(['ssl' => false]));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('isSecure')
+            ->will($this->returnValue(false));
+
+        $matcher = new Ssl($request);
 
         $this->assertFalse($matcher->doesMatch(true));
     }
