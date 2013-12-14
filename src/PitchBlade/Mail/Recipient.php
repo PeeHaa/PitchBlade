@@ -13,9 +13,6 @@
  */
 namespace PitchBlade\Mail;
 
-use PitchBlade\Mail\Address,
-    PitchBlade\Mail\InvalidAddressException;
-
 /**
  * Represents an RFC 2822 emailaddress
  *

@@ -13,10 +13,6 @@
  */
 namespace PitchBlade\Mail;
 
-use PitchBlade\Mail\Deliverable,
-    PitchBlade\Mail\Address,
-    PitchBlade\Mail\MissingBodyException;
-
 /**
  * Represents an email message
  *
