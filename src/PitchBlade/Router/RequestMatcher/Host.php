@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Router\RequestMatcher;
 
-use PitchBlade\Http\RequestData,
-    PitchBlade\Router\RequestMatcher\Matchable;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Check whether a request matches with host requirements
@@ -28,14 +27,14 @@ use PitchBlade\Http\RequestData,
 class Host implements Matchable
 {
     /**
-     * @var \PitchBlade\Http\Request The request
+     * @var \PitchBlade\Network\Http\Request The request
      */
     private $request;
 
     /**
      * Creates instance
      *
-     * @param \PitchBlade\Http\RequestData $request The request to check for requirements
+     * @param \PitchBlade\Network\Http\RequestData $request The request to check for requirements
      */
     public function __construct(RequestData $request)
     {
@@ -51,7 +50,7 @@ class Host implements Matchable
      */
     public function doesMatch($requirement)
     {
-        if (preg_match($requirement, $this->request->getHost()) === 1) {
+        if (preg_match($requirement, $this->request->server('SERVER_NAME')) === 1) {
             return true;
         }
 

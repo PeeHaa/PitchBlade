@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Router\RequestMatcher;
 
-use PitchBlade\Router\RequestMatcher\Host,
-    PitchBladeTest\Mocks\Http\Request;
+use PitchBlade\Router\RequestMatcher\Host;
 
 class HostTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class HostTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrentInterface()
     {
-        $matcher = new Host(new Request([]));
+        $matcher = new Host($this->getMock('\\PitchBlade\\Network\\Http\\RequestData'));
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RequestMatcher\\Matchable', $matcher);
     }
@@ -23,7 +22,12 @@ class HostTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchTrue()
     {
-        $matcher = new Host(new Request(['host' => 'pitchblade.com']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('server')
+            ->will($this->returnValue('pitchblade.com'));
+
+        $matcher = new Host($request);
 
         $this->assertTrue($matcher->doesMatch('/^pitchblade\.com$/'));
     }
@@ -34,7 +38,12 @@ class HostTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesMatchFalse()
     {
-        $matcher = new Host(new Request(['host' => 'pitchblade.comx']));
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once())
+            ->method('server')
+            ->will($this->returnValue('pitchblade.comx'));
+
+        $matcher = new Host($request);
 
         $this->assertFalse($matcher->doesMatch('/^pitchblade\.com$/'));
     }
