@@ -13,8 +13,6 @@
  */
 namespace PitchBlade\Logging;
 
-use PitchBlade\Logging\Logger;
-
 /**
  * Logs items to an array
  *

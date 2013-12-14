@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Logging;
 
-use PitchBlade\Logging\TimedLogger,
-    PitchBladeTest\Mocks\Logging\Logger;
+use PitchBlade\Logging\TimedLogger;
 
 class TimedLoggerTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +12,7 @@ class TimedLoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testStartUniqueId()
     {
-        $logger = new TimedLogger(new Logger());
+        $logger = new TimedLogger($this->getMock('\\PitchBlade\\Logging\\Logger'));
 
         $previousIds = [];
         for ($i = 0; $i < 10; $i++) {
@@ -31,7 +30,7 @@ class TimedLoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEndSingleValid()
     {
-        $logger = new TimedLogger(new Logger());
+        $logger = new TimedLogger($this->getMock('\\PitchBlade\\Logging\\Logger'));
         $uniqid = $logger->start();
 
         $this->assertInternalType('float', $logger->end($uniqid, 'theType', 'theAction'));
@@ -44,7 +43,7 @@ class TimedLoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEndMultipleFirstValid()
     {
-        $logger = new TimedLogger(new Logger());
+        $logger = new TimedLogger($this->getMock('\\PitchBlade\\Logging\\Logger'));
         $uniqid = $logger->start();
 
         for ($i = 0; $i < 10; $i++) {
@@ -61,7 +60,7 @@ class TimedLoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEndMultipleLastValid()
     {
-        $logger = new TimedLogger(new Logger());
+        $logger = new TimedLogger($this->getMock('\\PitchBlade\\Logging\\Logger'));
         $uniqid = $logger->start();
 
         for ($i = 0; $i < 10; $i++) {
@@ -78,7 +77,7 @@ class TimedLoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testEndThrowsException()
     {
-        $logger = new TimedLogger(new Logger());
+        $logger = new TimedLogger($this->getMock('\\PitchBlade\\Logging\\Logger'));
         $logger->start();
 
         $this->setExpectedException('\\PitchBlade\Logging\\UnknownTimedLogItemException');

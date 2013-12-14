@@ -13,9 +13,6 @@
  */
 namespace PitchBlade\Logging;
 
-use PitchBlade\Logging\Timeable,
-    PitchBlade\Logging\Logger;
-
 /**
  * This interface represents a logger
  *
