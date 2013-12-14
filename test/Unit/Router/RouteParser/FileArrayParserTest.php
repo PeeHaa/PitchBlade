@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Router\RouteParser;
 
-use PitchBlade\Router\RouteParser\FileArrayParser,
-    PitchBladeTest\Mocks\Router\RouteParser\ArrayParser;
+use PitchBlade\Router\RouteParser\FileArrayParser;
 
 class FileArrayParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +12,7 @@ class FileArrayParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseSuccess()
     {
-        $parser = new FileArrayParser(new ArrayParser());
+        $parser = new FileArrayParser($this->getMock('\\PitchBlade\\Router\\RouteParser\\Parser'));
 
         $this->assertNull($parser->parse(__DIR__ . '/../../../Data/valid-routes.php'));
     }
@@ -24,7 +23,7 @@ class FileArrayParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseInvalidFile()
     {
-        $parser = new FileArrayParser(new ArrayParser());
+        $parser = new FileArrayParser($this->getMock('\\PitchBlade\\Router\\RouteParser\\Parser'));
 
         $this->setExpectedException('\\PitchBlade\\Router\\RouteParser\\MissingFileException');
 
@@ -37,7 +36,7 @@ class FileArrayParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseInvalidFileFormat()
     {
-        $parser = new FileArrayParser(new ArrayParser());
+        $parser = new FileArrayParser($this->getMock('\\PitchBlade\\Router\\RouteParser\\Parser'));
 
         $this->setExpectedException('\\PitchBlade\\Router\\RouteParser\\InvalidFormatException');
 

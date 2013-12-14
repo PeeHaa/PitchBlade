@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Router\RouteParser;
 
-use PitchBlade\Router\RouteParser\ArrayParser,
-    PitchBladeTest\Mocks\Router\Routes;
+use PitchBlade\Router\RouteParser\ArrayParser;
 
 class ArrayParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $parser = new ArrayParser(new Routes());
+        $parser = new ArrayParser($this->getMock('\\PitchBlade\\Router\\Routable'));
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\RouteParser\\Parser', $parser);
     }
@@ -23,7 +22,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseWithoutDefaults()
     {
-        $parser = new ArrayParser(new Routes());
+        $parser = new ArrayParser($this->getMock('\\PitchBlade\\Router\\Routable'));
 
         $routes = [
             'with mapping' => [
@@ -43,7 +42,7 @@ class ArrayParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseWithDefaults()
     {
-        $parser = new ArrayParser(new Routes());
+        $parser = new ArrayParser($this->getMock('\\PitchBlade\\Router\\Routable'));
 
         $routes = [
             'with mapping' => [

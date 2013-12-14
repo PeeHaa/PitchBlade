@@ -14,8 +14,7 @@
  */
 namespace PitchBlade\Router\RouteParser;
 
-use PitchBlade\Router\RouteParser\Parser,
-    PitchBlade\Router\Routable;
+use PitchBlade\Router\Routable;
 
 /**
  * Routes parser based on array input. This class adds routes to a routes collection

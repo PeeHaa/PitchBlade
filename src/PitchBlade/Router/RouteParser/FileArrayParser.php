@@ -14,10 +14,6 @@
  */
 namespace PitchBlade\Router\RouteParser;
 
-use PitchBlade\Router\RouteParser\Parser,
-    PitchBlade\Router\RouteParser\MissingFileException,
-    PitchBlade\Router\RouteParser\InvalidFormatException;
-
 /**
  * Routes parser based on a file which contains an array
  *

@@ -24,7 +24,6 @@ namespace PitchBlade\Router\RouteParser;
  */
 interface Parser
 {
-
     /**
      * Parses the routes formatted as an array
      *
