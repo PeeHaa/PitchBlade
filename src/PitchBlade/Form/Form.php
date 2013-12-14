@@ -13,11 +13,9 @@
  */
 namespace PitchBlade\Form;
 
-use PitchBlade\Form\Validatable,
-    PitchBlade\Form\Field\Builder,
-    PitchBlade\Security\TokenGenerator,
-    PitchBlade\Http\RequestData,
-    PitchBlade\Form\InvalidFieldException;
+use PitchBlade\Form\Field\Builder;
+use PitchBlade\Security\TokenGenerator;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * Form class
@@ -26,7 +24,7 @@ use PitchBlade\Form\Validatable,
  * @package    Form
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-abstract class Form implements Validatable, \Iterator
+abstract class Form implements Validatable
 {
     /**
      * @var \PitchBlade\Form\Field\Builder The field factory
@@ -42,11 +40,6 @@ abstract class Form implements Validatable, \Iterator
      * @var array The field of the form
      */
     private $fields = [];
-
-    /**
-     * @var int The current index used in the iterator
-     */
-    private $currentIteration = 0;
 
     /**
      * Creates instance
@@ -69,11 +62,11 @@ abstract class Form implements Validatable, \Iterator
     /**
      * Binds the request to the form
      *
-     * @param \PitchBlade\Http\RequestData $request The request
+     * @param \PitchBlade\Network\Http\RequestData $request The request
      */
     public function bind(RequestData $request)
     {
-        foreach ($request->getPostVariables() as $name => $variable) {
+        foreach ($request->postIterator() as $name => $variable) {
             if (!array_key_exists($name, $this->fields)) {
                 continue;
             }
@@ -104,7 +97,9 @@ abstract class Form implements Validatable, \Iterator
     public function getField($name)
     {
         if (!array_key_exists($name, $this->fields)) {
-            throw new InvalidFieldException('Trying to access a undefined field (`' . $name . '`).');
+            throw new InvalidFieldException(
+                'Trying to access a undefined field (`' . $name . '`).'
+            );
         }
 
         return $this->fields[$name];
@@ -125,57 +120,5 @@ abstract class Form implements Validatable, \Iterator
         }
 
         return $isValid;
-    }
-
-    /**
-     * Gets the current field
-     *
-     * @return \PitchBlade\Form\Field\Generic The current field
-     */
-    public function current()
-    {
-        return $this->fields[array_keys($this->fields)[$this->current]];
-    }
-
-    /**
-     * Gets the current key
-     *
-     * @return string The current key
-     */
-    public function key()
-    {
-        return array_keys($this->fields)[$this->current];
-    }
-
-    /**
-     * Gets the next field
-     *
-     * @return string The next field
-     */
-    public function next()
-    {
-        $this->current++;
-    }
-
-    /**
-     * Resets the pointer
-     */
-    public function rewind()
-    {
-        $this->current = 0;
-    }
-
-    /**
-     * Checks whether the current pointer is valid
-     *
-     * @return boolean True when the current pointer is valid
-     */
-    public function valid()
-    {
-        if ($this->current < count($this->fields)) {
-            return true;
-        }
-
-        return false;
     }
 }
