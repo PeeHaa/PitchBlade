@@ -53,7 +53,7 @@ class MailerTest extends \PHPUnit_Framework_TestCase
         $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
         $recipient->expects($this->once())
             ->method('getRfcAddress')
-            ->$this->returnValue('peehaa@xshghxgsxhjsdgbchdsgchjsdgcbhdsg');
+            ->will($this->returnValue('peehaa@xshghxgsxhjsdgbchdsgchjsdgcbhdsg'));
 
         $message = $this->getMock('\\PitchBlade\\Mail\\Deliverable');
         $message->expects($this->any())

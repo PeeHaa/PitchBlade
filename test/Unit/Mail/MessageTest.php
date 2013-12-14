@@ -2,8 +2,8 @@
 
 namespace PitchBladeTest\Unit\Mail;
 
-use PitchBlade\Mail\Message,
-    PitchBlade\Mail\Recipient;
+use PitchBlade\Mail\Message;
+//    PitchBlade\Mail\Recipient;
 
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterfaceWithCharset()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test', 'utf-8');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test', 'utf-8');
 
         $this->assertInstanceOf('\\PitchBlade\\Mail\\Deliverable', $message);
     }
@@ -22,7 +22,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterfaceWithoutCharset()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
         $this->assertInstanceOf('\\PitchBlade\\Mail\\Deliverable', $message);
     }
@@ -33,9 +33,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetReplyTo()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
-        $this->assertNull($message->setReplyTo(new Recipient('peehaa@php.net')));
+        $this->assertNull($message->setReplyTo($this->getMock('\\PitchBlade\\Mail\\Address')));
     }
 
     /**
@@ -44,9 +44,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddRecipient()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
-        $this->assertNull($message->addRecipient(new Recipient('peehaa@php.net')));
+        $this->assertNull($message->addRecipient($this->getMock('\\PitchBlade\\Mail\\Address')));
     }
 
     /**
@@ -56,10 +56,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRecipients()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
-        $this->assertNull($message->addRecipient(new Recipient('recipient1@php.net')));
-        $this->assertNull($message->addRecipient(new Recipient('recipient2@php.net')));
+        $this->assertNull($message->addRecipient($this->getMock('\\PitchBlade\\Mail\\Address')));
+        $this->assertNull($message->addRecipient($this->getMock('\\PitchBlade\\Mail\\Address')));
 
         $recipients = $message->getRecipients();
 
@@ -76,9 +76,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddCc()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
-        $this->assertNull($message->addCc(new Recipient('peehaa@php.net')));
+        $this->assertNull($message->addCc($this->getMock('\\PitchBlade\\Mail\\Address')));
     }
 
     /**
@@ -87,9 +87,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddBcc()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
-        $this->assertNull($message->addBcc(new Recipient('peehaa@php.net')));
+        $this->assertNull($message->addBcc($this->getMock('\\PitchBlade\\Mail\\Address')));
     }
 
     /**
@@ -98,7 +98,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetPlainTextBody()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
         $this->assertNull($message->setPlainTextBody('plainText'));
     }
@@ -109,7 +109,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetHtmlBody()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $message = new Message($this->getMock('\\PitchBlade\\Mail\\Address'), 'test');
 
         $this->assertNull($message->setHtmlBody('<p>html</p>'));
     }
@@ -120,7 +120,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeadersWithoutExtraRecipients()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
+
+        $message = new Message($recipient, 'test');
 
         $this->assertSame('peehaa@php.net', $message->getHeaders()['From']);
         $this->assertSame('peehaa@php.net', $message->getHeaders()['Reply-To']);
@@ -135,9 +140,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeadersWithCcAddress()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
 
-        $message->addCc(new Recipient('peehaa@php.net'));
+        $message = new Message($recipient, 'test');
+
+        $message->addCc($recipient);
 
         $this->assertSame('peehaa@php.net', $message->getHeaders()['From']);
         $this->assertSame('peehaa@php.net', $message->getHeaders()['Reply-To']);
@@ -153,10 +163,20 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeadersWithMultipleCcAddresses()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
 
-        $message->addCc(new Recipient('peehaa@php.net'));
-        $message->addCc(new Recipient('pieter@php.net'));
+        $recipientPieter = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipientPieter->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('pieter@php.net'));
+
+        $message = new Message($recipient, 'test');
+
+        $message->addCc($recipient);
+        $message->addCc($recipientPieter);
 
         $this->assertSame('peehaa@php.net', $message->getHeaders()['From']);
         $this->assertSame('peehaa@php.net', $message->getHeaders()['Reply-To']);
@@ -172,9 +192,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeadersWithBccAddress()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
 
-        $message->addBcc(new Recipient('peehaa@php.net'));
+        $message = new Message($recipient, 'test');
+
+        $message->addBcc($recipient);
 
         $this->assertSame('peehaa@php.net', $message->getHeaders()['From']);
         $this->assertSame('peehaa@php.net', $message->getHeaders()['Reply-To']);
@@ -190,10 +215,20 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeadersWithMultipleBccAddresses()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
 
-        $message->addBcc(new Recipient('peehaa@php.net'));
-        $message->addBcc(new Recipient('pieter@php.net'));
+        $recipientPieter = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipientPieter->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('pieter@php.net'));
+
+        $message = new Message($recipient, 'test');
+
+        $message->addBcc($recipient);
+        $message->addBcc($recipientPieter);
 
         $this->assertSame('peehaa@php.net', $message->getHeaders()['From']);
         $this->assertSame('peehaa@php.net', $message->getHeaders()['Reply-To']);
@@ -210,10 +245,20 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeadersWithBothCcAndBccAddresses()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
 
-        $message->addCc(new Recipient('peehaa@php.net'));
-        $message->addBcc(new Recipient('pieter@php.net'));
+        $recipientPieter = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipientPieter->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('pieter@php.net'));
+
+        $message = new Message($recipient, 'test');
+
+        $message->addCc($recipient);
+        $message->addBcc($recipientPieter);
 
         $this->assertSame('peehaa@php.net', $message->getHeaders()['From']);
         $this->assertSame('peehaa@php.net', $message->getHeaders()['Reply-To']);
@@ -228,7 +273,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSubject()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
+
+        $message = new Message($recipient, 'test');
 
         $this->assertSame('test', $message->getSubject());
     }
@@ -240,7 +290,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessageBodyThrowsExceptionOnNoContent()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
+
+        $message = new Message($recipient, 'test');
 
         $this->setExpectedException('\\PitchBlade\\Mail\\MissingBodyException');
 
@@ -255,7 +310,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessageBodyPlainTextOnly()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
+
+        $message = new Message($recipient, 'test');
 
         $message->setPlainTextBody('plainText');
 
@@ -272,7 +332,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessageBodyHtmlOnly()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
+
+        $message = new Message($recipient, 'test');
 
         $message->setHtmlBody('<p>html</p>');
 
@@ -290,7 +355,12 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessageBothPlainTextAndHtml()
     {
-        $message = new Message(new Recipient('peehaa@php.net'), 'test');
+        $recipient = $this->getMock('\\PitchBlade\\Mail\\Address');
+        $recipient->expects($this->any())
+            ->method('getRfcAddress')
+            ->will($this->returnValue('peehaa@php.net'));
+
+        $message = new Message($recipient, 'test');
 
         $message->setPlainTextBody('plainText');
         $message->setHtmlBody('<p>html</p>');
