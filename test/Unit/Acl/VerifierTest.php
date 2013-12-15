@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Acl;
 
-use PitchBlade\Acl\Verifier,
-    PitchBladeTest\Mocks\Storage\Session;;
+use PitchBlade\Acl\Verifier;
 
 class VerifierTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +11,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterfaceWithSingleParam()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $this->assertInstanceOf('\\PitchBlade\\Acl\\Verifiable', $verifier);
     }
@@ -22,7 +23,10 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterfaceWithAllParams()
     {
-        $verifier = new Verifier(new Session(), 'guestRole');
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface'),
+            'guestRole'
+        );
 
         $this->assertInstanceOf('\\PitchBlade\\Acl\\Verifiable', $verifier);
     }
@@ -33,7 +37,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddRolesSuccess()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $this->assertNull($verifier->addRoles([
             'guest' => [
@@ -48,9 +54,13 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddRolesMissingAccesslevel()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
-        $this->setExpectedException('\\PitchBlade\\Acl\\MissingAccesslevelException');
+        $this->setExpectedException(
+            '\\PitchBlade\\Acl\\MissingAccesslevelException'
+        );
 
         $verifier->addRoles([
             'guest' => [
@@ -65,9 +75,13 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddRolesInvalidAccesslevel()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
-        $this->setExpectedException('\\PitchBlade\\Acl\\InvalidAccesslevelException');
+        $this->setExpectedException(
+            '\\PitchBlade\\Acl\\InvalidAccesslevelException'
+        );
 
         $verifier->addRoles([
             'guest' => [
@@ -82,7 +96,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddRolesMissingGuestRole()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $this->setExpectedException('\\PitchBlade\\Acl\\MissingGuestException');
 
@@ -101,7 +117,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleNotLoggedIn()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $verifier->addRoles([
             'guest' => [
@@ -123,7 +141,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleNotLoggedInGuestLast()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $verifier->addRoles([
             'user' => [
@@ -145,7 +165,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleLoggedInWithRole()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'guest' => [
@@ -167,7 +195,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleLoggedInWithRoleFirst()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -189,7 +225,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleLoggedInWithoutRoleGuestFallback()
     {
-        $verifier = new Verifier(new Session(['user' => ['notRole' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['notRole' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -211,7 +255,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleInvalidRole()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'invalidRole']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'invalidRole']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -235,7 +287,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUserRoleLoggedInFromCache()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -259,7 +319,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAccesslevelOfRole()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $verifier->addRoles([
             'user' => [
@@ -282,7 +344,9 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAccesslevelOfRoleInvalidRole()
     {
-        $verifier = new Verifier(new Session());
+        $verifier = new Verifier(
+            $this->getMock('\\PitchBlade\\Storage\\SessionInterface')
+        );
 
         $verifier->addRoles([
             'user' => [
@@ -305,7 +369,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchSuccess()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -327,7 +399,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchFail()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -350,7 +430,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchMinimumAccesslevelSuccessExact()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -373,7 +461,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchMinimumAccesslevelSuccessGreater()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'admin']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'admin']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -399,7 +495,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchMinimumAccesslevelFail()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -425,7 +529,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchMaximumAccesslevelSuccessExact()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -448,7 +560,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchMaximumAccesslevelSuccessSmaller()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'user']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'user']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
@@ -474,7 +594,15 @@ class VerifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoesRoleMatchMaximumAccesslevelFail()
     {
-        $verifier = new Verifier(new Session(['user' => ['role' => 'admin']]));
+        $session = $this->getMock('\\PitchBlade\\Storage\\SessionInterface');
+        $session->expects($this->once())
+            ->method('isKeyValid')
+            ->will($this->returnValue(true));
+        $session->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(['role' => 'admin']));
+
+        $verifier = new Verifier($session);
 
         $verifier->addRoles([
             'user' => [
