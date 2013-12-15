@@ -16,11 +16,10 @@
  */
 namespace PitchBlade\Security;
 
-use PitchBlade\Security\TokenGenerator,
-    PitchBlade\Security\CsrfToken\StorageMedium,
-    PitchBlade\Security\Generator\Builder,
-    PitchBlade\Security\Generator\UnsupportedAlgorithmException,
-    PitchBlade\Security\Generator\InvalidLengthException;
+use PitchBlade\Security\CsrfToken\StorageMedium;
+use PitchBlade\Security\Generator\Builder;
+use PitchBlade\Security\Generator\UnsupportedAlgorithmException;
+use PitchBlade\Security\Generator\InvalidLengthException;
 
 /**
  * Provides a csrf token to secure forms
@@ -40,7 +39,7 @@ class CsrfToken implements TokenGenerator
      * @var \PitchBlade\Security\Generator\Builder Instance of a generator factory
      */
     private $generatorFactory;
-
+private $counter = 0;
     /**
      * @var array List of supported algorithms sorted by strength (strongest first)
      */
@@ -74,6 +73,7 @@ class CsrfToken implements TokenGenerator
     public function getToken()
     {
         $csrfToken = $this->storageMedium->get();
+
         if ($csrfToken === null) {
             $csrfToken = $this->generateToken();
         }
@@ -90,7 +90,7 @@ class CsrfToken implements TokenGenerator
      */
     public function validate($token)
     {
-        return $token == $this->getToken();
+        return $token === $this->getToken();
     }
 
     /**
@@ -130,7 +130,11 @@ class CsrfToken implements TokenGenerator
 
         if (strlen($buffer) < $rawLength) {
             throw new InvalidLengthException(
-                'The generated token didn\'t met the required length (`' . $rawLength . '`). Actual length is: `' . strlen($buffer) . '`.'
+                'The generated token didn\'t met the required length (`'
+                . $rawLength
+                . '`). Actual length is: `'
+                . strlen($buffer)
+                . '`.'
             );
         }
 
