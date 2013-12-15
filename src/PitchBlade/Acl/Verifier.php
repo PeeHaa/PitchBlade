@@ -14,12 +14,7 @@
  */
 namespace PitchBlade\Acl;
 
-use PitchBlade\Acl\Verifiable,
-    PitchBlade\Storage\SessionInterface,
-    PitchBlade\Acl\MissingAccesslevelException,
-    PitchBlade\Acl\InvalidAccesslevelException,
-    PitchBlade\Acl\MissingGuestException,
-    PitchBlade\Acl\InvalidRoleException;
+use PitchBlade\Storage\SessionInterface;
 
 /**
  * An ACL container. This class provides a secure container from which the controller actions will be called
