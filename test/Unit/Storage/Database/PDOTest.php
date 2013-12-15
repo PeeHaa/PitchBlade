@@ -2,8 +2,7 @@
 
 namespace PitchBladeTest\Unit\Storage\Database;
 
-use PitchBlade\Storage\Database\PDO,
-    PitchBladeTest\Mocks\Logging\TimedLogger;
+use PitchBlade\Storage\Database\PDO;
 
 class PDOTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +20,13 @@ class PDOTest extends \PHPUnit_Framework_TestCase
         $this->password = $dbInfo['password'];
         $this->driverOptions = $dbInfo['driverOptions'];
 
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
         $dbConnection->query('TRUNCATE TABLE test_table');
     }
 
@@ -30,7 +35,13 @@ class PDOTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $this->assertInstanceOf('\\PDO', $dbConnection);
         $this->assertInstanceOf('\\PitchBlade\\Storage\\Database\\PDO', $dbConnection);
@@ -42,7 +53,13 @@ class PDOTest extends \PHPUnit_Framework_TestCase
      */
     public function testExec()
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $this->assertSame(1, $dbConnection->exec("INSERT INTO test_table (name) VALUES ('first')"));
 
@@ -56,7 +73,13 @@ class PDOTest extends \PHPUnit_Framework_TestCase
      */
     public function testQuery()
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $this->assertInstanceOf(
             '\\PitchBlade\\Storage\\Database\\PDOStatement',
@@ -73,7 +96,13 @@ class PDOTest extends \PHPUnit_Framework_TestCase
      */
     public function testPrepare()
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $this->assertInstanceOf(
             '\\PitchBlade\\Storage\\Database\\PDOStatement',
@@ -90,7 +119,13 @@ class PDOTest extends \PHPUnit_Framework_TestCase
      */
     public function testCommit()
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $dbConnection->beginTransaction();
 

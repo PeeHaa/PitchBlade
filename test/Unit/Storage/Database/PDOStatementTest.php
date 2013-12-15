@@ -2,9 +2,8 @@
 
 namespace PitchBladeTest\Unit\Storage\Database;
 
-use PitchBlade\Storage\Database\PDO,
-    PitchBladeTest\Mocks\Logging\TimedLogger,
-    PitchBlade\Storage\Database\PDOStatement;
+use PitchBlade\Storage\Database\PDO;
+use PitchBlade\Storage\Database\PDOStatement;
 
 class PDOStatementTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +21,13 @@ class PDOStatementTest extends \PHPUnit_Framework_TestCase
         $this->password = $dbInfo['password'];
         $this->driverOptions = $dbInfo['driverOptions'];
 
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
         $dbConnection->query('TRUNCATE TABLE test_table');
     }
 
@@ -31,7 +36,13 @@ class PDOStatementTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $this->assertInstanceOf('\\PDOStatement', $dbConnection->query('SELECT count(*) FROM test_table'));
         $this->assertInstanceOf(
@@ -46,7 +57,13 @@ class PDOStatementTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecuteWithoutParams($bound_input_params = null)
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $stmt = $dbConnection->prepare("INSERT INTO test_table (name) VALUES ('noparams')");
         $this->assertTrue($stmt->execute());
@@ -61,7 +78,13 @@ class PDOStatementTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecuteWithParams($bound_input_params = null)
     {
-        $dbConnection = new PDO($this->dsn, $this->username, $this->password, $this->driverOptions, new TimedLogger());
+        $dbConnection = new PDO(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->driverOptions,
+            $this->getMock('\\PitchBlade\\Logging\\Timeable')
+        );
 
         $stmt = $dbConnection->prepare("INSERT INTO test_table (name) VALUES (:name)");
         $this->assertTrue($stmt->execute(['name' => 'withparams']));
