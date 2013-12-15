@@ -68,7 +68,7 @@ function getDatabaseInfo()
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
             \PDO::ATTR_STATEMENT_CLASS    => [
                 '\\PitchBlade\\Storage\\Database\\PDOStatement',
-                [new \PitchBladeTest\Mocks\Logging\TimedLogger()],
+                [new \PitchBlade\Logging\TimedLogger(new \PitchBlade\Logging\ArrayLogger())],
             ],
             \PDO::ATTR_STRINGIFY_FETCHES  => true,
         ],
@@ -87,12 +87,12 @@ require_once __DIR__ . '/../src/PitchBlade/bootstrap.php';
  */
 function createTestDatabase() {
     $dbInfo = getDatabaseInfo();
+
     $dbConnection = new \PDO($dbInfo['dsn'], $dbInfo['username'], $dbInfo['password'], $dbInfo['driverOptions']);
     $data = file_get_contents(__DIR__ . '/Data/Database/pitchblade.sql');
     $data = str_replace('{username}', $dbInfo['username'], $data);
 
     $statements = explode(';', $data);
-
     foreach ($statements as $statement) {
         if (empty($statement)) {
             continue;
@@ -103,3 +103,8 @@ function createTestDatabase() {
 }
 
 createTestDatabase();
+
+function mail_mock()
+{
+    return true;
+}
