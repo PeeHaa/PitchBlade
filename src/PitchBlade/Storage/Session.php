@@ -13,9 +13,6 @@
  */
 namespace PitchBlade\Storage;
 
-use PitchBlade\Storage\SessionInterface,
-    PitchBlade\Storage\InvalidKeyException;
-
 /**
  * Session class
  *
