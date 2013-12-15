@@ -13,7 +13,14 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $route = new Route('name', '/path/of/route', [], 'view', [], new RequestMatcher());
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            [],
+            $this->getMock('\\PitchBlade\\Router\\RequestMatchable')
+        );
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\AccessPoint', $route);
     }
@@ -24,7 +31,17 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatchesRequest()
     {
-        $route = new Route('name', '/path/of/route', [], 'view', [], new RequestMatcher());
+        $route = new Route(
+            'name',
+            '/path/of/route',
+            [],
+            'view',
+            [],
+            $this->getMock('\\PitchBlade\\Router\\RequestMatchable')
+        );
+
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->once)
 
         $this->assertTrue($route->matchesRequest(new Request(['host' => 'http://example.com'])));
     }

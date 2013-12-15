@@ -13,9 +13,6 @@
  */
 namespace PitchBlade\Router;
 
-use PitchBlade\Router\AccessPoint,
-    PitchBlade\Router\RequestMatchable;
-
 /**
  * This class represents a single route
  *
