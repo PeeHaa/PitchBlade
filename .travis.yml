@@ -6,7 +6,6 @@ php:
 
 before_script:
   - psql -c 'create database pitchblade_test;' -U postgres
-  - composer install
 
 script:
   - phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover=coverage.clover
