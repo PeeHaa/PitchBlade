@@ -13,8 +13,6 @@
  */
 namespace PitchBlade\Router;
 
-use PitchBlade\Router\RequestMatchable;
-
 /**
  * This interface is used by classes which represent a single route
  *
@@ -25,58 +23,20 @@ use PitchBlade\Router\RequestMatchable;
 interface AccessPoint
 {
     /**
-     * Checks whether the route matches the request
+     * Adds a regex patterns as requirements for path variables
      *
-     * @return boolean Whether the route matches the request
+     * @param array $requirements The regex patterns
+     *
+     * @return \PitchBlade\Router\Route Instance of self
      */
-    public function matchesRequest();
+    public function wherePattern(array $requirements);
 
     /**
-     * Gets the path of the route
+     * Adds default values for path variables
      *
-     * @return string The path of the route
-     */
-    public function getPath();
-
-    /**
-     * Gets the controller of the route
+     * @param array $defaults The defaults
      *
-     * @return string The controller
+     * @return \PitchBlade\Router\Route Instance of self
      */
-    public function getController();
-
-    /**
-     * Get the action of the route
-     *
-     * @return string The action
-     */
-    public function getAction();
-
-    /**
-     * Gets the dependencies
-     *
-     * @return array The dependencies
-     */
-    public function getDependencies();
-
-    /**
-     * Gets the view of the route
-     *
-     * @return string The view
-     */
-    public function getView();
-
-    /**
-     * Gets the path variables
-     *
-     * @return array The variables in the path
-     */
-    public function getPathVariables();
-
-    /**
-     * Gets the default values of the path variables
-     *
-     * @return array The default values of the path variables
-     */
-    public function getDefaults();
+    public function defaults(array $defaults);
 }
