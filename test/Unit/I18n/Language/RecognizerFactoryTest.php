@@ -58,7 +58,6 @@ class RecognizerFactoryTest extends \PHPUnit_Framework_TestCase
         $recognizer = $factory->build('\\PitchBladeTest\\Mocks\\I18n\\Language\\InvalidRecognizer');
     }
 
-
     /**
      * @covers PitchBlade\I18n\Language\RecognizerFactory::__construct
      * @covers PitchBlade\I18n\Language\RecognizerFactory::build

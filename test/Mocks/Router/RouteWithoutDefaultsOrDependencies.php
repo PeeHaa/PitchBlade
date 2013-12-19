@@ -40,14 +40,14 @@ class RouteWithoutDefaultsOrDependencies implements AccessPoint
     /**
      * Creates the instance of the route
      *
-     * @param string                               $name           The name of the route
-     * @param string                               $path           The path of the route
-     * @param array                                $requirements   Array of requirements to match the route against
-     * @param string                               $view           The view belonging to this route
-     * @param array                                $controller     The controller and action belonging to this route
-     * @param \BareCMSLIb\Router\RequestMatchable  $requestMatcher The request matcher which check whether the route
-     *                                                             matches with a request
-     * @param array                                $defaults       Optional defaults for path variables
+     * @param string                              $name           The name of the route
+     * @param string                              $path           The path of the route
+     * @param array                               $requirements   Array of requirements to match the route against
+     * @param string                              $view           The view belonging to this route
+     * @param array                               $controller     The controller and action belonging to this route
+     * @param \BareCMSLIb\Router\RequestMatchable $requestMatcher The request matcher which check whether the route
+     *                                                            matches with a request
+     * @param array                               $defaults       Optional defaults for path variables
      */
     public function __construct(
         $name,

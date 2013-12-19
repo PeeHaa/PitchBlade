@@ -64,7 +64,7 @@ class Request implements RequestData
     /**
      * Creates instance
      *
-     * @param \PitchBlade\Storage\ImmutableKeyValue $pathVariables    The path variables
+     * @param \PitchBlade\Storage\ImmutableKeyValue $pathVariables   The path variables
      * @param \PitchBlade\Storage\ImmutableKeyValue $getVariables    The GET variables
      * @param \PitchBlade\Storage\ImmutableKeyValue $postVariables   The POST variables
      * @param \PitchBlade\Storage\ImmutableKeyValue $serverVariables The SERVER variables

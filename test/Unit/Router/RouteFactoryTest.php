@@ -29,7 +29,7 @@ class RouteFactoryTest extends \PHPUnit_Framework_TestCase
 
         $routeFactory = new RouteFactory($pathFactory);
 
-        $this->assertInstanceOf('\\PitchBlade\\Router\\AccessPoint', $routeFactory->build('test', '/test', function() {
+        $this->assertInstanceOf('\\PitchBlade\\Router\\AccessPoint', $routeFactory->build('test', '/test', function () {
         }));
     }
 }

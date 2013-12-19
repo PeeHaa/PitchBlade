@@ -41,7 +41,7 @@ class TranslatorByFile implements Translator
      * @param string $path     The location of the translation file(s)
      * @param string $language The ISO code of the language to get the translations for
      *
-     * @throws \PitchBlade\I18n\InvalidTranslationFileException When the file could not be found
+     * @throws \PitchBlade\I18n\InvalidTranslationFileException       When the file could not be found
      * @throws \PitchBlade\I18n\InvalidTranslationFileFormatException When the format of the file is invalid
      */
     public function __construct($path, $language)

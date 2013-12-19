@@ -68,7 +68,7 @@ class Mailer implements Transporter
      *
      * http://php.net/manual/en/function.mail.php
      *
-     * @return string RFC 2822 address(es)
+     * @return string                                     RFC 2822 address(es)
      * @throws \PitchBlade\Mail\MissingRecipientException When there is no recipient supplied for the message
      */
     private function getRecipients()

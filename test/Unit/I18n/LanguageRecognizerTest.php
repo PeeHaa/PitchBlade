@@ -110,7 +110,7 @@ class LanguageRecognizerTest extends \PHPUnit_Framework_TestCase
         $factory = $this->getMock('\\PitchBlade\\I18n\\Language\\RecognizerBuilder');
         $factory->expects($this->at(0))
             ->method('build')
-            ->will($this->returnCallback(function() {
+            ->will($this->returnCallback(function () {
                 $langRecognizer = $this->getMock('\\PitchBlade\\I18n\\Language\\Recognizer');
                 $langRecognizer->expects($this->at(0))
                     ->method('getLanguage')
@@ -120,7 +120,7 @@ class LanguageRecognizerTest extends \PHPUnit_Framework_TestCase
             }));
         $factory->expects($this->at(1))
             ->method('build')
-            ->will($this->returnCallback(function() {
+            ->will($this->returnCallback(function () {
                 $langRecognizer = $this->getMock('\\PitchBlade\\I18n\\Language\\Recognizer');
                 $langRecognizer->expects($this->at(0))
                     ->method('getLanguage')

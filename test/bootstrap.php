@@ -47,7 +47,8 @@ define('PITCHBLADE_TEST_DATA_DIR', __DIR__ . '/Data');
  *
  * @return mixed The test data from the file
  */
-function getTestDataFromFile($file) {
+function getTestDataFromFile($file)
+{
     return require $file;
 }
 
@@ -85,7 +86,8 @@ require_once __DIR__ . '/../src/PitchBlade/bootstrap.php';
 /**
  * Create the table used for testing
  */
-function createTestDatabase() {
+function createTestDatabase()
+{
     $dbInfo = getDatabaseInfo();
 
     $dbConnection = new \PDO($dbInfo['dsn'], $dbInfo['username'], $dbInfo['password'], $dbInfo['driverOptions']);

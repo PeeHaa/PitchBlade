@@ -36,7 +36,7 @@ interface KeyValuePair
      *
      * @param mixed $key The key of which to retrieve the value
      *
-     * @return mixed The value
+     * @return mixed                                   The value
      * @throws \PitchBlade\Storage\InvalidKeyException When the key is not found
      */
     public function get($key);

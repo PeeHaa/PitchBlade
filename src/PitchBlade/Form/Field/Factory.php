@@ -30,7 +30,7 @@ class Factory implements Builder
      * @param string $name The name of the field
      * @param array  $data The data to build the field
      *
-     * @return \BareCMSLib\Form\Field\Generic The field
+     * @return \BareCMSLib\Form\Field\Generic               The field
      * @throws \PitchBlade\Form\Field\InvalidFieldException When trying to build an invalid field
      */
     public function build($name, array $data = [])

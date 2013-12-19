@@ -29,8 +29,8 @@ interface RecognizerBuilder
      *
      * @param string $recognizerName The fully qualified class name of the recognizer
      *
-     * @return \PitchBlade\I18n\Language\Recognizer The language recognizer
-     * @throws \PitchBlade\I18n\Language\InvalidRecognizerException If the recognizer can not be loaded
+     * @return \PitchBlade\I18n\Language\Recognizer                      The language recognizer
+     * @throws \PitchBlade\I18n\Language\InvalidRecognizerException      If the recognizer can not be loaded
      * @throws \PitchBlade\I18n\Language\InvalidParameterNumberException If the recognizer needs an invalid number of
      *                                                                   parameters
      */

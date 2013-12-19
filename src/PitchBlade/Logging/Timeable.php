@@ -36,7 +36,7 @@ interface Timeable
      * @param string $type   The type of action which is being logged (e.g. PDO::query)
      * @param string $action The specific action (e.g. 'SELECT * FROM table')
      *
-     * @return int The time logged in microseconds
+     * @return int                                              The time logged in microseconds
      * @throws \PitchBlade\Logging\UnknownTimedLogItemException When an unknown id is supplied
      */
     public function end($id, $type, $action);
