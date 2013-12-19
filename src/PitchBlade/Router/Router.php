@@ -1,0 +1,97 @@
+<?php
+/**
+ * Simple router which basically just represents a collection of routes
+ *
+ * PHP version 5.4
+ *
+ * @category   PitchBlade
+ * @package    Router
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2013 Pieter Hordijk
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @version    1.0.0
+ */
+namespace PitchBlade\Router;
+
+/**
+ * Simple router
+ *
+ * @category   PitchBlade
+ * @package    Router
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ */
+class Router
+{
+    /**
+     * @var array LIst of all registered routes
+     */
+    private $routes = [
+        'get'  => [],
+        'post' => [],
+    ];
+
+    /**
+     * @var \PitchBlade\Router\RouteBuilder Instance of the route factory
+     */
+    private $routeFactory;
+
+    /**
+     * Creates instance
+     *
+     * @param \PitchBlade\Router\RouteBuilder $routeFactory Instance of a route factory
+     */
+    public function __construct(RouteBuilder $routeFactory)
+    {
+        $this->routeFactory = $routeFactory;
+    }
+
+    /**
+     * Adds a route to the collection
+     *
+     * @param string   $name     The identifier for the route
+     * @param string   $type     The type (post/get) of the route
+     * @param string   $path     The raw path of the route
+     * @param callable $callback The callback that is run when the route is called
+     *
+     * @return \PitchBlade\Router\Route The route
+     * @throws \PitchBlade\Router\DuplicateRouteException When trying to add an already defined route
+     */
+    private function addRoute($name, $type, $path, callable $callback)
+    {
+        if (array_key_exists($name, $this->routes[$type])) {
+            throw new DuplicateRouteException('A `' . $type . '` route with the name `' . $name . '` already exists.');
+        }
+
+        $this->routes[$type][$name] = $this->routeFactory->build($name, $path, $callback);
+
+        return $this->routes[$type][$name];
+    }
+
+    /**
+     * Adds a GET route to the collection
+     *
+     * @param string   $name     The identifier for the route
+     * @param string   $path     The raw path of the route
+     * @param callable $callback The callback that is run when the route is called
+     *
+     * @return \PitchBlade\Router\Route The route
+     */
+    public function get($name, $path, callable $callback)
+    {
+        return $this->addRoute($name, 'get', $path, $callback);
+    }
+
+    /**
+     * Adds a POST route to the collection
+     *
+     * @param string   $name     The identifier for the route
+     * @param string   $path     The raw path of the route
+     * @param callable $callback The callback that is run when the route is called
+     *
+     * @return \PitchBlade\Router\Route The route
+     */
+    public function post($name, $path, callable $callback)
+    {
+        return $this->addRoute($name, 'post', $path, $callback);
+    }
+}
