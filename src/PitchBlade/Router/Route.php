@@ -35,6 +35,11 @@ class Route implements AccessPoint
     private $path;
 
     /**
+     * @var callable The callback
+     */
+    private $callback;
+
+    /**
      * @var array The (optional) requirements of path variables in the route
      */
     private $requirements = [];
@@ -47,13 +52,15 @@ class Route implements AccessPoint
     /**
      * Creates the instance of the route
      *
-     * @param string                       $name The name of the route
-     * @param PitchBlade\Router\PathParser $path The path of the route
+     * @param string                       $name     The name of the route
+     * @param PitchBlade\Router\PathParser $path     The path of the route
+     * @param callable                     $callback The callback of the route
      */
-    public function __construct($name, PathParser $path)
+    public function __construct($name, PathParser $path, callable $callback)
     {
-        $this->name = $name;
-        $this->path = $path;
+        $this->name     = $name;
+        $this->path     = $path;
+        $this->callback = $callback;
     }
 
     /**

@@ -11,7 +11,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructCorrectInterface()
     {
-        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'));
+        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'), function() {});
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\Route', $route);
     }
@@ -22,7 +22,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testWherePattern()
     {
-        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'));
+        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'), function() {});
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\Route', $route->wherePattern(['key' => 'pattern']));
     }
@@ -33,7 +33,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testDefaults()
     {
-        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'));
+        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'), function() {});
 
         $this->assertInstanceOf('\\PitchBlade\\Router\\Route', $route->defaults(['key' => 'value']));
     }
@@ -45,7 +45,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
      */
     public function testFluidInterface()
     {
-        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'));
+        $route = new Route('name', $this->getMock('\\PitchBlade\\Router\\PathParser'), function() {});
 
         $this->assertInstanceOf(
             '\\PitchBlade\\Router\\Route',
