@@ -38,6 +38,7 @@ class Fake implements SecurityGenerator
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
         }
+
         return $randomString;
     }
 }

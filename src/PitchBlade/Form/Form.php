@@ -91,7 +91,7 @@ abstract class Form implements Validatable
      *
      * @param string $name The name of the field to get
      *
-     * @return \PitchBlade\Form\Field\Generic The field
+     * @return \PitchBlade\Form\Field\Generic         The field
      * @throws \PitchBlade\Form\InvalidFieldException When there is no field with the supplied name
      */
     public function getField($name)

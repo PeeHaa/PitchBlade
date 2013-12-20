@@ -29,7 +29,7 @@ interface Builder
      *
      * @param string $class The fully qualified class name
      *
-     * @return \PitchBlade\Security\Generator The random string generator requested
+     * @return \PitchBlade\Security\Generator                           The random string generator requested
      * @throws \PitchBlade\Security\Generator\InvalidGeneratorException If the generator can not be loaded
      */
     public function build($class);

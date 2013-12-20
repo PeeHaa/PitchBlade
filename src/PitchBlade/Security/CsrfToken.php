@@ -106,7 +106,7 @@ private $counter = 0;
      *
      * @param int $rawLength The (raw) length of the token to be generated
      *
-     * @return string The generated CSRF token
+     * @return string                                                The generated CSRF token
      * @throws \PitchBlade\Security\Generator\InvalidLengthException When the generated token has an invalid length
      */
     private function generateToken($rawLength = 128)

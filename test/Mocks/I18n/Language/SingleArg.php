@@ -35,7 +35,7 @@ class SingleArg implements Recognizer
     /**
      * Creates instance
      *
-     * @param array                        $supportedLanguages The list of supported languages
+     * @param array $supportedLanguages The list of supported languages
      */
     public function __construct(array $supportedLanguages)
     {

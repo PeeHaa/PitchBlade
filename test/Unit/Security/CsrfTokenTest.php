@@ -243,7 +243,7 @@ class CsrfTokenTest extends \PHPUnit_Framework_TestCase
         $tokenGenerator->expects($this->at(0))->method('generate')->will($this->returnValue(str_repeat('.', 97)));
 
         $factory = $this->getMock('\\PitchBlade\\Security\\Generator\\Builder');
-        $factory->expects($this->at(0))->method('build')->will($this->returnCallback(function() {
+        $factory->expects($this->at(0))->method('build')->will($this->returnCallback(function () {
             throw new \PitchBlade\Security\Generator\UnsupportedAlgorithmException();
         }));
         $factory->expects($this->at(1))->method('build')->will($this->returnValue($tokenGenerator));

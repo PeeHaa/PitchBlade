@@ -30,7 +30,7 @@ class UrlBuilder implements UrlBuildable
      * @param string $name       The name of the route for which to build the URL
      * @param array  $parameters The optional parameters to build the URL with
      *
-     * @return string The built URL
+     * @return string                                          The built URL
      * @throws \PicthBlade\Router\MissingUrlParameterException When missing URL parameters
      */
     public function build($name, array $parameters = [])

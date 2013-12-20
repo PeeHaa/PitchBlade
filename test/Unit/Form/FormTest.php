@@ -51,14 +51,14 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $fieldFactory = $this->getMock('\\PitchBlade\\Form\\Field\\Builder');
         $fieldFactory->expects($this->at(0))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 return $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
             }));
         $fieldFactory->expects($this->at(1))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 return $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
@@ -110,14 +110,14 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $fieldFactory = $this->getMock('\\PitchBlade\\Form\\Field\\Builder');
         $fieldFactory->expects($this->at(0))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 return $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
             }));
         $fieldFactory->expects($this->at(1))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 return $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Text', [
                     $name, $data
                 ]);
@@ -175,7 +175,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $fieldFactory = $this->getMock('\\PitchBlade\\Form\\Field\\Builder');
         $fieldFactory->expects($this->at(0))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 $csrfField = $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
@@ -209,7 +209,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $fieldFactory = $this->getMock('\\PitchBlade\\Form\\Field\\Builder');
         $fieldFactory->expects($this->at(0))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 $csrfField = $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
@@ -219,7 +219,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             }));
         $fieldFactory->expects($this->at(1))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 $textField = $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
@@ -264,7 +264,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $fieldFactory = $this->getMock('\\PitchBlade\\Form\\Field\\Builder');
         $fieldFactory->expects($this->at(0))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 $csrfField = $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);
@@ -274,7 +274,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             }));
         $fieldFactory->expects($this->at(1))
             ->method('build')
-            ->will($this->returnCallback(function($name, $data) {
+            ->will($this->returnCallback(function ($name, $data) {
                 $textField = $this->getMockForAbstractClass('\\PitchBlade\\Form\\Field\\Generic', [
                     $name, $data
                 ]);

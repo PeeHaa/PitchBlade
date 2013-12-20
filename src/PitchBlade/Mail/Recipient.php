@@ -41,7 +41,7 @@ class Recipient implements Address
      * Creates instance
      *
      * @param string $address The emailaddress
-     * @param string $name The name
+     * @param string $name    The name
      *
      * @throws \PitchBlade\Mail\InvalidAddressException When the supplied e-mailaddress is invalid
      */

@@ -41,7 +41,7 @@ class RecognizerFactory implements RecognizerBuilder
     /**
      * Creates instance
      *
-     * @param array                        $supportedLanguages The list of supported languages
+     * @param array                                $supportedLanguages The list of supported languages
      * @param \PitchBlade\Network\Http\RequestData $request            The request data
      */
     public function __construct(array $supportedLanguages, RequestData $request)
@@ -55,8 +55,8 @@ class RecognizerFactory implements RecognizerBuilder
      *
      * @param string $recognizerName The fully qualified class name of the recognizer
      *
-     * @return \PitchBlade\I18n\Language\Recognizer The language recognizer
-     * @throws \PitchBlade\I18n\Language\InvalidRecognizerException If the recognizer can not be loaded
+     * @return \PitchBlade\I18n\Language\Recognizer                      The language recognizer
+     * @throws \PitchBlade\I18n\Language\InvalidRecognizerException      If the recognizer can not be loaded
      * @throws \PitchBlade\I18n\Language\InvalidParameterNumberException If the recognizer needs an invalid number of
      *                                                                   parameters
      */
@@ -92,7 +92,7 @@ class RecognizerFactory implements RecognizerBuilder
      *
      * @param \ReflectionMethod $constructor The constructor
      *
-     * @return array The arguments for the constructor
+     * @return array                                                   The arguments for the constructor
      * @throws \PitchBlade\I18n\Language\InvalidParameterTypeException When constructor expects an invalid parameter type
      */
     private function buildClassConstructorArguments(\ReflectionMethod $constructor)

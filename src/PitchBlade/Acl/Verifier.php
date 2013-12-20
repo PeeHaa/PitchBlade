@@ -66,7 +66,7 @@ class Verifier implements Verifiable
      *
      * @throws \PitchBlade\Acl\MissingAccesslevelException When there is no accesslevel
      * @throws \PitchBlade\Acl\InvalidAccesslevelException When accesslevel is not an integer value
-     * @throws \PitchBlade\Acl\MissingGuestException When roles do not contain a guest account
+     * @throws \PitchBlade\Acl\MissingGuestException       When roles do not contain a guest account
      */
     public function addRoles(array $roles)
     {
@@ -95,7 +95,7 @@ class Verifier implements Verifiable
     /**
      * Gets the role of the current user
      *
-     * @return string The name of role of the current user
+     * @return string                               The name of role of the current user
      * @throws \PitchBlade\Acl\InvalidRoleException When the user's role is not defined
      */
     private function getUserRole()
@@ -127,7 +127,7 @@ class Verifier implements Verifiable
      *
      * @param string The name of the role
      *
-     * @return int The accesslevel of the role
+     * @return int                                  The accesslevel of the role
      * @throws \PitchBlade\Acl\InvalidRoleException When the user's role is not defined
      */
     private function getAccesslevelOfRole($role)

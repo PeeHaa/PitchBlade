@@ -53,7 +53,7 @@ class Router
      * @param string   $path     The raw path of the route
      * @param callable $callback The callback that is run when the route is called
      *
-     * @return \PitchBlade\Router\Route The route
+     * @return \PitchBlade\Router\Route                   The route
      * @throws \PitchBlade\Router\DuplicateRouteException When trying to add an already defined route
      */
     private function addRoute($name, $type, $path, callable $callback)

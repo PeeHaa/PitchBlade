@@ -48,7 +48,7 @@ class PDOStatement extends \PDOStatement
      *
      * @param array $bound_input_params The list of parameters
      *
-     * @return boolean True on success
+     * @return boolean       True on success
      * @throws \PDOException On failure
      */
     public function execute($bound_input_params = null)

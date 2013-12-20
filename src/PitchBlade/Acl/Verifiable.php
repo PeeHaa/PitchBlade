@@ -30,7 +30,7 @@ interface Verifiable
      *
      * @throws \PitchBlade\Acl\MissingAccesslevelException When there is no accesslevel
      * @throws \PitchBlade\Acl\InvalidAccesslevelException When accesslevel is not an integer value
-     * @throws \PitchBlade\Acl\MissingGuestException When roles do not contain a guest account
+     * @throws \PitchBlade\Acl\MissingGuestException       When roles do not contain a guest account
      */
     public function addRoles(array $roles);
 

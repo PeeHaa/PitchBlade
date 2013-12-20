@@ -16,13 +16,13 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $routeFactory = $this->getMock('\\PitchBlade\\Router\\RouteBuilder');
         $routeFactory->expects($this->once())
             ->method('build')
-            ->will($this->returnCallback(function($name, $path, $callback) {
+            ->will($this->returnCallback(function ($name, $path, $callback) {
                 return [$name, $path, $callback];
             }));
 
         $router = new Router($routeFactory);
 
-        $route = $router->get('routeName', 'routePath', function() {
+        $route = $router->get('routeName', 'routePath', function () {
             return true;
         });
 
@@ -40,13 +40,13 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $router = new Router($this->getMock('\\PitchBlade\\Router\\RouteBuilder'));
 
-        $route = $router->get('routeName', 'routePath', function() {
+        $route = $router->get('routeName', 'routePath', function () {
             return true;
         });
 
         $this->setExpectedException('\\PitchBlade\\Router\\DuplicateRouteException');
 
-        $route = $router->get('routeName', 'routePath', function() {
+        $route = $router->get('routeName', 'routePath', function () {
             return true;
         });
     }
@@ -61,13 +61,13 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $routeFactory = $this->getMock('\\PitchBlade\\Router\\RouteBuilder');
         $routeFactory->expects($this->once())
             ->method('build')
-            ->will($this->returnCallback(function($name, $path, $callback) {
+            ->will($this->returnCallback(function ($name, $path, $callback) {
                 return [$name, $path, $callback];
             }));
 
         $router = new Router($routeFactory);
 
-        $route = $router->post('routeName', 'routePath', function() {
+        $route = $router->post('routeName', 'routePath', function () {
             return true;
         });
 
@@ -85,13 +85,13 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $router = new Router($this->getMock('\\PitchBlade\\Router\\RouteBuilder'));
 
-        $route = $router->post('routeName', 'routePath', function() {
+        $route = $router->post('routeName', 'routePath', function () {
             return true;
         });
 
         $this->setExpectedException('\\PitchBlade\\Router\\DuplicateRouteException');
 
-        $route = $router->post('routeName', 'routePath', function() {
+        $route = $router->post('routeName', 'routePath', function () {
             return true;
         });
     }
@@ -111,11 +111,11 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $router = new Router($routeFactory);
 
-        $getRoute = $router->get('getRoute', 'routePath', function() {
+        $getRoute = $router->get('getRoute', 'routePath', function () {
             return true;
         });
 
-        $postRoute = $router->post('postRoute', 'routePath', function() {
+        $postRoute = $router->post('postRoute', 'routePath', function () {
             return false;
         });
 

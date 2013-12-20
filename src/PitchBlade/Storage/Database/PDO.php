@@ -56,7 +56,7 @@ class PDO extends \PDO
      *
      * @param string $statement The SQL statement to execute
      *
-     * @return false|int False when an error occured and the number of affected rows otherwise
+     * @return false|int     False when an error occured and the number of affected rows otherwise
      * @throws \PDOException When the query failed
      */
     public function exec($statement)
@@ -79,7 +79,7 @@ class PDO extends \PDO
      * @param string $statement The SQL statement to execute
      *
      * @return false|\PDOStatement False on failure or instance of \PDOStatement on success
-     * @throws \PDOException When the query failed
+     * @throws \PDOException       When the query failed
      */
     public function query($statement)
     {

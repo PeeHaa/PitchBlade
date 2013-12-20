@@ -43,7 +43,7 @@ class RoutesWithDefaultsWithoutDependencies implements Routable
      *
      * @param string $name The name of the route to find
      *
-     * @return \PitchBlade\Router\Route The route
+     * @return \PitchBlade\Router\Route                 The route
      * @throws \PitchBlade\Router\InvalidRouteException When no route matches the name
      */
     public function getRouteByName($name)
@@ -53,7 +53,7 @@ class RoutesWithDefaultsWithoutDependencies implements Routable
     /**
      * Gets a route by requestdata
      *
-     * @return \PitchBlade\Router\Route The matching route
+     * @return \PitchBlade\Router\Route                 The matching route
      * @throws \PitchBlade\Router\InvalidRouteException When no route matches the request
      */
     public function getRouteByRequest()
