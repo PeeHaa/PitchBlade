@@ -43,6 +43,8 @@
                 <file>src/PitchBlade/Mail/MissingRecipientException.php</file>
                 <file>src/PitchBlade/Mail/SendFailureException.php</file>
                 <file>src/PitchBlade/Router/DuplicateRouteException.php</file>
+                <file>src/PitchBlade/Router/NotFoundException.php</file>
+                <file>src/PitchBlade/Router/UnsupportedMethodException.php</file>
                 <file>src/PitchBlade/Security/password_compat.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidGeneratorException.php</file>
                 <file>src/PitchBlade/Security/Generator/InvalidLengthException.php</file>
