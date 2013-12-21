@@ -6,20 +6,23 @@
  *
  * @category   PitchBlade
  * @package    Router
+ * @subpackage Route
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  * @version    1.0.0
  */
-namespace PitchBlade\Router;
+namespace PitchBlade\Router\Route;
 
-use PitchBlade\Router\PathParser;
+use PitchBlade\Router\Path\Parser;
+use PitchBlade\Network\Http\RequestData;
 
 /**
  * This class represents a single route
  *
  * @category   PitchBlade
  * @package    Router
+ * @subpackage Route
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class Route implements AccessPoint
@@ -30,7 +33,7 @@ class Route implements AccessPoint
     private $name;
 
     /**
-     * @var PitchBlade\Router\PathParser The path of the route
+     * @var PitchBlade\Router\Path\Parser The path of the route
      */
     private $path;
 
@@ -52,11 +55,11 @@ class Route implements AccessPoint
     /**
      * Creates the instance of the route
      *
-     * @param string                       $name     The name of the route
-     * @param PitchBlade\Router\PathParser $path     The path of the route
-     * @param callable                     $callback The callback of the route
+     * @param string                        $name     The name of the route
+     * @param PitchBlade\Router\Path\Parser $path     The path of the route
+     * @param callable                      $callback The callback of the route
      */
-    public function __construct($name, PathParser $path, callable $callback)
+    public function __construct($name, Parser $path, callable $callback)
     {
         $this->name     = $name;
         $this->path     = $path;
@@ -68,7 +71,7 @@ class Route implements AccessPoint
      *
      * @param array $requirements The regex patterns
      *
-     * @return \PitchBlade\Router\Route Instance of self
+     * @return \PitchBlade\Router\Route\AccessPoint Instance of self
      */
     public function wherePattern(array $requirements)
     {
@@ -82,12 +85,22 @@ class Route implements AccessPoint
      *
      * @param array $defaults The defaults
      *
-     * @return \PitchBlade\Router\Route Instance of self
+     * @return \PitchBlade\Router\Route\AccessPoint Instance of self
      */
     public function defaults(array $defaults)
     {
         $this->defaults = $defaults;
 
         return $this;
+    }
+
+    public function matchesRequest(RequestData $request)
+    {
+        $pathParts = explode('/', trim($request->getPath(), '/'));
+
+        foreach ($this->path->getParts() as $pathPart) {
+        }
+
+        return true;
     }
 }
