@@ -122,4 +122,149 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('getRoute', $getRoute);
         $this->assertSame('postRoute', $postRoute);
     }
+
+    /**
+     * @covers PitchBlade\Router\Router::__construct
+     * @covers PitchBlade\Router\Router::getRoute
+     */
+    public function testGetRouteThrowsOnUnsupportedMethod()
+    {
+        $router = new Router($this->getMock('\\PitchBlade\\Router\\Route\\Builder'));
+
+        $this->setExpectedException('\\PitchBlade\\Router\\UnsupportedMethodException');
+
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->any())
+            ->method('getMethod')
+            ->will($this->returnValue('UNSUPPORTED'));
+
+        $router->getRoute($request);
+    }
+
+    /**
+     * @covers PitchBlade\Router\Router::__construct
+     * @covers PitchBlade\Router\Router::get
+     * @covers PitchBlade\Router\Router::addRoute
+     * @covers PitchBlade\Router\Router::getRoute
+     */
+    public function testGetRouteFoundFirst()
+    {
+        $routeFactory = $this->getMock('\\PitchBlade\\Router\\Route\\Builder');
+        $routeFactory->expects($this->at(0))
+            ->method('build')
+            ->will($this->returnCallback(function() {
+                $route = $this->getMock('\\PitchBlade\\Router\\Route\\AccessPoint');
+                $route->expects($this->once())
+                    ->method('matchesRequest')
+                    ->will($this->returnValue(true));
+
+                return $route;
+            }));
+
+        $router = new Router($routeFactory);
+
+        $router->get('foo', '/foo', function() {});
+
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->any())
+            ->method('getMethod')
+            ->will($this->returnValue('GET'));
+
+        $this->assertInstanceOf('\\PitchBlade\\Router\\Route\\AccessPoint', $router->getRoute($request));
+    }
+
+    /**
+     * @covers PitchBlade\Router\Router::__construct
+     * @covers PitchBlade\Router\Router::get
+     * @covers PitchBlade\Router\Router::addRoute
+     * @covers PitchBlade\Router\Router::getRoute
+     */
+    public function testGetRouteFoundSecond()
+    {
+        $routeFactory = $this->getMock('\\PitchBlade\\Router\\Route\\Builder');
+        $routeFactory->expects($this->at(0))
+            ->method('build')
+            ->will($this->returnCallback(function() {
+                $route = $this->getMock('\\PitchBlade\\Router\\Route\\AccessPoint');
+                $route->expects($this->once())
+                    ->method('matchesRequest')
+                    ->will($this->returnValue(false));
+
+                return $route;
+            }));
+        $routeFactory->expects($this->at(1))
+            ->method('build')
+            ->will($this->returnCallback(function() {
+                $route = $this->getMock('\\PitchBlade\\Router\\Route\\AccessPoint');
+                $route->expects($this->once())
+                    ->method('matchesRequest')
+                    ->will($this->returnValue(true));
+
+                return $route;
+            }));
+
+        $router = new Router($routeFactory);
+
+        $router->get('foo', '/foo', function() {});
+        $router->get('bar', '/bar', function() {});
+
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->any())
+            ->method('getMethod')
+            ->will($this->returnValue('GET'));
+
+        $this->assertInstanceOf('\\PitchBlade\\Router\\Route\\AccessPoint', $router->getRoute($request));
+    }
+
+    /**
+     * @covers PitchBlade\Router\Router::__construct
+     * @covers PitchBlade\Router\Router::getRoute
+     */
+    public function testGetRouteThrowsNotFound()
+    {
+        $router = new Router($this->getMock('\\PitchBlade\\Router\\Route\\Builder'));
+
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->any())
+            ->method('getMethod')
+            ->will($this->returnValue('GET'));
+
+        $this->setExpectedException('\\PitchBlade\\Router\\NotFoundException');
+
+        $router->getRoute($request);
+    }
+
+    /**
+     * @covers PitchBlade\Router\Router::__construct
+     * @covers PitchBlade\Router\Router::get
+     * @covers PitchBlade\Router\Router::addRoute
+     * @covers PitchBlade\Router\Router::getRoute
+     */
+    public function testGetRouteThrowsNotFoundButDoesIncludeRoute()
+    {
+        $routeFactory = $this->getMock('\\PitchBlade\\Router\\Route\\Builder');
+        $routeFactory->expects($this->at(0))
+            ->method('build')
+            ->will($this->returnCallback(function() {
+                $route = $this->getMock('\\PitchBlade\\Router\\Route\\AccessPoint');
+                $route->expects($this->once())
+                    ->method('matchesRequest')
+                    ->will($this->returnValue(false));
+
+                return $route;
+            }));
+
+        $router = new Router($routeFactory);
+
+        $router->get('foo', '/foo', function() {});
+
+        $request = $this->getMock('\\PitchBlade\\Network\\Http\\RequestData');
+        $request->expects($this->any())
+            ->method('getMethod')
+            ->will($this->returnValue('GET'));
+
+        $this->setExpectedException('\\PitchBlade\\Router\\NotFoundException');
+
+        $router->getRoute($request);
+    }
 }
