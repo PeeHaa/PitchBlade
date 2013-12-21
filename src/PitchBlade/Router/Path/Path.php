@@ -6,21 +6,23 @@
  *
  * @category   PitchBlade
  * @package    Router
+ * @subpackage Path
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2013 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  * @version    1.0.0
  */
-namespace PitchBlade\Router;
+namespace PitchBlade\Router\Path;
 
 /**
  * This class represents a path of a route
  *
  * @category   PitchBlade
  * @package    Router
+ * @subpackage Path
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Path implements PathParser
+class Path implements Parser
 {
     /**
      * @var string The raw path
