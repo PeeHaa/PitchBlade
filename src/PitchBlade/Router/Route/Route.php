@@ -94,6 +94,13 @@ class Route implements AccessPoint
         return $this;
     }
 
+    /**
+     * Tries to match the current route against the request
+     *
+     * @param \PitchBlade\Network\Http\RequestData $request The request data
+     *
+     * @return boolean True when the route matches the request
+     */
     public function matchesRequest(RequestData $request)
     {
         $pathParts = explode('/', trim($request->getPath(), '/'));
