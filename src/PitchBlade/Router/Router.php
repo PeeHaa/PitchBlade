@@ -29,8 +29,8 @@ class Router
      * @var array LIst of all registered routes
      */
     private $routes = [
-        'get'  => [],
-        'post' => [],
+        'GET'  => [],
+        'POST' => [],
     ];
 
     /**
@@ -81,7 +81,7 @@ class Router
      */
     public function get($name, $path, callable $callback)
     {
-        return $this->addRoute($name, 'get', $path, $callback);
+        return $this->addRoute($name, 'GET', $path, $callback);
     }
 
     /**
@@ -95,7 +95,7 @@ class Router
      */
     public function post($name, $path, callable $callback)
     {
-        return $this->addRoute($name, 'post', $path, $callback);
+        return $this->addRoute($name, 'POST', $path, $callback);
     }
 
     /**
