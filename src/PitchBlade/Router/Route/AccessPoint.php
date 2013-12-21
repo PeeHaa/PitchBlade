@@ -14,6 +14,8 @@
  */
 namespace PitchBlade\Router\Route;
 
+use PitchBlade\Network\Http\RequestData;
+
 /**
  * This interface is used by classes which represent a single route
  *
@@ -41,4 +43,13 @@ interface AccessPoint
      * @return \PitchBlade\Router\Route\AccessPoint Instance of self
      */
     public function defaults(array $defaults);
+
+    /**
+     * Tries to match the current route against the request
+     *
+     * @param \PitchBlade\Network\Http\RequestData $request The request data
+     *
+     * @return boolean True when the route matches the request
+     */
+    public function matchesRequest(RequestData $request);
 }
