@@ -13,6 +13,9 @@
  */
 namespace PitchBlade\Router;
 
+use PitchBlade\Router\Route\Builder;
+use PitchBlade\Network\Http\RequestData;
+
 /**
  * Simple router
  *
@@ -31,16 +34,16 @@ class Router
     ];
 
     /**
-     * @var \PitchBlade\Router\RouteBuilder Instance of the route factory
+     * @var \PitchBlade\Router\Route\Builder Instance of the route factory
      */
     private $routeFactory;
 
     /**
      * Creates instance
      *
-     * @param \PitchBlade\Router\RouteBuilder $routeFactory Instance of a route factory
+     * @param \PitchBlade\Router\Route\Builder $routeFactory Instance of a route factory
      */
-    public function __construct(RouteBuilder $routeFactory)
+    public function __construct(Builder $routeFactory)
     {
         $this->routeFactory = $routeFactory;
     }
@@ -53,7 +56,7 @@ class Router
      * @param string   $path     The raw path of the route
      * @param callable $callback The callback that is run when the route is called
      *
-     * @return \PitchBlade\Router\Route                   The route
+     * @return \PitchBlade\Router\Route\AccessPoint       The route
      * @throws \PitchBlade\Router\DuplicateRouteException When trying to add an already defined route
      */
     private function addRoute($name, $type, $path, callable $callback)
@@ -74,7 +77,7 @@ class Router
      * @param string   $path     The raw path of the route
      * @param callable $callback The callback that is run when the route is called
      *
-     * @return \PitchBlade\Router\Route The route
+     * @return \PitchBlade\Router\Route\AccessPoint The route
      */
     public function get($name, $path, callable $callback)
     {
@@ -88,10 +91,36 @@ class Router
      * @param string   $path     The raw path of the route
      * @param callable $callback The callback that is run when the route is called
      *
-     * @return \PitchBlade\Router\Route The route
+     * @return \PitchBlade\Router\Route\AccessPoint The route
      */
     public function post($name, $path, callable $callback)
     {
         return $this->addRoute($name, 'post', $path, $callback);
+    }
+
+    /**
+     * Gets the route for he current request
+     *
+     * @param \PitchBlade\Network\Http\RequestData $request The request data
+     *
+     * @return \PitchBlade\Router\AccessPoint                The matching route
+     * @throws \PitchBlade\Router\UnsupportedMethodException When the request contains an unspported method
+     * @throws \PitchBlade\Router\NotFoundException          When no route matches
+     */
+    public function getRoute(RequestData $request)
+    {
+        if (!array_key_exists($request->getMethod(), $this->routes)) {
+            throw new UnsupportedMethodException(
+                'The `' . $request->getMethod() . '` method is currently not implemented.'
+            );
+        }
+
+        foreach ($this->routes[$request->getMethod()] as $route) {
+            if ($route->matchesRequest($request)) {
+                return $route;
+            }
+        }
+
+        throw new NotFoundException('No route matches the request.');
     }
 }

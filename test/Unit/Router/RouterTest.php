@@ -13,7 +13,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        $routeFactory = $this->getMock('\\PitchBlade\\Router\\RouteBuilder');
+        $routeFactory = $this->getMock('\\PitchBlade\\Router\\Route\\Builder');
         $routeFactory->expects($this->once())
             ->method('build')
             ->will($this->returnCallback(function ($name, $path, $callback) {
@@ -38,7 +38,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetThrowsOnDuplicateRoute()
     {
-        $router = new Router($this->getMock('\\PitchBlade\\Router\\RouteBuilder'));
+        $router = new Router($this->getMock('\\PitchBlade\\Router\\Route\\Builder'));
 
         $route = $router->get('routeName', 'routePath', function () {
             return true;
@@ -58,7 +58,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testPost()
     {
-        $routeFactory = $this->getMock('\\PitchBlade\\Router\\RouteBuilder');
+        $routeFactory = $this->getMock('\\PitchBlade\\Router\\Route\\Builder');
         $routeFactory->expects($this->once())
             ->method('build')
             ->will($this->returnCallback(function ($name, $path, $callback) {
@@ -83,7 +83,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testPostThrowsOnDuplicateRoute()
     {
-        $router = new Router($this->getMock('\\PitchBlade\\Router\\RouteBuilder'));
+        $router = new Router($this->getMock('\\PitchBlade\\Router\\Route\\Builder'));
 
         $route = $router->post('routeName', 'routePath', function () {
             return true;
@@ -104,7 +104,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAndPostWithSameNameValid()
     {
-        $routeFactory = $this->getMock('\\PitchBlade\\Router\\RouteBuilder');
+        $routeFactory = $this->getMock('\\PitchBlade\\Router\\Route\\Builder');
         $routeFactory->expects($this->any())
             ->method('build')
             ->will($this->returnArgument(0));
