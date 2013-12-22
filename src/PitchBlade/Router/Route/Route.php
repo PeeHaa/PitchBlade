@@ -16,6 +16,7 @@ namespace PitchBlade\Router\Route;
 
 use PitchBlade\Router\Path\Parser;
 use PitchBlade\Network\Http\RequestData;
+use PitchBlade\Router\Path\Segment;
 
 /**
  * This class represents a single route
@@ -51,6 +52,11 @@ class Route implements AccessPoint
      * @var array The (optional) mapping of path variable in the route
      */
     private $defaults = [];
+
+    /**
+     * @var array List of the path variables of the route
+     */
+    private $variables = [];
 
     /**
      * Creates the instance of the route
@@ -105,9 +111,120 @@ class Route implements AccessPoint
     {
         $pathParts = explode('/', trim($request->getPath(), '/'));
 
-        foreach ($this->path->getParts() as $pathPart) {
+        if (!$this->doesMatch($this->path->getParts(), $pathParts)) {
+            return false;
+        }
+
+        $this->processVariables($this->path->getParts(), $pathParts);
+
+        return true;
+    }
+
+    /**
+     * Checks whether the request matches the route
+     *
+     * @param array $routeParts   The route parts
+     * @param array $requestParts The request parts
+     *
+     * @return boolean True when the request matched the route
+     */
+    private function doesMatch(array $routeParts, array $requestParts)
+    {
+        if (count($requestParts) > count($routeParts)) {
+            return false;
+        }
+
+        foreach ($routeParts as $index => $routePart) {
+            if (!$routePart->isVariable() && !$this->doesStaticSegmentMatch($routePart, $requestParts, $index)) {
+                return false;
+            } else if (!$routePart->isOptional() && !$this->isRequiredSegmentSet($routePart, $requestParts, $index)) {
+                return false;
+            } else if ($routePart->isVariable() && !$this->areRequirementsMet($routePart, $requestParts, $index)) {
+                return false;
+            }
         }
 
         return true;
+    }
+
+    /**
+     * Checks whether the static segment matches
+     *
+     * @param \PitchBlade\Router\Path\Segment $routepart    The route part
+     * @param array                           $requestParts The request parts
+     * @param int                             $index        The current index
+     *
+     * @return boolean True when the static part matches
+     */
+    private function doesStaticSegmentMatch(Segment $routePart, array $requestParts, $index)
+    {
+        return isset($requestParts[$index]) && $routePart->getValue() === $requestParts[$index];
+    }
+
+    /**
+     * Checks whether the required segment matches
+     *
+     * @param \PitchBlade\Router\Path\Segment $routepart    The route part
+     * @param array                           $requestParts The request parts
+     * @param int                             $index        The current index
+     *
+     * @return boolean True when the required segment matches
+     */
+    private function isRequiredSegmentSet(Segment $routePart, array $requestParts, $index)
+    {
+        return !empty($requestParts[$index]) || array_key_exists($routePart->getValue(), $this->defaults);
+    }
+
+    /**
+     * Checks whether the requirements for the segment are met
+     *
+     * @param \PitchBlade\Router\Path\Segment $routepart    The route part
+     * @param array                           $requestParts The request parts
+     * @param int                             $index        The current index
+     *
+     * @return boolean True when the requirements match
+     */
+    private function areRequirementsMet(Segment $routePart, array $requestParts, $index)
+    {
+        if (!array_key_exists($routePart->getValue(), $this->requirements)) {
+            return true;
+        }
+
+        return preg_match('/^' . $this->requirements[$routePart->getValue()] . '$/', $requestParts[$index]) === 1;
+    }
+
+    /**
+     * Processes the variables in the URI path
+     *
+     * @param array $routeParts   The route parts
+     * @param array $requestParts The request parts
+     */
+    private function processVariables(array $routeParts, array $requestParts)
+    {
+        foreach ($this->path->getParts() as $index => $pathPart) {
+            if (!$pathPart->isVariable()) {
+                continue;
+            }
+
+            $this->variables[$pathPart->getValue()] = $this->processVariable($pathPart, $requestParts, $index);
+        }
+    }
+
+    /**
+     * Processes a single URI path variable
+     *
+     * @param \PitchBlade\Router\Path\Segment $routepart    The route part
+     * @param array                           $requestParts The request parts
+     * @param int                             $index        The current index
+     *
+     * @return boolean True when the static part matches
+     */
+    private function processVariable(Segment $routePart, array $requestParts, $index)
+    {
+        if (isset($requestParts[$index])) {
+            return $requestParts[$index];
+        } else if (array_key_exists($routePart->getValue(), $this->defaults)) {
+            return $this->defaults[$routePart->getValue()];
+        }
     }
 }
