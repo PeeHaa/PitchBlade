@@ -74,7 +74,11 @@ class Part implements Segment
             $length--;
         }
 
-        $this->value = substr($this->rawValue, $start, $length);
+        $this->value = substr($this->rawValue, $start, $length) ? substr($this->rawValue, $start, $length) : '';
+
+        if ($this->value === '') {
+            $this->optional = true;
+        }
     }
 
     /**

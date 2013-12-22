@@ -92,6 +92,19 @@ class PartTest extends \PHPUnit_Framework_TestCase
      * @covers PitchBlade\Router\Path\Part::parse
      * @covers PitchBlade\Router\Path\Part::isOptional
      */
+    public function testIsOptionalWithEmptyValue()
+    {
+        $part = new Part('');
+        $part->parse();
+
+        $this->assertTrue($part->isOptional());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Path\Part::__construct
+     * @covers PitchBlade\Router\Path\Part::parse
+     * @covers PitchBlade\Router\Path\Part::isOptional
+     */
     public function testIsOptionalTrue()
     {
         $part = new Part('{foo?}');
@@ -138,6 +151,19 @@ class PartTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($part->isVariable());
         $this->assertTrue($part->isOptional());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Path\Part::__construct
+     * @covers PitchBlade\Router\Path\Part::parse
+     * @covers PitchBlade\Router\Path\Part::getValue
+     */
+    public function testGetValueEmpty()
+    {
+        $part = new Part('');
+        $part->parse();
+
+        $this->assertSame('', $part->getValue());
     }
 
     /**
