@@ -30,6 +30,11 @@ class Path implements Parser
     private $rawPath;
 
     /**
+     * @var array The individual segments that make the path
+     */
+    private $segments = [];
+
+    /**
      * Creates instance
      *
      * @param string $rawPath The raw path
@@ -37,5 +42,29 @@ class Path implements Parser
     public function __construct($rawPath)
     {
         $this->rawPath = $rawPath;
+    }
+
+    /**
+     * Parses the path into individual segments
+     *
+     * @param PitchBlade\Router\Path\SegmentBuilder $factory Instance of a segment factory
+     */
+    public function parse(SegmentBuilder $factory)
+    {
+        $segments = explode('/', trim($this->rawPath, '/'));
+
+        foreach ($segments as $segment) {
+            $this->segments[] = $factory->build($segment);
+        }
+    }
+
+    /**
+     * Gets the segments of the path
+     *
+     * @return array The segments of the path
+     */
+    public function getParts()
+    {
+        return $this->segments;
     }
 }
