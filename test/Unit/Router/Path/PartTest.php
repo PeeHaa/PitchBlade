@@ -8,6 +8,16 @@ class PartTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers PitchBlade\Router\Path\Part::__construct
+     */
+    public function testCOnstructCorrectInterface()
+    {
+        $part = new Part('foo');
+
+        $this->assertInstanceOf('\\PitchBlade\\Router\\Path\\Segment', $part);
+    }
+
+    /**
+     * @covers PitchBlade\Router\Path\Part::__construct
      * @covers PitchBlade\Router\Path\Part::parse
      */
     public function testParse()

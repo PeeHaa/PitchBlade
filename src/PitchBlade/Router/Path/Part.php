@@ -21,7 +21,7 @@ namespace PitchBlade\Router\Path;
  * @subpackage Path
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
-class Part
+class Part implements Segment
 {
     /**
      * @var string The raw value of the path part
