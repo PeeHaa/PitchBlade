@@ -45,6 +45,20 @@ interface AccessPoint
     public function defaults(array $defaults);
 
     /**
+     * Gets the name of the route
+     *
+     * @return string The name of the route
+     */
+    public function getName();
+
+    /**
+     * Gets the callback of the route
+     *
+     * @return callable The callback of the route
+     */
+    public function getCallback();
+
+    /**
      * Tries to match the current route against the request
      *
      * @param \PitchBlade\Network\Http\RequestData $request The request data

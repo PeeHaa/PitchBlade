@@ -73,6 +73,26 @@ class Route implements AccessPoint
     }
 
     /**
+     * Gets the name of the route
+     *
+     * @return string The name of the route
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Gets the callback of the route
+     *
+     * @return callable The callback of the route
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
      * Adds a regex patterns as requirements for path variables
      *
      * @param array $requirements The regex patterns

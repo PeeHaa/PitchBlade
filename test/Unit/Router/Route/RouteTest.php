@@ -18,6 +18,32 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers PitchBlade\Router\Route\Route::__construct
+     * @covers PitchBlade\Router\Route\Route::getName
+     */
+    public function testGetName()
+    {
+        $route = new Route('foo', $this->getMock('\\PitchBlade\\Router\\Path\\Parser'), function () {});
+
+        $this->assertSame('foo', $route->getName());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route\Route::__construct
+     * @covers PitchBlade\Router\Route\Route::getCallback
+     */
+    public function testGetCallback()
+    {
+        $route = new Route('foo', $this->getMock('\\PitchBlade\\Router\\Path\\Parser'), function () {
+            return 'bar';
+        });
+
+        $callback = $route->getCallback();
+
+        $this->assertSame('bar', $callback());
+    }
+
+    /**
+     * @covers PitchBlade\Router\Route\Route::__construct
      * @covers PitchBlade\Router\Route\Route::wherePattern
      */
     public function testWherePattern()
