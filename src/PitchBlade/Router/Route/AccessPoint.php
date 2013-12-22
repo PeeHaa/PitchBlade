@@ -59,7 +59,7 @@ interface AccessPoint
      * @return string                                                  The value of the variable
      * @throws \PitchBlade\Router\Route\UndefinedPathVariableException When trying to access an undefined variable
      */
-    public function getVariable($name)
+    public function getVariable($name);
 
     /**
      * Gets the callback of the route
