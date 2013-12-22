@@ -39,7 +39,7 @@ class CsrfToken implements TokenGenerator
      * @var \PitchBlade\Security\Generator\Builder Instance of a generator factory
      */
     private $generatorFactory;
-private $counter = 0;
+
     /**
      * @var array List of supported algorithms sorted by strength (strongest first)
      */
