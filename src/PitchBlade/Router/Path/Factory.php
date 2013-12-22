@@ -25,6 +25,21 @@ namespace PitchBlade\Router\Path;
 class Factory implements Builder
 {
     /**
+     * @var \PitchBlade\Router\Path\SegmentBuilder $segmentFactory Instance of a segment factory
+     */
+    private $segmentFactory;
+
+    /**
+     * Creates instance
+     *
+     * @param \PitchBlade\Router\Path\SegmentBuilder $segmentFactory Instance of a segment factory
+     */
+    public function __construct(SegmentBuilder $segmentFactory)
+    {
+        $this->segmentFactory = $segmentFactory;
+    }
+
+    /**
      * Creates new instance of a path
      *
      * @param string $path The raw path
@@ -33,6 +48,10 @@ class Factory implements Builder
      */
     public function build($rawPath)
     {
-        return new Path($rawPath);
+        $path = new Path($rawPath);
+
+        $path->parse($this->segmentFactory);
+
+        return $path;
     }
 }
