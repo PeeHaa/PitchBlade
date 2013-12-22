@@ -52,6 +52,16 @@ interface AccessPoint
     public function getName();
 
     /**
+     * Gets a path variable
+     *
+     * @param string $name The name of the variable to get
+     *
+     * @return string                                                  The value of the variable
+     * @throws \PitchBlade\Router\Route\UndefinedPathVariableException When trying to access an undefined variable
+     */
+    public function getVariable($name)
+
+    /**
      * Gets the callback of the route
      *
      * @return callable The callback of the route
