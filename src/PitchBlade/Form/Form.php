@@ -121,4 +121,9 @@ abstract class Form implements Validatable
 
         return $isValid;
     }
+
+    public function getFields()
+    {
+        return $this->fields;
+    }
 }
