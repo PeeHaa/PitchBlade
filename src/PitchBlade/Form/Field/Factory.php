@@ -37,7 +37,9 @@ class Factory implements Builder
     {
         $formFieldClass = $data['type'];
         if (strpos($data['type'], '\\') !== 0) {
-            $formFieldClass = '\\PitchBlade\\Form\\Field\\' . ucfirst($data['type']);
+            $className = implode('', array_map('ucfirst', explode('-', $data['type'])));
+
+            $formFieldClass = '\\PitchBlade\\Form\\Field\\' . $className;
         }
 
         if (!class_exists($formFieldClass)) {
