@@ -257,6 +257,18 @@ class Request implements RequestData
     {
         return preg_replace('/\?.*/', '', $this->serverVariables->get('REQUEST_URI'));
     }
+    
+    /**
+     * Gets the requested subdomain
+     *
+     * @return string The requested subdomain
+     */
+    public function getSubdomain()
+    {
+        preg_match("/(?:[A-Za-z0-9][A-Za-z0-9\-]{0,61}[A-Za-z0-9]|[A-Za-z0-9])/", $this->serverVariables->get('HTTP_HOST'), $output_array);
+
+        return $output_array[0];
+    }
 
     /**
      * Gets the HTTP method used
