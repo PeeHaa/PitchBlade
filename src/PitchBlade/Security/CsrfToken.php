@@ -130,7 +130,7 @@ class CsrfToken implements TokenGenerator
 
         if (strlen($buffer) < $rawLength) {
             throw new InvalidLengthException(
-                'The generated token didn\'t met the required length (`'
+                'The generated token didn\'t meet the required length (`'
                 . $rawLength
                 . '`). Actual length is: `'
                 . strlen($buffer)
